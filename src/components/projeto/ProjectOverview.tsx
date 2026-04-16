@@ -1,0 +1,220 @@
+import React from 'react';
+import { differenceInDays, parseISO } from 'date-fns';
+import { Layers, TrendingUp, Clock, Users } from 'lucide-react';
+import Card from '../ui/Card';
+import { useProjectStore } from '../../store/projectStore';
+import { useInterviewStore } from '../../store/interviewStore';
+
+// Circular progress ring
+interface CircularProgressProps {
+  value: number; // 0-100
+  size?: number;
+  strokeWidth?: number;
+}
+
+const CircularProgress: React.FC<CircularProgressProps> = ({
+  value,
+  size = 64,
+  strokeWidth = 6,
+}) => {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (value / 100) * circumference;
+
+  return (
+    <svg width={size} height={size} className="-rotate-90">
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke="var(--color-border)"
+        strokeWidth={strokeWidth}
+      />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={radius}
+        fill="none"
+        stroke="var(--color-accent)"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeDasharray={circumference}
+        strokeDashoffset={offset}
+        style={{ transition: 'stroke-dashoffset 0.5s ease' }}
+      />
+    </svg>
+  );
+};
+
+// Individual metric card
+interface MetricCardProps {
+  icon: React.ReactNode;
+  label: string;
+  value: React.ReactNode;
+  sub?: string;
+  accent?: boolean;
+}
+
+const MetricCard: React.FC<MetricCardProps> = ({ icon, label, value, sub, accent }) => (
+  <div
+    className={[
+      'flex flex-col gap-3 rounded-xl p-5 border',
+      accent
+        ? 'bg-primary border-primary/20 text-white'
+        : 'bg-surface-2 border-border',
+    ].join(' ')}
+  >
+    <div
+      className={[
+        'w-10 h-10 rounded-lg flex items-center justify-center',
+        accent ? 'bg-white/10' : 'bg-accent/10',
+      ].join(' ')}
+    >
+      <span className={accent ? 'text-accent' : 'text-accent'}>{icon}</span>
+    </div>
+    <div>
+      <p
+        className={[
+          'font-body text-xs font-medium uppercase tracking-wide mb-1',
+          accent ? 'text-white/60' : 'text-text-muted',
+        ].join(' ')}
+      >
+        {label}
+      </p>
+      <div
+        className={[
+          'font-heading text-2xl font-bold',
+          accent ? 'text-accent' : 'text-primary',
+        ].join(' ')}
+      >
+        {value}
+      </div>
+      {sub && (
+        <p
+          className={[
+            'font-body text-xs mt-0.5',
+            accent ? 'text-white/50' : 'text-text-muted',
+          ].join(' ')}
+        >
+          {sub}
+        </p>
+      )}
+    </div>
+  </div>
+);
+
+// Info row
+interface InfoRowProps {
+  label: string;
+  value: string | number;
+}
+
+const InfoRow: React.FC<InfoRowProps> = ({ label, value }) => (
+  <div className="flex items-center justify-between py-2.5 border-b border-border last:border-0">
+    <span className="font-body text-sm text-text-muted">{label}</span>
+    <span className="font-body text-sm font-semibold text-primary">{value}</span>
+  </div>
+);
+
+const ProjectOverview: React.FC = () => {
+  const project = useProjectStore((s) => s.project);
+  const interviews = useInterviewStore((s) => s.interviews);
+
+  if (!project) return null;
+
+  const daysRemaining = differenceInDays(parseISO(project.endDate), new Date());
+  const interviewsCompleted = interviews.filter(
+    (i) => i.status === 'analyzed' || i.status === 'completed'
+  ).length;
+
+  const phaseLabels: Record<number, string> = {
+    1: 'Diagnostico',
+    2: 'Analise',
+    3: 'Entrega',
+  };
+
+  return (
+    <div className="space-y-5">
+      {/* 4 metric cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Fase atual */}
+        <MetricCard
+          accent
+          icon={<Layers size={20} />}
+          label="Fase Atual"
+          value={`Fase ${project.currentPhase}`}
+          sub={phaseLabels[project.currentPhase] ?? ''}
+        />
+
+        {/* Conclusao */}
+        <div className="flex flex-col gap-3 rounded-xl p-5 border bg-surface-2 border-border">
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-accent/10">
+            <TrendingUp size={20} className="text-accent" />
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="relative flex items-center justify-center">
+              <CircularProgress value={project.completionPercent} size={56} strokeWidth={5} />
+              <span
+                className="absolute font-body text-xs font-bold text-primary"
+                style={{ fontSize: '10px' }}
+              >
+                {project.completionPercent}%
+              </span>
+            </div>
+            <div>
+              <p className="font-body text-xs font-medium uppercase tracking-wide text-text-muted mb-0.5">
+                Conclusao
+              </p>
+              <p className="font-heading text-xl font-bold text-primary">
+                {project.completionPercent}%
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Dias restantes */}
+        <MetricCard
+          icon={<Clock size={20} />}
+          label="Dias Restantes"
+          value={daysRemaining > 0 ? daysRemaining : 0}
+          sub={daysRemaining < 0 ? 'Prazo encerrado' : 'ate o encerramento'}
+        />
+
+        {/* Entrevistas */}
+        <MetricCard
+          icon={<Users size={20} />}
+          label="Entrevistas Realizadas"
+          value={interviewsCompleted}
+          sub={`de ${interviews.length} agendadas`}
+        />
+      </div>
+
+      {/* Project info card */}
+      <Card title="Informacoes do Projeto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+          <div>
+            <InfoRow label="Cliente" value={project.client} />
+            <InfoRow label="Setor" value={project.sector} />
+            <InfoRow label="Receita Anual" value={project.revenue} />
+          </div>
+          <div>
+            <InfoRow label="Colaboradores" value={project.employees.toLocaleString('pt-BR')} />
+            <InfoRow label="Unidades / Fabricas" value={project.factories} />
+            <InfoRow
+              label="Duracao do Projeto"
+              value={`${project.startDate} — ${project.endDate}`}
+            />
+          </div>
+        </div>
+        {project.context && (
+          <p className="font-body text-sm text-text-muted mt-4 leading-relaxed border-t border-border pt-4">
+            {project.context}
+          </p>
+        )}
+      </Card>
+    </div>
+  );
+};
+
+export default ProjectOverview;
