@@ -15,11 +15,11 @@ import { useProjectStore } from '../../store/projectStore';
 import type { ProjectDocument } from '../../types/project';
 
 const docIcon: Record<ProjectDocument['type'], React.ReactNode> = {
-  proposal: <FileText size={18} className="text-blue-500" />,
-  contract: <FileCheck2 size={18} className="text-emerald-500" />,
-  data: <FileSpreadsheet size={18} className="text-amber-500" />,
-  organogram: <Workflow size={18} className="text-violet-500" />,
-  other: <File size={18} className="text-text-muted" />,
+  proposal: <FileText size={18} style={{ color: '#3B82F6' }} />,
+  contract: <FileCheck2 size={18} style={{ color: '#10B981' }} />,
+  data: <FileSpreadsheet size={18} style={{ color: '#F59E0B' }} />,
+  organogram: <Workflow size={18} style={{ color: '#8B5CF6' }} />,
+  other: <File size={18} style={{ color: 'var(--t-text-sec)' }} />,
 };
 
 const docTypeLabel: Record<ProjectDocument['type'], string> = {
@@ -30,12 +30,12 @@ const docTypeLabel: Record<ProjectDocument['type'], string> = {
   other: 'Outro',
 };
 
-const docTypeBg: Record<ProjectDocument['type'], string> = {
-  proposal: 'bg-blue-500/10 border-blue-500/20',
-  contract: 'bg-emerald-500/10 border-emerald-500/20',
-  data: 'bg-amber-500/10 border-amber-500/20',
-  organogram: 'bg-violet-500/10 border-violet-500/20',
-  other: 'bg-surface border-border',
+const docTypeBgStyle: Record<ProjectDocument['type'], React.CSSProperties> = {
+  proposal: { background: 'rgba(59,130,246,0.1)', borderColor: 'rgba(59,130,246,0.2)' },
+  contract: { background: 'rgba(16,185,129,0.1)', borderColor: 'rgba(16,185,129,0.2)' },
+  data: { background: 'rgba(245,158,11,0.1)', borderColor: 'rgba(245,158,11,0.2)' },
+  organogram: { background: 'rgba(139,92,246,0.1)', borderColor: 'rgba(139,92,246,0.2)' },
+  other: { background: 'var(--t-surface-alt)', borderColor: 'var(--t-border)' },
 };
 
 interface DocRowProps {
@@ -52,23 +52,21 @@ const DocRow: React.FC<DocRowProps> = ({ doc }) => {
   })();
 
   return (
-    <div className="flex items-center gap-3 py-2.5 border-b border-border last:border-0">
+    <div className="flex items-center gap-3 py-2.5" style={{ borderBottom: '1px solid var(--t-border)' }}>
       {/* Icon */}
       <div
-        className={[
-          'w-9 h-9 rounded-lg flex items-center justify-center border shrink-0',
-          docTypeBg[doc.type],
-        ].join(' ')}
+        className="w-9 h-9 rounded-lg flex items-center justify-center border shrink-0"
+        style={docTypeBgStyle[doc.type]}
       >
         {docIcon[doc.type]}
       </div>
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="font-body text-sm font-medium text-primary truncate">
+        <p className="font-body text-sm font-medium truncate" style={{ color: 'var(--t-text)' }}>
           {doc.name}
         </p>
-        <p className="font-body text-xs text-text-muted">
+        <p className="font-body text-xs" style={{ color: 'var(--t-text-sec)' }}>
           {docTypeLabel[doc.type]} &middot; {formattedDate}
           {doc.size ? ` · ${doc.size}` : ''}
         </p>
@@ -103,11 +101,11 @@ const DocumentsPanel: React.FC = () => {
     >
       {documents.length === 0 ? (
         <div className="text-center py-8">
-          <File size={32} className="text-border mx-auto mb-2" />
-          <p className="font-body text-sm text-text-muted">
+          <File size={32} className="mx-auto mb-2" style={{ color: 'var(--t-border)' }} />
+          <p className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>
             Nenhum documento adicionado.
           </p>
-          <p className="font-body text-xs text-text-muted mt-1">
+          <p className="font-body text-xs mt-1" style={{ color: 'var(--t-text-sec)' }}>
             Clique em "Adicionar" para incluir arquivos.
           </p>
         </div>

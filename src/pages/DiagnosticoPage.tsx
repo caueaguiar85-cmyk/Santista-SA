@@ -50,16 +50,16 @@ function BenchmarkCard({ report }: { report: ReportType }) {
       <Card title="Benchmark do Setor" subtitle="Dados de referencia">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="font-body text-sm text-primary/60">Score da empresa</span>
-            <span className="font-body text-sm font-semibold text-primary">—</span>
+            <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Score da empresa</span>
+            <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>—</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="font-body text-sm text-primary/60">Media do setor</span>
-            <span className="font-body text-sm font-semibold text-primary">3.1</span>
+            <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Media do setor</span>
+            <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>3.1</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="font-body text-sm text-primary/60">Top quartil</span>
-            <span className="font-body text-sm font-semibold text-primary">4.0</span>
+            <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Top quartil</span>
+            <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>4.0</span>
           </div>
         </div>
       </Card>
@@ -73,15 +73,15 @@ function BenchmarkCard({ report }: { report: ReportType }) {
     <Card title="Benchmark do Setor" subtitle="Comparativo com o mercado">
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <span className="font-body text-sm text-primary/60">Score da empresa</span>
-          <span className="font-heading text-sm font-bold text-primary">
+          <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Score da empresa</span>
+          <span className="font-heading text-sm font-bold" style={{ color: 'var(--t-text)' }}>
             {companyScore.toFixed(1)}
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="font-body text-sm text-primary/60">Media do setor</span>
+          <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Media do setor</span>
           <div className="flex items-center gap-1.5">
-            <span className="font-body text-sm font-semibold text-amber-600">
+            <span className="font-body text-sm font-semibold" style={{ color: '#F59E0B' }}>
               {sectorAverage.toFixed(1)}
             </span>
             {gap > 0 && (
@@ -92,14 +92,14 @@ function BenchmarkCard({ report }: { report: ReportType }) {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <span className="font-body text-sm text-primary/60">Top quartil</span>
-          <span className="font-body text-sm font-semibold text-emerald-600">
+          <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Top quartil</span>
+          <span className="font-body text-sm font-semibold" style={{ color: '#10B981' }}>
             {topQuartile.toFixed(1)}
           </span>
         </div>
         {report.marketBenchmark.references.length > 0 && (
-          <div className="pt-2 border-t border-border">
-            <p className="font-body text-xs text-primary/30">
+          <div className="pt-2" style={{ borderTop: '1px solid var(--t-border)' }}>
+            <p className="font-body text-xs" style={{ color: 'var(--t-text-ter)' }}>
               {report.marketBenchmark.references[0]}
             </p>
           </div>
@@ -129,14 +129,17 @@ function DashboardTab() {
         <div className="flex flex-col gap-4">
           <Card>
             <div className="text-center py-2">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-3">
-                <Award size={22} className="text-primary" />
+              <div
+                className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-3"
+                style={{ background: 'var(--t-accent-soft)' }}
+              >
+                <Award size={22} style={{ color: 'var(--t-text)' }} />
               </div>
-              <p className="font-body text-sm text-primary/50 mb-1">Maturidade Geral</p>
-              <p className="font-heading text-5xl font-bold text-primary">
+              <p className="font-body text-sm mb-1" style={{ color: 'var(--t-text-sec)' }}>Maturidade Geral</p>
+              <p className="font-heading text-5xl font-bold" style={{ color: 'var(--t-text)' }}>
                 {report ? report.overallScore.toFixed(1) : '—'}
               </p>
-              <p className="font-body text-xs text-primary/40 mt-1">escala CMMI 1–5</p>
+              <p className="font-body text-xs mt-1" style={{ color: 'var(--t-text-ter)' }}>escala CMMI 1–5</p>
               {report && (
                 <div className="mt-3">
                   <Badge variant="warning">
@@ -162,10 +165,10 @@ function DashboardTab() {
                 <Badge variant={PILLAR_BADGE_VARIANTS[i]} size="sm" className="mb-2">
                   {PILLAR_LABELS[pillar].split(' ')[0]}
                 </Badge>
-                <p className="font-heading text-3xl font-bold text-primary mt-1">
+                <p className="font-heading text-3xl font-bold mt-1" style={{ color: 'var(--t-text)' }}>
                   {ps ? ps.score.toFixed(1) : '—'}
                 </p>
-                <p className="font-body text-xs text-primary/40 mt-0.5">
+                <p className="font-body text-xs mt-0.5" style={{ color: 'var(--t-text-ter)' }}>
                   {ps ? ps.level : 'Pendente'}
                 </p>
               </Card>
@@ -199,14 +202,12 @@ function PilaresTab() {
               key={pillar}
               type="button"
               onClick={() => setActivePillar(pillar)}
-              className={[
-                'inline-flex items-center gap-2 px-3 py-2 rounded-lg border font-body text-sm font-medium transition-all',
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg font-body text-sm font-medium transition-all"
+              style={
                 isActive
-                  ? 'border-primary bg-primary/5 text-primary'
-                  : 'border-border bg-surface-2 text-primary/50 hover:text-primary hover:border-primary/30',
-              ]
-                .filter(Boolean)
-                .join(' ')}
+                  ? { border: '1px solid var(--t-text)', background: 'var(--t-surface-alt)', color: 'var(--t-text)' }
+                  : { border: '1px solid var(--t-border)', background: 'var(--t-surface)', color: 'var(--t-text-sec)' }
+              }
             >
               <Badge variant={PILLAR_BADGE_VARIANTS[i]} size="sm" className="shrink-0">
                 {i + 1}
@@ -243,7 +244,7 @@ const DiagnosticoPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-surface px-6 py-8 max-w-7xl mx-auto">
+    <div className="min-h-screen px-6 py-8 max-w-7xl mx-auto" style={{ background: 'var(--t-bg)' }}>
       <Header
         title="Diagnostico"
         subtitle="Centro de analise estrategica"

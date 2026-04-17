@@ -61,16 +61,16 @@ const CustomTooltip = ({
 }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-surface-2 border border-border rounded-lg shadow-lg p-3 font-body">
-      <p className="text-xs font-semibold text-primary mb-2">{label}</p>
+    <div className="rounded-lg shadow-lg p-3 font-body" style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}>
+      <p className="text-xs font-semibold mb-2" style={{ color: 'var(--t-text)' }}>{label}</p>
       {payload.map((entry, i) => (
         <div key={i} className="flex items-center gap-2 text-xs">
           <span
             className="inline-block w-2.5 h-2.5 rounded-full shrink-0"
             style={{ backgroundColor: entry.color }}
           />
-          <span className="text-primary/60">{entry.name}:</span>
-          <span className="font-semibold text-primary">{entry.value.toFixed(1)}</span>
+          <span style={{ color: 'var(--t-text-sec)' }}>{entry.name}:</span>
+          <span className="font-semibold" style={{ color: 'var(--t-text)' }}>{entry.value.toFixed(1)}</span>
         </div>
       ))}
     </div>
@@ -89,20 +89,20 @@ function overallScore(report: DiagnosticReport | null, useMock: boolean): number
 function ScoreBadge({ score }: { score: number }) {
   const color =
     score >= 4
-      ? 'text-emerald-400'
+      ? '#10B981'
       : score >= 3
-      ? 'text-sky-400'
+      ? '#3B82F6'
       : score >= 2
-      ? 'text-amber-400'
-      : 'text-red-400';
+      ? '#F59E0B'
+      : '#EF4444';
 
   return (
     <div className="text-center">
-      <span className={`font-heading text-5xl font-bold ${color}`}>
+      <span className="font-heading text-5xl font-bold" style={{ color }}>
         {score.toFixed(1)}
       </span>
-      <span className="font-body text-lg text-primary/40 ml-1">/5.0</span>
-      <p className="font-body text-xs text-primary/50 mt-1">Score de Maturidade Geral</p>
+      <span className="font-body text-lg ml-1" style={{ color: 'var(--t-text-ter)' }}>/5.0</span>
+      <p className="font-body text-xs mt-1" style={{ color: 'var(--t-text-sec)' }}>Score de Maturidade Geral</p>
     </div>
   );
 }
@@ -143,14 +143,17 @@ const MaturityRadar: React.FC<MaturityRadarProps> = ({ report }) => {
         </div>
         <div className="flex-1 min-w-0">
           {useMock && (
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-lg mb-3">
-              <Activity size={14} className="text-amber-400" />
-              <span className="font-body text-xs text-amber-400 font-medium">
+            <div
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg mb-3"
+              style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.15)' }}
+            >
+              <Activity size={14} style={{ color: '#F59E0B' }} />
+              <span className="font-body text-xs font-medium" style={{ color: '#F59E0B' }}>
                 Dados de demonstracao — execute o diagnostico para ver resultados reais
               </span>
             </div>
           )}
-          <p className="font-body text-sm text-primary/60">
+          <p className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>
             Comparativo de maturidade nos 5 pilares da cadeia de suprimentos versus o benchmark do setor de alimentos & bebidas.
           </p>
         </div>
@@ -161,7 +164,7 @@ const MaturityRadar: React.FC<MaturityRadarProps> = ({ report }) => {
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart data={chartData} margin={{ top: 10, right: 30, bottom: 10, left: 30 }}>
             <PolarGrid
-              stroke="var(--color-border, #e5e7eb)"
+              stroke="var(--t-border)"
               strokeDasharray="3 3"
             />
             <PolarAngleAxis
@@ -169,7 +172,7 @@ const MaturityRadar: React.FC<MaturityRadarProps> = ({ report }) => {
               tick={{
                 fontSize: 11,
                 fontFamily: 'var(--font-body, sans-serif)',
-                fill: 'var(--color-text-muted, #6b7280)',
+                fill: 'var(--t-text-sec)',
               }}
               tickLine={false}
             />
@@ -221,15 +224,16 @@ const MaturityRadar: React.FC<MaturityRadarProps> = ({ report }) => {
           return (
             <div
               key={pillar}
-              className="bg-surface rounded-lg border border-border p-3 text-center"
+              className="rounded-lg p-3 text-center"
+              style={{ background: 'var(--t-surface-alt)', border: '1px solid var(--t-border)' }}
             >
-              <p className="font-body text-xs text-primary/40 mb-1 leading-tight">
+              <p className="font-body text-xs mb-1 leading-tight" style={{ color: 'var(--t-text-ter)' }}>
                 {PILLAR_LABELS[pillar].split(' ')[0]}
               </p>
-              <p className="font-heading text-xl font-bold text-primary">
+              <p className="font-heading text-xl font-bold" style={{ color: 'var(--t-text)' }}>
                 {santistaScore.toFixed(1)}
               </p>
-              <p className="font-body text-xs text-red-500 font-medium">
+              <p className="font-body text-xs font-medium text-red-500">
                 -{gap.toFixed(1)} vs setor
               </p>
             </div>

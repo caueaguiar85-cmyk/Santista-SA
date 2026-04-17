@@ -25,12 +25,12 @@ const Tabs: React.FC<TabsProps> = ({
       role="tablist"
       aria-label="Navegacao por abas"
       className={[
-        'flex items-end gap-0 border-b border-border overflow-x-auto',
-        'scrollbar-none',
+        'flex items-end gap-0 overflow-x-auto scrollbar-none',
         className,
       ]
         .filter(Boolean)
         .join(' ')}
+      style={{ borderBottom: '1px solid var(--t-border)' }}
     >
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab;
@@ -48,24 +48,16 @@ const Tabs: React.FC<TabsProps> = ({
               'relative inline-flex items-center gap-2 shrink-0',
               'px-4 pb-3 pt-2',
               'font-body text-sm font-medium',
-              'transition-all duration-300 ease-in-out',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-inset',
+              'transition-all duration-150',
+              'focus-visible:outline-none',
               'rounded-t-md',
-              isActive
-                ? 'text-accent'
-                : 'text-primary/50 hover:text-primary hover:bg-surface/60',
-            ]
-              .filter(Boolean)
-              .join(' ')}
+            ].join(' ')}
+            style={{
+              color: isActive ? 'var(--t-accent)' : 'var(--t-text-ter)',
+            }}
           >
             {tab.icon && (
-              <span
-                className={[
-                  'shrink-0 transition-colors duration-300',
-                  isActive ? 'text-accent' : 'text-primary/40',
-                ].join(' ')}
-                aria-hidden="true"
-              >
+              <span className="shrink-0" aria-hidden="true">
                 {tab.icon}
               </span>
             )}
@@ -74,11 +66,11 @@ const Tabs: React.FC<TabsProps> = ({
 
             {/* Underline indicator */}
             <span
-              className={[
-                'absolute bottom-0 left-0 right-0 h-0.5 rounded-full',
-                'transition-all duration-300 ease-in-out',
-                isActive ? 'bg-accent opacity-100' : 'bg-transparent opacity-0',
-              ].join(' ')}
+              className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200"
+              style={{
+                background: isActive ? 'var(--t-accent)' : 'transparent',
+                opacity: isActive ? 1 : 0,
+              }}
               aria-hidden="true"
             />
           </button>

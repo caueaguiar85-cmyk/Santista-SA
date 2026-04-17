@@ -19,16 +19,13 @@ interface Filters {
 
 const DEFAULT_FILTERS: Filters = { pillar: '', level: '', status: '' };
 
-// ─── select style ─────────────────────────────────────────────────────────────
-
-const selectClass = [
-  'h-9 rounded-lg border border-border bg-surface-2 px-3',
-  'font-body text-sm text-primary',
-  'transition-colors duration-200',
-  'focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60',
-].join(' ');
-
 // ─── component ────────────────────────────────────────────────────────────────
+
+const selectStyle: React.CSSProperties = {
+  background: 'var(--t-input)',
+  color: 'var(--t-text)',
+  border: '1px solid var(--t-border)',
+};
 
 const EntrevistasPage: React.FC = () => {
   const [isFormOpen, setFormOpen] = useState(false);
@@ -63,13 +60,17 @@ const EntrevistasPage: React.FC = () => {
         {/* ── Filter bar ────────────────────────────────────────────────── */}
         <section
           aria-label="Filtros"
-          className="bg-surface-2 rounded-xl border border-border p-4 flex flex-wrap items-center gap-3"
+          className="rounded-xl p-4 flex flex-wrap items-center gap-3"
+          style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}
         >
-          <div className="flex items-center gap-2 text-primary/50 shrink-0">
+          <div className="flex items-center gap-2 shrink-0" style={{ color: 'var(--t-text-sec)' }}>
             <SlidersHorizontal size={16} aria-hidden="true" />
             <span className="font-body text-sm font-medium">Filtros</span>
             {total > 0 && (
-              <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-medium font-body">
+              <span
+                className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium font-body"
+                style={{ background: 'var(--t-accent-soft)', color: 'var(--t-text)' }}
+              >
                 {total} {total === 1 ? 'entrevista' : 'entrevistas'}
               </span>
             )}
@@ -80,7 +81,8 @@ const EntrevistasPage: React.FC = () => {
             id="filter-pillar"
             value={filters.pillar}
             onChange={(e) => setFilter('pillar', e.target.value as PillarType | '')}
-            className={selectClass}
+            className="h-9 rounded-lg px-3 font-body text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40"
+            style={selectStyle}
             aria-label="Filtrar por pilar"
           >
             <option value="">Todos os pilares</option>
@@ -94,7 +96,8 @@ const EntrevistasPage: React.FC = () => {
             id="filter-level"
             value={filters.level}
             onChange={(e) => setFilter('level', e.target.value as HierarchyLevel | '')}
-            className={selectClass}
+            className="h-9 rounded-lg px-3 font-body text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40"
+            style={selectStyle}
             aria-label="Filtrar por nivel hierarquico"
           >
             <option value="">Todos os niveis</option>
@@ -108,7 +111,8 @@ const EntrevistasPage: React.FC = () => {
             id="filter-status"
             value={filters.status}
             onChange={(e) => setFilter('status', e.target.value as InterviewStatus | '')}
-            className={selectClass}
+            className="h-9 rounded-lg px-3 font-body text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40"
+            style={selectStyle}
             aria-label="Filtrar por status"
           >
             <option value="">Todos os status</option>
@@ -122,13 +126,8 @@ const EntrevistasPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setFilters(DEFAULT_FILTERS)}
-              className={[
-                'h-9 px-3 rounded-lg font-body text-sm font-medium',
-                'text-primary/60 hover:text-primary hover:bg-surface',
-                'border border-transparent hover:border-border',
-                'transition-all duration-200',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40',
-              ].join(' ')}
+              className="h-9 px-3 rounded-lg font-body text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+              style={{ color: 'var(--t-text-sec)', border: '1px solid transparent' }}
             >
               Limpar filtros
             </button>

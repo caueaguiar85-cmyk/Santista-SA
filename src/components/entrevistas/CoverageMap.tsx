@@ -31,10 +31,10 @@ interface CellInfo {
   count: number;
 }
 
-const CELL_CLASSES: Record<CellState, string> = {
-  analyzed: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400',
-  completed: 'bg-amber-500/10 border-amber-500/25 text-amber-400',
-  empty:    'bg-red-500/10 border-red-500/20 text-red-400',
+const CELL_STYLES: Record<CellState, React.CSSProperties> = {
+  analyzed: { background: 'rgba(16,185,129,0.12)', borderColor: 'rgba(16,185,129,0.3)', color: '#10B981' },
+  completed: { background: 'rgba(245,158,11,0.08)', borderColor: 'rgba(245,158,11,0.25)', color: '#F59E0B' },
+  empty: { background: 'rgba(239,68,68,0.08)', borderColor: 'rgba(239,68,68,0.2)', color: '#EF4444' },
 };
 
 const CELL_LABEL: Record<CellState, string> = {
@@ -52,12 +52,6 @@ const LEGEND_ITEMS: { state: CellState; label: string }[] = [
 const CoverageMap: React.FC = () => {
   const interviews = useInterviewStore((s) => s.interviews);
 
-  /**
-   * For each (pillar, level) cell, determine its best state:
-   *   - "analyzed"  if any interview in that cell has status === 'analyzed'
-   *   - "completed" if none are analyzed but at least one is completed
-   *   - "empty"     otherwise
-   */
   function getCellInfo(pillar: PillarType, level: HierarchyLevel): CellInfo {
     const matches = interviews.filter(
       (i) => i.pillar === pillar && i.level === level
@@ -79,14 +73,14 @@ const CoverageMap: React.FC = () => {
   const totalCells = PILLARS.length * LEVELS.length;
 
   return (
-    <div className="bg-surface-2 rounded-xl border border-border shadow-sm p-6 flex flex-col gap-6">
+    <div className="rounded-xl shadow-sm p-6 flex flex-col gap-6" style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}>
       {/* Section header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h2 className="font-heading text-lg font-semibold text-primary">
+          <h2 className="font-heading text-lg font-semibold" style={{ color: 'var(--t-text)' }}>
             Mapa de Cobertura
           </h2>
-          <p className="font-body text-sm text-primary/60 mt-0.5">
+          <p className="font-body text-sm mt-0.5" style={{ color: 'var(--t-text-sec)' }}>
             Distribuicao das entrevistas por pilar e nivel hierarquico
           </p>
         </div>
@@ -94,25 +88,24 @@ const CoverageMap: React.FC = () => {
         {/* Quick stats */}
         <div className="flex flex-wrap gap-4">
           {[
-            { label: 'Total',      value: totalInterviews, color: 'text-primary' },
-            { label: 'Analisadas', value: analyzedCount,   color: 'text-emerald-600' },
-            { label: 'Concluidas', value: completedCount,  color: 'text-amber-600' },
-            { label: 'Cobertura',  value: `${coveredCells}/${totalCells}`, color: 'text-blue-600' },
+            { label: 'Total',      value: totalInterviews, color: 'var(--t-text)' },
+            { label: 'Analisadas', value: analyzedCount,   color: '#10B981' },
+            { label: 'Concluidas', value: completedCount,  color: '#F59E0B' },
+            { label: 'Cobertura',  value: `${coveredCells}/${totalCells}`, color: '#3B82F6' },
           ].map(({ label, value, color }) => (
             <div key={label} className="text-center">
-              <p className={['font-heading text-xl font-bold', color].join(' ')}>{value}</p>
-              <p className="font-body text-xs text-primary/50">{label}</p>
+              <p className="font-heading text-xl font-bold" style={{ color }}>{value}</p>
+              <p className="font-body text-xs" style={{ color: 'var(--t-text-sec)' }}>{label}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Grid — horizontally scrollable on small screens */}
+      {/* Grid */}
       <div className="overflow-x-auto -mx-1 px-1">
         <div className="min-w-[560px]">
           {/* Pillar header row */}
           <div className="grid gap-1.5 mb-1.5" style={{ gridTemplateColumns: '110px repeat(5, 1fr)' }}>
-            {/* empty top-left corner */}
             <div />
             {PILLARS.map((pillar) => (
               <div
@@ -137,7 +130,7 @@ const CoverageMap: React.FC = () => {
             >
               {/* Row label */}
               <div className="flex items-center">
-                <span className="font-body text-sm font-medium text-primary/70">
+                <span className="font-body text-sm font-medium" style={{ color: 'var(--t-text-sec)' }}>
                   {HIERARCHY_LABELS[level]}
                 </span>
               </div>
@@ -148,11 +141,8 @@ const CoverageMap: React.FC = () => {
                   <div
                     key={pillar}
                     title={`${PILLAR_LABELS[pillar]} · ${HIERARCHY_LABELS[level]} · ${CELL_LABEL[state]}`}
-                    className={[
-                      'rounded-lg border flex flex-col items-center justify-center',
-                      'py-3 gap-0.5 transition-all duration-200 hover:brightness-95',
-                      CELL_CLASSES[state],
-                    ].join(' ')}
+                    className="rounded-lg border flex flex-col items-center justify-center py-3 gap-0.5 transition-all duration-200 hover:brightness-95"
+                    style={CELL_STYLES[state]}
                   >
                     <span className="font-heading text-lg font-bold leading-none">
                       {state === 'empty' ? '—' : count}
@@ -169,20 +159,18 @@ const CoverageMap: React.FC = () => {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap items-center gap-4 pt-2 border-t border-border">
-        <span className="font-body text-xs font-semibold text-primary/50 uppercase tracking-wide">
+      <div className="flex flex-wrap items-center gap-4 pt-2" style={{ borderTop: '1px solid var(--t-border)' }}>
+        <span className="font-body text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--t-text-sec)' }}>
           Legenda:
         </span>
         {LEGEND_ITEMS.map(({ state, label }) => (
           <div key={state} className="flex items-center gap-1.5">
             <span
-              className={[
-                'h-3 w-3 rounded border shrink-0',
-                CELL_CLASSES[state],
-              ].join(' ')}
+              className="h-3 w-3 rounded border shrink-0"
+              style={CELL_STYLES[state]}
               aria-hidden="true"
             />
-            <span className="font-body text-xs text-primary/70">{label}</span>
+            <span className="font-body text-xs" style={{ color: 'var(--t-text-sec)' }}>{label}</span>
           </div>
         ))}
       </div>

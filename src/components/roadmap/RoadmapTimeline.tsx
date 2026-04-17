@@ -19,28 +19,28 @@ const WAVE_CONFIG: Record<Initiative['wave'], WaveConfig> = {
   stabilize: {
     label: 'Estabilizar',
     period: '0 – 6 meses',
-    headerBg: 'bg-red-500',
-    headerText: 'text-white',
-    borderColor: 'border-red-500/30',
-    bgColor: 'bg-red-500/5',
+    headerBg: '#EF4444',
+    headerText: '#FFFFFF',
+    borderColor: 'rgba(239,68,68,0.3)',
+    bgColor: 'rgba(239,68,68,0.04)',
     icon: '🔧',
   },
   optimize: {
     label: 'Otimizar',
     period: '6 – 18 meses',
-    headerBg: 'bg-amber-500',
-    headerText: 'text-white',
-    borderColor: 'border-amber-500/30',
-    bgColor: 'bg-amber-500/5',
+    headerBg: '#F59E0B',
+    headerText: '#FFFFFF',
+    borderColor: 'rgba(245,158,11,0.3)',
+    bgColor: 'rgba(245,158,11,0.04)',
     icon: '⚙️',
   },
   transform: {
     label: 'Transformar',
     period: '18 – 36 meses',
-    headerBg: 'bg-emerald-500',
-    headerText: 'text-white',
-    borderColor: 'border-emerald-500/30',
-    bgColor: 'bg-emerald-500/5',
+    headerBg: '#10B981',
+    headerText: '#FFFFFF',
+    borderColor: 'rgba(16,185,129,0.3)',
+    bgColor: 'rgba(16,185,129,0.04)',
     icon: '🚀',
   },
 };
@@ -54,31 +54,41 @@ const WaveSection: React.FC<WaveSectionProps> = ({ wave, initiatives }) => {
   const config = WAVE_CONFIG[wave];
 
   return (
-    <section className={`rounded-xl border-2 ${config.borderColor} overflow-hidden shadow-sm`}>
+    <section
+      className="rounded-xl overflow-hidden shadow-sm"
+      style={{ border: `2px solid ${config.borderColor}` }}
+    >
       {/* Wave header */}
-      <div className={`${config.headerBg} px-6 py-4 flex items-center justify-between gap-4`}>
+      <div
+        className="px-6 py-4 flex items-center justify-between gap-4"
+        style={{ background: config.headerBg }}
+      >
         <div className="flex items-center gap-3">
           <span className="text-2xl" role="img" aria-hidden>
             {config.icon}
           </span>
           <div>
-            <h2 className={`font-heading text-xl font-bold ${config.headerText} leading-tight`}>
+            <h2
+              className="font-heading text-xl font-bold leading-tight"
+              style={{ color: config.headerText }}
+            >
               {config.label}
             </h2>
-            <p className={`text-sm ${config.headerText} opacity-80`}>{config.period}</p>
+            <p className="text-sm" style={{ color: config.headerText, opacity: 0.8 }}>{config.period}</p>
           </div>
         </div>
         <span
-          className={`shrink-0 inline-flex items-center justify-center px-3 py-1 rounded-full bg-white/20 ${config.headerText} text-sm font-semibold`}
+          className="shrink-0 inline-flex items-center justify-center px-3 py-1 rounded-full text-sm font-semibold"
+          style={{ background: 'rgba(255,255,255,0.2)', color: config.headerText }}
         >
           {initiatives.length} iniciativa{initiatives.length !== 1 ? 's' : ''}
         </span>
       </div>
 
       {/* Initiative cards */}
-      <div className={`${config.bgColor} p-6`}>
+      <div className="p-6" style={{ background: config.bgColor }}>
         {initiatives.length === 0 ? (
-          <p className="text-sm text-text-muted text-center py-6">
+          <p className="text-sm text-center py-6" style={{ color: 'var(--t-text-sec)' }}>
             Nenhuma iniciativa nesta onda ainda.
           </p>
         ) : (

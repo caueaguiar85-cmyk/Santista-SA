@@ -78,8 +78,8 @@ function categoryVariant(
 function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }) {
   return (
     <div className="flex items-center gap-2 mb-3">
-      <span className="text-primary/40">{icon}</span>
-      <h4 className="font-heading text-sm font-semibold text-primary uppercase tracking-wider">
+      <span style={{ color: 'var(--t-text-ter)' }}>{icon}</span>
+      <h4 className="font-heading text-sm font-semibold uppercase tracking-wider" style={{ color: 'var(--t-text)' }}>
         {title}
       </h4>
     </div>
@@ -89,21 +89,22 @@ function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }
 function RiskCard({ risk }: { risk: Risk }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border border-border rounded-lg overflow-hidden">
+    <div className="rounded-lg overflow-hidden" style={{ border: '1px solid var(--t-border)' }}>
       <button
         type="button"
-        className="w-full flex items-center justify-between gap-3 p-3 bg-surface hover:bg-surface/80 transition-colors text-left"
+        className="w-full flex items-center justify-between gap-3 p-3 transition-colors text-left"
+        style={{ background: 'var(--t-surface-alt)' }}
         onClick={() => setOpen((v) => !v)}
       >
         <div className="flex items-start gap-3 min-w-0 flex-1">
           <AlertTriangle size={15} className="text-amber-500 shrink-0 mt-0.5" />
           <div className="min-w-0">
-            <p className="font-body text-sm font-semibold text-primary truncate">{risk.title}</p>
+            <p className="font-body text-sm font-semibold truncate" style={{ color: 'var(--t-text)' }}>{risk.title}</p>
             <div className="flex items-center gap-2 flex-wrap mt-0.5">
               <Badge variant={categoryVariant(risk.category)} size="sm">
                 {risk.category}
               </Badge>
-              <span className="font-body text-xs text-primary/50">
+              <span className="font-body text-xs" style={{ color: 'var(--t-text-sec)' }}>
                 Prob.: {risk.probability}% &middot; Impacto: {risk.impact}/5
               </span>
               <span className={`font-body text-xs ${riskScoreColor(risk.riskScore)}`}>
@@ -112,25 +113,25 @@ function RiskCard({ risk }: { risk: Risk }) {
             </div>
           </div>
         </div>
-        {open ? <ChevronUp size={14} className="shrink-0 text-primary/40" /> : <ChevronDown size={14} className="shrink-0 text-primary/40" />}
+        {open ? <ChevronUp size={14} className="shrink-0" style={{ color: 'var(--t-text-ter)' }} /> : <ChevronDown size={14} className="shrink-0" style={{ color: 'var(--t-text-ter)' }} />}
       </button>
 
       {open && (
-        <div className="p-3 bg-surface-2 border-t border-border space-y-2.5">
-          <p className="font-body text-sm text-primary/70">{risk.description}</p>
+        <div className="p-3 space-y-2.5" style={{ background: 'var(--t-surface)', borderTop: '1px solid var(--t-border)' }}>
+          <p className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>{risk.description}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div>
-              <p className="font-body text-xs text-primary/40 mb-0.5">Custo estimado</p>
-              <p className="font-body text-sm font-semibold text-primary">{risk.estimatedCost}</p>
+              <p className="font-body text-xs mb-0.5" style={{ color: 'var(--t-text-ter)' }}>Custo estimado</p>
+              <p className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>{risk.estimatedCost}</p>
             </div>
             <div>
-              <p className="font-body text-xs text-primary/40 mb-0.5">Fonte</p>
-              <p className="font-body text-sm text-primary/70">{risk.source}</p>
+              <p className="font-body text-xs mb-0.5" style={{ color: 'var(--t-text-ter)' }}>Fonte</p>
+              <p className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>{risk.source}</p>
             </div>
           </div>
           <div>
-            <p className="font-body text-xs text-primary/40 mb-0.5">Mitigacao</p>
-            <p className="font-body text-sm text-primary/70">{risk.mitigation}</p>
+            <p className="font-body text-xs mb-0.5" style={{ color: 'var(--t-text-ter)' }}>Mitigacao</p>
+            <p className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>{risk.mitigation}</p>
           </div>
         </div>
       )}
@@ -146,12 +147,12 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
   };
 
   return (
-    <div className="border border-border rounded-lg p-3 bg-surface">
+    <div className="rounded-lg p-3" style={{ border: '1px solid var(--t-border)', background: 'var(--t-surface-alt)' }}>
       <div className="flex items-start gap-3">
-        <Lightbulb size={15} className="text-accent shrink-0 mt-0.5" />
+        <Lightbulb size={15} className="shrink-0 mt-0.5" style={{ color: 'var(--t-accent)' }} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
-            <p className="font-body text-sm font-semibold text-primary">{rec.title}</p>
+            <p className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>{rec.title}</p>
             <Badge variant={priorityVariant(rec.priority)} size="sm">
               {rec.priority}
             </Badge>
@@ -159,10 +160,10 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
               {typeLabels[rec.type]}
             </Badge>
           </div>
-          <p className="font-body text-sm text-primary/60 mb-2">{rec.description}</p>
-          <div className="flex items-center gap-4 text-xs font-body text-primary/50">
-            <span>Esforco: <strong className="text-primary/70">{effortLabel(rec.effort)}</strong></span>
-            <span>Impacto: <strong className="text-primary/70">{rec.impact}/5</strong></span>
+          <p className="font-body text-sm mb-2" style={{ color: 'var(--t-text-sec)' }}>{rec.description}</p>
+          <div className="flex items-center gap-4 text-xs font-body" style={{ color: 'var(--t-text-sec)' }}>
+            <span>Esforco: <strong style={{ color: 'var(--t-text)' }}>{effortLabel(rec.effort)}</strong></span>
+            <span>Impacto: <strong style={{ color: 'var(--t-text)' }}>{rec.impact}/5</strong></span>
           </div>
         </div>
       </div>
@@ -180,13 +181,16 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
     return (
       <Card>
         <div className="text-center py-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface mb-4">
-            <FileSearch size={28} className="text-primary/20" />
+          <div
+            className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4"
+            style={{ background: 'var(--t-surface-alt)' }}
+          >
+            <FileSearch size={28} style={{ color: 'var(--t-text-ter)' }} />
           </div>
-          <p className="font-heading text-lg font-semibold text-primary/40 mb-1">
+          <p className="font-heading text-lg font-semibold mb-1" style={{ color: 'var(--t-text-ter)' }}>
             Analise pendente
           </p>
-          <p className="font-body text-sm text-primary/30">
+          <p className="font-body text-sm" style={{ color: 'var(--t-text-ter)' }}>
             Execute o diagnostico para gerar a analise de{' '}
             <strong>{PILLAR_LABELS[pillar]}</strong>.
           </p>
@@ -204,18 +208,18 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
       <Card>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="text-center bg-surface rounded-xl border border-border px-5 py-3">
-              <p className="font-heading text-4xl font-bold text-primary">
+            <div className="text-center rounded-xl px-5 py-3" style={{ background: 'var(--t-surface-alt)', border: '1px solid var(--t-border)' }}>
+              <p className="font-heading text-4xl font-bold" style={{ color: 'var(--t-text)' }}>
                 {pillarScore.score.toFixed(1)}
               </p>
-              <p className="font-body text-xs text-primary/40">/5.0</p>
+              <p className="font-body text-xs" style={{ color: 'var(--t-text-ter)' }}>/5.0</p>
             </div>
             <div>
-              <p className="font-body text-xs text-primary/40 mb-1">Nivel CMMI</p>
+              <p className="font-body text-xs mb-1" style={{ color: 'var(--t-text-ter)' }}>Nivel CMMI</p>
               <Badge variant={cmmiLevelBadgeVariant(pillarScore.score)} size="md">
                 Nivel {levelNum} — {levelName}
               </Badge>
-              <p className="font-body text-xs text-primary/50 mt-2">
+              <p className="font-body text-xs mt-2" style={{ color: 'var(--t-text-sec)' }}>
                 {PILLAR_LABELS[pillar]}
               </p>
             </div>
@@ -223,29 +227,30 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
 
           {/* Status controls */}
           <div className="flex flex-col items-start sm:items-end gap-2">
-            <p className="font-body text-xs text-primary/40">Status da analise</p>
+            <p className="font-body text-xs" style={{ color: 'var(--t-text-ter)' }}>Status da analise</p>
             <div className="flex items-center gap-1.5 flex-wrap">
-              {(['draft', 'reviewed', 'approved'] as const).map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => updatePillarStatus(pillar, s)}
-                  className={[
-                    'px-3 py-1 rounded-full font-body text-xs font-medium border transition-all',
-                    pillarScore.status === s
-                      ? s === 'approved'
-                        ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
-                        : s === 'reviewed'
-                        ? 'bg-sky-500/15 border-sky-500/30 text-sky-400'
-                        : 'bg-amber-500/15 border-amber-500/30 text-amber-400'
-                      : 'border-border text-primary/40 hover:border-primary/30 hover:text-primary/60',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                >
-                  {statusLabel(s)}
-                </button>
-              ))}
+              {(['draft', 'reviewed', 'approved'] as const).map((s) => {
+                const isActive = pillarScore.status === s;
+                const activeStyle: React.CSSProperties =
+                  s === 'approved'
+                    ? { background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.25)', color: '#10B981' }
+                    : s === 'reviewed'
+                    ? { background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.25)', color: '#3B82F6' }
+                    : { background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.25)', color: '#F59E0B' };
+                const inactiveStyle: React.CSSProperties = { border: '1px solid var(--t-border)', color: 'var(--t-text-ter)' };
+
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => updatePillarStatus(pillar, s)}
+                    className="px-3 py-1 rounded-full font-body text-xs font-medium transition-all"
+                    style={isActive ? activeStyle : inactiveStyle}
+                  >
+                    {statusLabel(s)}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -260,7 +265,7 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
             acc[chunkIndex].push(sentence + (i < arr.length - 1 ? '.' : ''));
             return acc;
           }, []).map((chunk, i) => (
-            <p key={i} className="font-body text-sm text-primary/70 leading-relaxed">
+            <p key={i} className="font-body text-sm leading-relaxed" style={{ color: 'var(--t-text-sec)' }}>
               {chunk.join(' ')}
             </p>
           ))}
@@ -275,8 +280,8 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
             <ul className="space-y-2">
               {pillarScore.keyFindings.map((finding, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-                  <span className="font-body text-sm text-primary/70">{finding}</span>
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: 'var(--t-accent)' }} />
+                  <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>{finding}</span>
                 </li>
               ))}
             </ul>
@@ -291,7 +296,7 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
             {pillarScore.criticalGaps.map((gap, i) => (
               <li key={i} className="flex items-start gap-2.5">
                 <AlertCircle size={14} className="text-red-500 shrink-0 mt-0.5" />
-                <span className="font-body text-sm text-primary/70">{gap}</span>
+                <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>{gap}</span>
               </li>
             ))}
           </ul>
@@ -330,36 +335,37 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
       {pillarScore.estimatedGains && (
         <Card title="Ganhos Estimados">
           <div className="flex items-start gap-4 flex-wrap">
-            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-center min-w-[140px]">
-              <DollarSign size={20} className="text-emerald-400 mx-auto mb-1" />
-              <p className="font-heading text-2xl font-bold text-emerald-400">
+            <div className="rounded-xl p-4 text-center min-w-[140px]" style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.15)', borderRadius: 12 }}>
+              <DollarSign size={20} className="mx-auto mb-1" style={{ color: '#10B981' }} />
+              <p className="font-heading text-2xl font-bold" style={{ color: '#10B981' }}>
                 {pillarScore.estimatedGains.totalEstimatedGain}
               </p>
-              <p className="font-body text-xs text-emerald-500 mt-0.5">ganho total estimado</p>
+              <p className="font-body text-xs mt-0.5" style={{ color: '#10B981' }}>ganho total estimado</p>
             </div>
-            <div className="bg-sky-500/10 border border-sky-500/20 rounded-xl p-4 text-center min-w-[100px]">
-              <Clock size={20} className="text-sky-400 mx-auto mb-1" />
-              <p className="font-heading text-2xl font-bold text-sky-400">
+            <div className="rounded-xl p-4 text-center min-w-[100px]" style={{ background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.15)', borderRadius: 12 }}>
+              <Clock size={20} className="mx-auto mb-1" style={{ color: '#3B82F6' }} />
+              <p className="font-heading text-2xl font-bold" style={{ color: '#3B82F6' }}>
                 {pillarScore.estimatedGains.paybackMonths}m
               </p>
-              <p className="font-body text-xs text-sky-500 mt-0.5">payback medio</p>
+              <p className="font-body text-xs mt-0.5" style={{ color: '#3B82F6' }}>payback medio</p>
             </div>
           </div>
 
           {pillarScore.estimatedGains.byInitiative.length > 0 && (
             <div className="mt-4">
-              <p className="font-body text-xs text-primary/40 uppercase tracking-wider mb-2">
+              <p className="font-body text-xs uppercase tracking-wider mb-2" style={{ color: 'var(--t-text-ter)' }}>
                 Por iniciativa
               </p>
               <div className="space-y-2">
                 {pillarScore.estimatedGains.byInitiative.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between gap-2 py-1.5 border-b border-border last:border-0"
+                    className="flex items-center justify-between gap-2 py-1.5 last:border-0"
+                    style={{ borderBottom: '1px solid var(--t-border)' }}
                   >
                     <div className="flex items-center gap-2">
                       <TrendingUp size={13} className="text-emerald-500 shrink-0" />
-                      <span className="font-body text-sm text-primary/70">{item.name}</span>
+                      <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>{item.name}</span>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       <Badge
@@ -374,7 +380,7 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
                       >
                         {item.confidence}
                       </Badge>
-                      <span className="font-body text-sm font-semibold text-emerald-400">
+                      <span className="font-body text-sm font-semibold" style={{ color: '#10B981' }}>
                         {item.gain}
                       </span>
                     </div>

@@ -35,9 +35,9 @@ const StatusIcon: React.FC<StatusIconProps> = ({ status }) => {
     return <CheckCircle2 size={20} className="text-success shrink-0" />;
   }
   if (status === 'in_progress') {
-    return <CircleDot size={20} className="text-accent shrink-0" />;
+    return <CircleDot size={20} className="shrink-0" style={{ color: 'var(--t-accent)' }} />;
   }
-  return <Circle size={20} className="text-border shrink-0" />;
+  return <Circle size={20} className="shrink-0" style={{ color: 'var(--t-border)' }} />;
 };
 
 const connectorColor = (status: Milestone['status']): string => {
@@ -61,12 +61,12 @@ const MilestoneRow: React.FC<MilestoneRowProps> = ({ milestone, isLast, onToggle
     }
   })();
 
-  const labelColor =
+  const labelStyle: React.CSSProperties =
     milestone.status === 'completed'
-      ? 'text-primary'
+      ? { color: 'var(--t-text)' }
       : milestone.status === 'in_progress'
-      ? 'text-primary font-semibold'
-      : 'text-text-muted';
+      ? { color: 'var(--t-text)', fontWeight: 600 }
+      : { color: 'var(--t-text-sec)' };
 
   return (
     <div className="flex gap-4">
@@ -88,7 +88,7 @@ const MilestoneRow: React.FC<MilestoneRowProps> = ({ milestone, isLast, onToggle
       {/* Content */}
       <div className={['pb-5 flex-1', isLast ? '' : ''].join(' ')}>
         <div className="flex flex-wrap items-center gap-2 mb-0.5">
-          <span className={['font-body text-sm', labelColor].join(' ')}>
+          <span className="font-body text-sm" style={labelStyle}>
             {milestone.label}
           </span>
           <Badge variant={phaseBadgeVariant[milestone.phase]} size="sm">
@@ -101,9 +101,9 @@ const MilestoneRow: React.FC<MilestoneRowProps> = ({ milestone, isLast, onToggle
             <Badge variant="success" size="sm">Concluido</Badge>
           )}
         </div>
-        <p className="font-body text-xs text-text-muted">{formattedDate}</p>
+        <p className="font-body text-xs" style={{ color: 'var(--t-text-sec)' }}>{formattedDate}</p>
         {milestone.deliverable && (
-          <p className="font-body text-xs text-primary/60 mt-1 italic">
+          <p className="font-body text-xs mt-1 italic" style={{ color: 'var(--t-text-sec)' }}>
             Entregavel: {milestone.deliverable}
           </p>
         )}
@@ -139,23 +139,24 @@ const MilestonesTimeline: React.FC = () => {
           const milestones = grouped[phase];
           if (!milestones || milestones.length === 0) return null;
 
+          const phaseStyle: React.CSSProperties =
+            phase === 1
+              ? { background: 'rgba(59,130,246,0.08)', color: '#3B82F6', border: '1px solid rgba(59,130,246,0.2)' }
+              : phase === 2
+              ? { background: 'rgba(139,92,246,0.08)', color: '#8B5CF6', border: '1px solid rgba(139,92,246,0.2)' }
+              : { background: 'rgba(20,184,166,0.08)', color: '#14B8A6', border: '1px solid rgba(20,184,166,0.2)' };
+
           return (
             <div key={phase}>
               {/* Phase header */}
               <div className="flex items-center gap-3 mb-4">
                 <span
-                  className={[
-                    'font-body text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border',
-                    phase === 1
-                      ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                      : phase === 2
-                      ? 'bg-violet-500/10 text-violet-400 border-violet-500/20'
-                      : 'bg-teal-500/10 text-teal-400 border-teal-500/20',
-                  ].join(' ')}
+                  className="font-body text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                  style={phaseStyle}
                 >
                   {phaseLabel[phase]}
                 </span>
-                <div className="flex-1 h-px bg-border" />
+                <div className="flex-1 h-px" style={{ background: 'var(--t-border)' }} />
               </div>
 
               {/* Milestones */}
@@ -174,7 +175,7 @@ const MilestonesTimeline: React.FC = () => {
         })}
 
         {project.milestones.length === 0 && (
-          <p className="font-body text-sm text-text-muted text-center py-8">
+          <p className="font-body text-sm text-center py-8" style={{ color: 'var(--t-text-sec)' }}>
             Nenhum marco cadastrado para este projeto.
           </p>
         )}

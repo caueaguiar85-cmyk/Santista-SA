@@ -46,11 +46,11 @@ const STATUS_VARIANT: Record<string, 'warning' | 'info' | 'success'> = {
 
 const SENTIMENT_CONFIG: Record<
   AIInsights['sentiment'],
-  { label: string; classes: string }
+  { label: string; bg: string; color: string; border: string }
 > = {
-  positive: { label: 'Positivo',  classes: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' },
-  neutral:  { label: 'Neutro',    classes: 'bg-sky-500/10 text-sky-400 border border-sky-500/20' },
-  negative: { label: 'Negativo',  classes: 'bg-red-500/10 text-red-400 border border-red-500/20' },
+  positive: { label: 'Positivo',  bg: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' },
+  neutral:  { label: 'Neutro',    bg: 'rgba(59,130,246,0.1)', color: '#3B82F6', border: '1px solid rgba(59,130,246,0.2)' },
+  negative: { label: 'Negativo',  bg: 'rgba(239,68,68,0.1)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.2)' },
 };
 
 // Placeholder AI analysis that runs after 2 s
@@ -84,8 +84,8 @@ interface InterviewDetailProps {
 
 const SectionTitle: React.FC<{ icon: React.ReactNode; label: string }> = ({ icon, label }) => (
   <div className="flex items-center gap-2 mb-3">
-    <span className="text-accent" aria-hidden="true">{icon}</span>
-    <h3 className="font-heading font-semibold text-primary text-base">{label}</h3>
+    <span style={{ color: 'var(--t-accent)' }} aria-hidden="true">{icon}</span>
+    <h3 className="font-heading font-semibold text-base" style={{ color: 'var(--t-text)' }}>{label}</h3>
   </div>
 );
 
@@ -129,10 +129,10 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
-          <h2 className="font-heading text-xl font-semibold text-primary leading-tight">
+          <h2 className="font-heading text-xl font-semibold leading-tight" style={{ color: 'var(--t-text)' }}>
             {intervieweeName}
           </h2>
-          <p className="font-body text-sm text-primary/60 mt-1">
+          <p className="font-body text-sm mt-1" style={{ color: 'var(--t-text-sec)' }}>
             {role} &middot; {area}
           </p>
         </div>
@@ -140,12 +140,8 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
           type="button"
           onClick={onClose}
           aria-label="Fechar detalhes"
-          className={[
-            'shrink-0 inline-flex items-center justify-center h-8 w-8 rounded-lg',
-            'text-primary/40 hover:text-primary hover:bg-surface',
-            'transition-colors duration-300',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30',
-          ].join(' ')}
+          className="shrink-0 inline-flex items-center justify-center h-8 w-8 rounded-lg transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2"
+          style={{ color: 'var(--t-text-ter)' }}
         >
           <X size={18} />
         </button>
@@ -169,12 +165,12 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
           { icon: <Layers size={14} />,        label: 'Nivel',       value: HIERARCHY_LABELS[level] },
           { icon: <CalendarDays size={14} />,  label: 'Data',        value: formattedDate },
         ].map(({ icon, label, value }) => (
-          <div key={label} className="bg-surface rounded-lg p-3 border border-border">
-            <div className="flex items-center gap-1.5 text-primary/50 mb-1">
+          <div key={label} className="rounded-lg p-3" style={{ background: 'var(--t-surface-alt)', borderRadius: 8, padding: 12, border: '1px solid var(--t-border)' }}>
+            <div className="flex items-center gap-1.5 mb-1" style={{ color: 'var(--t-text-sec)' }}>
               <span aria-hidden="true">{icon}</span>
               <span className="font-body text-xs">{label}</span>
             </div>
-            <p className="font-body text-sm font-medium text-primary truncate">{value}</p>
+            <p className="font-body text-sm font-medium truncate" style={{ color: 'var(--t-text)' }}>{value}</p>
           </div>
         ))}
       </div>
@@ -197,8 +193,8 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
       {transcript && (
         <div>
           <SectionTitle icon={<MessageSquareText size={15} />} label="Transcrição" />
-          <div className="bg-surface rounded-lg border border-border p-4 max-h-48 overflow-y-auto">
-            <p className="font-body text-sm text-primary/80 whitespace-pre-wrap leading-relaxed">
+          <div className="rounded-lg p-4 max-h-48 overflow-y-auto" style={{ background: 'var(--t-surface-alt)', border: '1px solid var(--t-border)' }}>
+            <p className="font-body text-sm whitespace-pre-wrap leading-relaxed" style={{ color: 'var(--t-text)' }}>
               {transcript}
             </p>
           </div>
@@ -207,34 +203,39 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
 
       {/* AI Insights */}
       {aiInsights ? (
-        <div className="flex flex-col gap-5 border border-emerald-500/20 rounded-xl p-5 bg-emerald-500/5">
+        <div
+          className="flex flex-col gap-5 rounded-xl p-5"
+          style={{ border: '1px solid rgba(16,185,129,0.15)', borderRadius: 12, padding: 20, background: 'rgba(16,185,129,0.04)' }}
+        >
           <div className="flex items-center gap-2">
-            <Sparkles size={16} className="text-emerald-600" aria-hidden="true" />
-            <h3 className="font-heading font-semibold text-primary text-base">
+            <Sparkles size={16} style={{ color: '#10B981' }} aria-hidden="true" />
+            <h3 className="font-heading font-semibold text-base" style={{ color: 'var(--t-text)' }}>
               Analise de Inteligencia Artificial
             </h3>
           </div>
 
           {/* Summary */}
           <div>
-            <p className="font-body text-xs font-semibold text-primary/50 uppercase tracking-wide mb-1">
+            <p className="font-body text-xs font-semibold uppercase tracking-wide mb-1" style={{ color: 'var(--t-text-sec)' }}>
               Resumo
             </p>
-            <p className="font-body text-sm text-primary/80 leading-relaxed">
+            <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--t-text)' }}>
               {aiInsights.summary}
             </p>
           </div>
 
           {/* Sentiment */}
           <div className="flex items-center gap-2">
-            <p className="font-body text-xs font-semibold text-primary/50 uppercase tracking-wide">
+            <p className="font-body text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--t-text-sec)' }}>
               Sentimento:
             </p>
             <span
-              className={[
-                'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium font-body',
-                SENTIMENT_CONFIG[aiInsights.sentiment].classes,
-              ].join(' ')}
+              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium font-body"
+              style={{
+                background: SENTIMENT_CONFIG[aiInsights.sentiment].bg,
+                color: SENTIMENT_CONFIG[aiInsights.sentiment].color,
+                border: SENTIMENT_CONFIG[aiInsights.sentiment].border,
+              }}
             >
               {SENTIMENT_CONFIG[aiInsights.sentiment].label}
             </span>
@@ -244,8 +245,8 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
           {aiInsights.keyFindings.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <CheckCircle2 size={14} className="text-emerald-600" aria-hidden="true" />
-                <p className="font-body text-xs font-semibold text-primary/50 uppercase tracking-wide">
+                <CheckCircle2 size={14} style={{ color: '#10B981' }} aria-hidden="true" />
+                <p className="font-body text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--t-text-sec)' }}>
                   Principais achados
                 </p>
               </div>
@@ -256,7 +257,7 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
                       className="mt-1.5 shrink-0 h-1.5 w-1.5 rounded-full bg-emerald-500"
                       aria-hidden="true"
                     />
-                    <span className="font-body text-sm text-primary/80">{finding}</span>
+                    <span className="font-body text-sm" style={{ color: 'var(--t-text)' }}>{finding}</span>
                   </li>
                 ))}
               </ul>
@@ -267,8 +268,8 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
           {aiInsights.maturityIndicators.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <TrendingUp size={14} className="text-emerald-600" aria-hidden="true" />
-                <p className="font-body text-xs font-semibold text-primary/50 uppercase tracking-wide">
+                <TrendingUp size={14} style={{ color: '#10B981' }} aria-hidden="true" />
+                <p className="font-body text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--t-text-sec)' }}>
                   Indicadores de maturidade
                 </p>
               </div>
@@ -279,7 +280,7 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
                       className="mt-1.5 shrink-0 h-1.5 w-1.5 rounded-full bg-blue-500"
                       aria-hidden="true"
                     />
-                    <span className="font-body text-sm text-primary/80">{indicator}</span>
+                    <span className="font-body text-sm" style={{ color: 'var(--t-text)' }}>{indicator}</span>
                   </li>
                 ))}
               </ul>
@@ -289,7 +290,7 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
           {/* AI tags */}
           {aiInsights.tags.length > 0 && (
             <div>
-              <p className="font-body text-xs font-semibold text-primary/50 uppercase tracking-wide mb-2">
+              <p className="font-body text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--t-text-sec)' }}>
                 Tags da IA
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -304,9 +305,9 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
         </div>
       ) : (
         /* Analyze button */
-        <div className="flex flex-col items-center gap-3 py-6 border border-dashed border-border rounded-xl bg-surface/50">
-          <Sparkles size={24} className="text-primary/30" aria-hidden="true" />
-          <p className="font-body text-sm text-primary/50 text-center">
+        <div className="flex flex-col items-center gap-3 py-6 rounded-xl" style={{ border: '1px dashed var(--t-border)', background: 'var(--t-surface-alt)' }}>
+          <Sparkles size={24} style={{ color: 'var(--t-text-ter)' }} aria-hidden="true" />
+          <p className="font-body text-sm text-center" style={{ color: 'var(--t-text-sec)' }}>
             {transcript
               ? 'Esta entrevista ainda nao foi analisada pela IA.'
               : 'Adicione uma transcricao para habilitar a analise de IA.'}

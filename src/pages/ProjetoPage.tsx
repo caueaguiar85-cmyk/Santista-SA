@@ -11,12 +11,12 @@ const ProjetoPage: React.FC = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--t-bg)' }}>
         <div className="text-center">
-          <p className="font-heading text-2xl font-semibold text-primary mb-2">
+          <p className="font-heading text-2xl font-semibold mb-2" style={{ color: 'var(--t-text)' }}>
             Nenhum projeto carregado
           </p>
-          <p className="font-body text-text-muted">
+          <p className="font-body" style={{ color: 'var(--t-text-sec)' }}>
             Configure um projeto para visualizar o painel.
           </p>
         </div>
@@ -25,7 +25,7 @@ const ProjetoPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-surface px-6 py-8 max-w-7xl mx-auto">
+    <div className="min-h-screen px-6 py-8 max-w-7xl mx-auto" style={{ background: 'var(--t-bg)' }}>
       <Header
         title="Projeto"
         subtitle="Visao geral do assessment Santista S.A."

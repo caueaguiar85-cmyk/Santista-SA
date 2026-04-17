@@ -9,11 +9,16 @@ import { useDiagnosticoStore } from '../store/diagnosticoStore';
 /* ────────────────────────────────────────────
    Shared input style
    ──────────────────────────────────────────── */
-const inputClass =
-  'w-full text-sm border border-border rounded-lg px-3 py-2 bg-surface-2 text-text ' +
-  'focus:outline-none focus:ring-2 focus:ring-primary/30 transition-shadow';
+const inputStyle: React.CSSProperties = {
+  background: 'var(--t-input)',
+  color: 'var(--t-text)',
+  border: '1px solid var(--t-border)',
+};
 
-const labelClass = 'block text-xs font-semibold text-text-muted uppercase tracking-wide mb-1';
+const inputClass =
+  'w-full text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent/30 transition-shadow';
+
+const labelClass = 'block text-xs font-semibold uppercase tracking-wide mb-1';
 
 /* ────────────────────────────────────────────
    Section: Dados do Projeto
@@ -61,53 +66,56 @@ const DadosProjeto: React.FC = () => {
   return (
     <Card title="Dados do Projeto">
       {!project ? (
-        <p className="text-sm text-text-muted">
+        <p className="text-sm" style={{ color: 'var(--t-text-sec)' }}>
           Nenhum projeto carregado. Crie um projeto na secao Projeto.
         </p>
       ) : (
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className={labelClass} htmlFor="cfg-client">
+              <label className={labelClass} style={{ color: 'var(--t-text-sec)' }} htmlFor="cfg-client">
                 Cliente
               </label>
               <input
                 id="cfg-client"
                 type="text"
                 className={inputClass}
+                style={inputStyle}
                 value={form.client}
                 onChange={(e) => setForm((f) => ({ ...f, client: e.target.value }))}
                 placeholder="Nome do cliente"
               />
             </div>
             <div>
-              <label className={labelClass} htmlFor="cfg-sector">
+              <label className={labelClass} style={{ color: 'var(--t-text-sec)' }} htmlFor="cfg-sector">
                 Setor
               </label>
               <input
                 id="cfg-sector"
                 type="text"
                 className={inputClass}
+                style={inputStyle}
                 value={form.sector}
                 onChange={(e) => setForm((f) => ({ ...f, sector: e.target.value }))}
                 placeholder="Ex: Alimenticio, Automotivo..."
               />
             </div>
             <div>
-              <label className={labelClass} htmlFor="cfg-revenue">
+              <label className={labelClass} style={{ color: 'var(--t-text-sec)' }} htmlFor="cfg-revenue">
                 Faturamento Anual
               </label>
               <input
                 id="cfg-revenue"
                 type="text"
                 className={inputClass}
+                style={inputStyle}
                 value={form.revenue}
                 onChange={(e) => setForm((f) => ({ ...f, revenue: e.target.value }))}
                 placeholder="Ex: R$ 500M"
               />
             </div>
             <div>
-              <label className={labelClass} htmlFor="cfg-employees">
+              <label className={labelClass} style={{ color: 'var(--t-text-sec)' }} htmlFor="cfg-employees">
                 Numero de Funcionarios
               </label>
               <input
@@ -115,12 +123,13 @@ const DadosProjeto: React.FC = () => {
                 type="number"
                 min="0"
                 className={inputClass}
+                style={inputStyle}
                 value={form.employees}
                 onChange={(e) => setForm((f) => ({ ...f, employees: e.target.value }))}
               />
             </div>
             <div>
-              <label className={labelClass} htmlFor="cfg-factories">
+              <label className={labelClass} style={{ color: 'var(--t-text-sec)' }} htmlFor="cfg-factories">
                 Numero de Plantas / Unidades
               </label>
               <input
@@ -128,6 +137,7 @@ const DadosProjeto: React.FC = () => {
                 type="number"
                 min="0"
                 className={inputClass}
+                style={inputStyle}
                 value={form.factories}
                 onChange={(e) => setForm((f) => ({ ...f, factories: e.target.value }))}
               />
@@ -139,7 +149,7 @@ const DadosProjeto: React.FC = () => {
               Salvar dados
             </Button>
             {saved && (
-              <span className="text-xs text-emerald-600 font-medium">
+              <span className="text-xs font-medium" style={{ color: '#10B981' }}>
                 Dados salvos com sucesso!
               </span>
             )}
@@ -172,12 +182,13 @@ const ContextoAgentes: React.FC = () => {
 
   return (
     <Card title="Contexto para Agentes IA">
-      <p className="text-xs text-text-muted mb-3">
+      <p className="text-xs mb-3" style={{ color: 'var(--t-text-sec)' }}>
         Descreva o contexto do projeto. Os agentes de IA usam este texto para personalizar a
         analise e as recomendacoes.
       </p>
       <textarea
         className={`${inputClass} resize-y`}
+        style={inputStyle}
         rows={6}
         value={context}
         onChange={(e) => setContext(e.target.value)}
@@ -185,7 +196,7 @@ const ContextoAgentes: React.FC = () => {
         disabled={!project}
       />
       {!project && (
-        <p className="text-xs text-text-muted mt-2">
+        <p className="text-xs mt-2" style={{ color: 'var(--t-text-sec)' }}>
           Crie um projeto primeiro para editar o contexto.
         </p>
       )}
@@ -199,7 +210,7 @@ const ContextoAgentes: React.FC = () => {
           Salvar contexto
         </Button>
         {saved && (
-          <span className="text-xs text-emerald-600 font-medium">Contexto salvo!</span>
+          <span className="text-xs font-medium" style={{ color: '#10B981' }}>Contexto salvo!</span>
         )}
       </div>
     </Card>
@@ -229,13 +240,14 @@ const ChaveAPI: React.FC = () => {
 
   return (
     <Card title="Chave API Anthropic">
-      <p className="text-xs text-text-muted mb-3">
+      <p className="text-xs mb-3" style={{ color: 'var(--t-text-sec)' }}>
         A chave e armazenada apenas no localStorage do navegador e nunca enviada a terceiros.
       </p>
       <div className="flex gap-2">
         <input
           type={visible ? 'text' : 'password'}
           className={`${inputClass} flex-1 font-mono`}
+          style={inputStyle}
           value={visible ? apiKey : maskedKey && apiKey ? maskedKey : ''}
           onChange={(e) => {
             setVisible(true);
@@ -248,7 +260,8 @@ const ChaveAPI: React.FC = () => {
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
-          className="px-3 py-2 border border-border rounded-lg text-xs text-text-muted hover:text-text transition-colors bg-surface-2"
+          className="px-3 py-2 rounded-lg text-xs transition-colors"
+          style={{ border: '1px solid var(--t-border)', background: 'var(--t-input)', color: 'var(--t-text-sec)' }}
           title={visible ? 'Ocultar chave' : 'Mostrar chave'}
         >
           {visible ? 'Ocultar' : 'Mostrar'}
@@ -259,7 +272,7 @@ const ChaveAPI: React.FC = () => {
           Salvar chave
         </Button>
         {saved && (
-          <span className="text-xs text-emerald-600 font-medium">Chave salva!</span>
+          <span className="text-xs font-medium" style={{ color: '#10B981' }}>Chave salva!</span>
         )}
         {apiKey && !saved && (
           <button
@@ -314,29 +327,29 @@ const CalibracacaoAgentes: React.FC = () => {
 
   return (
     <Card title="Calibracao dos Agentes">
-      <p className="text-xs text-text-muted mb-4">
+      <p className="text-xs mb-4" style={{ color: 'var(--t-text-sec)' }}>
         Ajuste como os agentes de IA redigem os relatorios e insights.
       </p>
 
       <div className="space-y-5">
         {/* Tone */}
         <div>
-          <label className={labelClass}>Tom de comunicacao</label>
+          <label className={labelClass} style={{ color: 'var(--t-text-sec)' }}>Tom de comunicacao</label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {TONE_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 type="button"
                 onClick={() => setTone(opt.value)}
-                className={[
-                  'text-left px-3 py-2.5 rounded-lg border text-sm transition-all',
+                className="text-left px-3 py-2.5 rounded-lg text-sm transition-all"
+                style={
                   tone === opt.value
-                    ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-border text-text hover:border-primary/40',
-                ].join(' ')}
+                    ? { border: '1px solid var(--t-text)', background: 'var(--t-surface-alt)', color: 'var(--t-text)' }
+                    : { border: '1px solid var(--t-border)', color: 'var(--t-text)' }
+                }
               >
                 <span className="block font-semibold">{opt.label}</span>
-                <span className="block text-xs text-text-muted mt-0.5">{opt.desc}</span>
+                <span className="block text-xs mt-0.5" style={{ color: 'var(--t-text-sec)' }}>{opt.desc}</span>
               </button>
             ))}
           </div>
@@ -344,22 +357,22 @@ const CalibracacaoAgentes: React.FC = () => {
 
         {/* Detail level */}
         <div>
-          <label className={labelClass}>Nivel de detalhe</label>
+          <label className={labelClass} style={{ color: 'var(--t-text-sec)' }}>Nivel de detalhe</label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {DETAIL_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 type="button"
                 onClick={() => setDetail(opt.value)}
-                className={[
-                  'text-left px-3 py-2.5 rounded-lg border text-sm transition-all',
+                className="text-left px-3 py-2.5 rounded-lg text-sm transition-all"
+                style={
                   detail === opt.value
-                    ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-border text-text hover:border-primary/40',
-                ].join(' ')}
+                    ? { border: '1px solid var(--t-text)', background: 'var(--t-surface-alt)', color: 'var(--t-text)' }
+                    : { border: '1px solid var(--t-border)', color: 'var(--t-text)' }
+                }
               >
                 <span className="block font-semibold">{opt.label}</span>
-                <span className="block text-xs text-text-muted mt-0.5">{opt.desc}</span>
+                <span className="block text-xs mt-0.5" style={{ color: 'var(--t-text-sec)' }}>{opt.desc}</span>
               </button>
             ))}
           </div>
@@ -370,7 +383,7 @@ const CalibracacaoAgentes: React.FC = () => {
             Salvar calibracao
           </Button>
           {saved && (
-            <span className="text-xs text-emerald-600 font-medium">Calibracao salva!</span>
+            <span className="text-xs font-medium" style={{ color: '#10B981' }}>Calibracao salva!</span>
           )}
         </div>
       </div>
@@ -404,15 +417,17 @@ const StatusDados: React.FC = () => {
 
   return (
     <Card title="Status dos Dados">
-      <ul className="divide-y divide-border">
+      <ul className="divide-y" style={{ borderColor: 'var(--t-border)' }}>
         {rows.map(({ label, value, ok }) => (
           <li
             key={label}
             className="flex items-center justify-between py-2.5 text-sm"
+            style={{ borderColor: 'var(--t-border)' }}
           >
-            <span className="text-text-muted">{label}</span>
+            <span style={{ color: 'var(--t-text-sec)' }}>{label}</span>
             <span
-              className={`font-semibold ${ok ? 'text-emerald-600' : 'text-text-muted'}`}
+              className="font-semibold"
+              style={{ color: ok ? '#10B981' : 'var(--t-text-sec)' }}
             >
               {value}
             </span>
@@ -440,7 +455,7 @@ const DangerZone: React.FC = () => {
 
   return (
     <Card title="Zona de Perigo">
-      <p className="text-sm text-text-muted mb-4">
+      <p className="text-sm mb-4" style={{ color: 'var(--t-text-sec)' }}>
         Limpa todos os dados armazenados no navegador — projeto, entrevistas, insights e
         relatorios. Os dados seed serao recarregados automaticamente na proxima visita.
       </p>

@@ -14,20 +14,20 @@ interface CardProps {
 
 const paddingClasses: Record<CardPadding, string> = {
   sm: 'p-4',
-  md: 'p-6',
-  lg: 'p-8',
+  md: 'p-5',
+  lg: 'p-6',
 };
 
 const headerPaddingClasses: Record<CardPadding, string> = {
   sm: 'px-4 pt-4 pb-3',
-  md: 'px-6 pt-6 pb-4',
-  lg: 'px-8 pt-8 pb-5',
+  md: 'px-5 pt-5 pb-4',
+  lg: 'px-6 pt-6 pb-5',
 };
 
 const bodyPaddingClasses: Record<CardPadding, string> = {
   sm: 'px-4 pb-4',
-  md: 'px-6 pb-6',
-  lg: 'px-8 pb-8',
+  md: 'px-5 pb-5',
+  lg: 'px-6 pb-6',
 };
 
 const Card: React.FC<CardProps> = ({
@@ -43,8 +43,7 @@ const Card: React.FC<CardProps> = ({
   return (
     <div
       className={[
-        'bg-surface-2 rounded-xl border border-border shadow-sm',
-        'transition-shadow duration-300',
+        't-card t-transition',
         !hasHeader ? paddingClasses[padding] : '',
         className,
       ]
@@ -60,11 +59,14 @@ const Card: React.FC<CardProps> = ({
             ].join(' ')}
           >
             <div className="min-w-0 flex-1">
-              <h3 className="font-heading text-lg font-semibold text-primary leading-tight truncate">
+              <h3
+                className="font-heading text-base font-semibold leading-tight truncate"
+                style={{ color: 'var(--t-text)' }}
+              >
                 {title}
               </h3>
               {subtitle && (
-                <p className="font-body text-sm text-primary/60 mt-0.5">
+                <p className="font-body text-sm mt-0.5" style={{ color: 'var(--t-text-ter)' }}>
                   {subtitle}
                 </p>
               )}
@@ -74,7 +76,7 @@ const Card: React.FC<CardProps> = ({
             )}
           </div>
 
-          <div className="border-t border-border" />
+          <div style={{ borderTop: '1px solid var(--t-border)' }} />
 
           <div className={bodyPaddingClasses[padding]}>{children}</div>
         </>

@@ -72,7 +72,7 @@ const InsightCard: React.FC<{ insight: Insight }> = ({ insight }) => {
   return (
     <Card>
       <div className="flex items-start justify-between gap-4 mb-3">
-        <h3 className="font-heading text-base font-semibold text-primary leading-snug flex-1">
+        <h3 className="font-heading text-base font-semibold leading-snug flex-1" style={{ color: 'var(--t-text)' }}>
           {insight.title}
         </h3>
         <div className="flex flex-wrap gap-1.5 shrink-0">
@@ -88,34 +88,34 @@ const InsightCard: React.FC<{ insight: Insight }> = ({ insight }) => {
         </div>
       </div>
 
-      <p className="text-sm text-text leading-relaxed mb-4 line-clamp-3">
+      <p className="text-sm leading-relaxed mb-4 line-clamp-3" style={{ color: 'var(--t-text)' }}>
         {insight.description}
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs text-text-muted mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-xs mb-4" style={{ color: 'var(--t-text-sec)' }}>
         {insight.estimatedValue && (
           <div>
-            <span className="font-semibold text-text">Valor estimado:</span>{' '}
-            <span className="text-emerald-400 font-medium">{insight.estimatedValue}</span>
+            <span className="font-semibold" style={{ color: 'var(--t-text)' }}>Valor estimado:</span>{' '}
+            <span className="font-medium" style={{ color: '#10B981' }}>{insight.estimatedValue}</span>
           </div>
         )}
         <div>
-          <span className="font-semibold text-text">Origem:</span> {insight.origin}
+          <span className="font-semibold" style={{ color: 'var(--t-text)' }}>Origem:</span> {insight.origin}
         </div>
         {insight.benchmarkSource && (
           <div>
-            <span className="font-semibold text-text">Benchmark:</span> {insight.benchmarkSource}
+            <span className="font-semibold" style={{ color: 'var(--t-text)' }}>Benchmark:</span> {insight.benchmarkSource}
           </div>
         )}
         {insight.suggestedAction && (
           <div className="sm:col-span-2">
-            <span className="font-semibold text-text">Acao sugerida:</span>{' '}
+            <span className="font-semibold" style={{ color: 'var(--t-text)' }}>Acao sugerida:</span>{' '}
             {insight.suggestedAction}
           </div>
         )}
       </div>
 
-      <div className="flex items-center justify-between pt-3 border-t border-border">
+      <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid var(--t-border)' }}>
         <Badge variant={statusVariant(insight.status)} size="sm">
           {STATUS_LABELS[insight.status]}
         </Badge>
@@ -125,7 +125,8 @@ const InsightCard: React.FC<{ insight: Insight }> = ({ insight }) => {
           onChange={(e) =>
             updateInsightStatus(insight.id, e.target.value as Insight['status'])
           }
-          className="text-xs border border-border rounded-md px-2 py-1 bg-surface-2 text-text focus:outline-none focus:ring-1 focus:ring-primary/40"
+          className="text-xs rounded-md px-2 py-1 focus:outline-none focus:ring-1"
+          style={{ border: '1px solid var(--t-border)', background: 'var(--t-input)', color: 'var(--t-text)' }}
           aria-label="Alterar status do insight"
         >
           <option value="new">Novo</option>
@@ -154,10 +155,10 @@ const InsightsFeed: React.FC<InsightsFeedProps> = ({ filters = {} }) => {
     return (
       <Card>
         <div className="text-center py-8">
-          <p className="text-text-muted text-sm">
+          <p className="text-sm" style={{ color: 'var(--t-text-sec)' }}>
             Nenhum insight encontrado para os filtros selecionados.
           </p>
-          <p className="text-text-muted text-xs mt-1">
+          <p className="text-xs mt-1" style={{ color: 'var(--t-text-sec)' }}>
             Execute o diagnostico para gerar insights automaticamente.
           </p>
         </div>
@@ -167,7 +168,7 @@ const InsightsFeed: React.FC<InsightsFeedProps> = ({ filters = {} }) => {
 
   return (
     <div className="space-y-4">
-      <p className="text-xs text-text-muted">
+      <p className="text-xs" style={{ color: 'var(--t-text-sec)' }}>
         {filtered.length} insight{filtered.length !== 1 ? 's' : ''} encontrado
         {filtered.length !== 1 ? 's' : ''} — ordenados por impacto
       </p>

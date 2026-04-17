@@ -7,7 +7,6 @@ import {
   Lightbulb,
   Map,
   Settings,
-  Hexagon,
 } from 'lucide-react';
 import { useProjectStore } from '../../store/projectStore';
 
@@ -32,35 +31,45 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className="fixed top-0 left-0 h-screen flex flex-col z-40 border-r border-border bg-surface-2 backdrop-blur-xl"
-      style={{ width: 260 }}
+      className="fixed top-0 left-0 h-screen flex flex-col z-40 t-transition"
+      style={{
+        width: 256,
+        background: 'var(--t-surface)',
+        borderRight: '1px solid var(--t-border)',
+      }}
     >
-      {/* Logo */}
-      <div className="px-5 pt-6 pb-4">
-        <div className="flex items-center gap-2.5 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shadow-[0_0_16px_rgba(227,30,36,0.3)]">
-            <Hexagon size={16} className="text-white" aria-hidden="true" />
+      {/* Brand */}
+      <div className="px-5 pt-6 pb-5">
+        <div className="flex items-center gap-3">
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center font-heading font-bold text-white text-sm"
+            style={{ background: 'var(--t-accent)' }}
+          >
+            S
           </div>
-          <span className="text-lg font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-heading)' }}>
-            Stoken Advisory
-          </span>
-        </div>
-
-        <div className="pl-0.5">
-          <p className="text-sm font-medium text-text">
-            Santista S.A.
-          </p>
-          <p className="text-xs text-text-muted">
-            Assessment 2026
-          </p>
+          <div className="leading-tight">
+            <p className="font-heading text-[15px] font-bold" style={{ color: 'var(--t-text)' }}>
+              Santista S.A.
+            </p>
+            <p className="text-[11px] font-medium" style={{ color: 'var(--t-text-ter)' }}>
+              Stoken Advisory
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Divider */}
-      <div className="mx-4 border-t border-border" />
+      <div className="mx-5 h-px" style={{ background: 'var(--t-border)' }} />
+
+      {/* Nav label */}
+      <div className="px-5 pt-5 pb-2">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.08em]" style={{ color: 'var(--t-text-ter)' }}>
+          Menu
+        </p>
+      </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto px-3 pt-4 space-y-1">
+      <nav className="flex-1 overflow-y-auto px-3 space-y-0.5">
         {navItems.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
@@ -68,56 +77,72 @@ const Sidebar: React.FC = () => {
             className={({ isActive }) =>
               [
                 'flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium',
-                'transition-all duration-200',
+                'transition-all duration-150',
                 isActive
-                  ? 'bg-accent/10 text-accent border-r-2 border-accent'
-                  : 'text-text-muted hover:text-text hover:bg-white/[0.03]',
+                  ? 'font-semibold'
+                  : '',
               ].join(' ')
             }
+            style={({ isActive }) => ({
+              background: isActive ? 'var(--t-accent-soft)' : 'transparent',
+              color: isActive ? 'var(--t-accent)' : 'var(--t-text-sec)',
+            })}
           >
             {({ isActive }) => (
               <>
                 <Icon
                   size={18}
                   className="shrink-0"
-                  style={{ color: isActive ? 'var(--color-accent)' : undefined }}
+                  style={{ color: isActive ? 'var(--t-accent)' : 'var(--t-text-ter)' }}
                   aria-hidden="true"
                 />
                 <span>{label}</span>
+                {isActive && (
+                  <span
+                    className="ml-auto w-1.5 h-1.5 rounded-full"
+                    style={{ background: 'var(--t-accent)' }}
+                  />
+                )}
               </>
             )}
           </NavLink>
         ))}
       </nav>
 
-      {/* Project Progress */}
+      {/* Progress */}
       <div className="px-4 py-4">
-        <div className="rounded-xl border border-border p-3.5 bg-white/[0.02]">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-text-muted">
-              Progresso
+        <div
+          className="rounded-xl p-4 t-transition"
+          style={{
+            background: 'var(--t-surface-alt)',
+            border: '1px solid var(--t-border)',
+          }}
+        >
+          <div className="flex items-center justify-between mb-2.5">
+            <span className="text-[11px] font-semibold" style={{ color: 'var(--t-text-sec)' }}>
+              Progresso do Projeto
             </span>
-            <span className="text-xs font-semibold tabular-nums text-accent">
+            <span className="text-[11px] font-bold tabular-nums" style={{ color: 'var(--t-accent)' }}>
               {completion}%
             </span>
           </div>
 
           <div
-            className="w-full rounded-full overflow-hidden bg-white/[0.06]"
-            style={{ height: 4 }}
+            className="w-full rounded-full overflow-hidden"
+            style={{ height: 5, background: 'var(--t-border)' }}
             role="progressbar"
             aria-valuenow={completion}
             aria-valuemin={0}
             aria-valuemax={100}
           >
             <div
-              className="h-full rounded-full transition-all duration-500 bg-accent shadow-[0_0_8px_rgba(227,30,36,0.4)]"
-              style={{ width: `${completion}%` }}
+              className="h-full rounded-full transition-all duration-500"
+              style={{ width: `${completion}%`, background: 'var(--t-accent)' }}
             />
           </div>
 
           {project && (
-            <p className="mt-2 text-[11px] text-text-muted">
+            <p className="mt-2 text-[11px]" style={{ color: 'var(--t-text-ter)' }}>
               Fase {project.currentPhase} de 3
             </p>
           )}

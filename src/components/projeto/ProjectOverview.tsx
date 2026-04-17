@@ -28,7 +28,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
         cy={size / 2}
         r={radius}
         fill="none"
-        stroke="var(--color-border)"
+        stroke="var(--t-border)"
         strokeWidth={strokeWidth}
       />
       <circle
@@ -36,7 +36,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
         cy={size / 2}
         r={radius}
         fill="none"
-        stroke="var(--color-accent)"
+        stroke="var(--t-accent)"
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeDasharray={circumference}
@@ -58,44 +58,36 @@ interface MetricCardProps {
 
 const MetricCard: React.FC<MetricCardProps> = ({ icon, label, value, sub, accent }) => (
   <div
-    className={[
-      'flex flex-col gap-3 rounded-xl p-5 border',
+    className="flex flex-col gap-3 rounded-xl p-5"
+    style={
       accent
-        ? 'bg-accent/10 border-accent/20'
-        : 'bg-surface-2 border-border',
-    ].join(' ')}
+        ? { background: 'var(--t-accent-soft)', border: '1px solid rgba(227,30,36,0.15)' }
+        : { background: 'var(--t-surface)', border: '1px solid var(--t-border)' }
+    }
   >
     <div
-      className={[
-        'w-10 h-10 rounded-lg flex items-center justify-center',
-        accent ? 'bg-accent/15' : 'bg-accent/10',
-      ].join(' ')}
+      className="w-10 h-10 rounded-lg flex items-center justify-center"
+      style={{ background: 'var(--t-accent-soft)' }}
     >
-      <span className={accent ? 'text-accent' : 'text-accent'}>{icon}</span>
+      <span style={{ color: 'var(--t-accent)' }}>{icon}</span>
     </div>
     <div>
       <p
-        className={[
-          'font-body text-xs font-medium uppercase tracking-wide mb-1',
-          accent ? 'text-primary/60' : 'text-text-muted',
-        ].join(' ')}
+        className="font-body text-xs font-medium uppercase tracking-wide mb-1"
+        style={{ color: accent ? 'var(--t-text-sec)' : 'var(--t-text-sec)' }}
       >
         {label}
       </p>
       <div
-        className={[
-          'font-heading text-2xl font-bold',
-          accent ? 'text-accent' : 'text-primary',
-        ].join(' ')}
+        className="font-heading text-2xl font-bold"
+        style={{ color: accent ? 'var(--t-accent)' : 'var(--t-text)' }}
       >
         {value}
       </div>
       {sub && (
         <p
-          className={[
-            'font-body text-xs mt-0.5',
-            accent ? 'text-primary/50' : 'text-text-muted',
-          ].join(' ')}
+          className="font-body text-xs mt-0.5"
+          style={{ color: accent ? 'var(--t-text-sec)' : 'var(--t-text-sec)' }}
         >
           {sub}
         </p>
@@ -111,9 +103,9 @@ interface InfoRowProps {
 }
 
 const InfoRow: React.FC<InfoRowProps> = ({ label, value }) => (
-  <div className="flex items-center justify-between py-2.5 border-b border-border last:border-0">
-    <span className="font-body text-sm text-text-muted">{label}</span>
-    <span className="font-body text-sm font-semibold text-primary">{value}</span>
+  <div className="flex items-center justify-between py-2.5" style={{ borderBottom: '1px solid var(--t-border)' }}>
+    <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>{label}</span>
+    <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>{value}</span>
   </div>
 );
 
@@ -148,25 +140,25 @@ const ProjectOverview: React.FC = () => {
         />
 
         {/* Conclusao */}
-        <div className="flex flex-col gap-3 rounded-xl p-5 border bg-surface-2 border-border">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-accent/10">
-            <TrendingUp size={20} className="text-accent" />
+        <div className="flex flex-col gap-3 rounded-xl p-5" style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}>
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'var(--t-accent-soft)' }}>
+            <TrendingUp size={20} style={{ color: 'var(--t-accent)' }} />
           </div>
           <div className="flex items-center gap-3">
             <div className="relative flex items-center justify-center">
               <CircularProgress value={project.completionPercent} size={56} strokeWidth={5} />
               <span
-                className="absolute font-body text-xs font-bold text-primary"
-                style={{ fontSize: '10px' }}
+                className="absolute font-body text-xs font-bold"
+                style={{ fontSize: '10px', color: 'var(--t-text)' }}
               >
                 {project.completionPercent}%
               </span>
             </div>
             <div>
-              <p className="font-body text-xs font-medium uppercase tracking-wide text-text-muted mb-0.5">
+              <p className="font-body text-xs font-medium uppercase tracking-wide mb-0.5" style={{ color: 'var(--t-text-sec)' }}>
                 Conclusao
               </p>
-              <p className="font-heading text-xl font-bold text-primary">
+              <p className="font-heading text-xl font-bold" style={{ color: 'var(--t-text)' }}>
                 {project.completionPercent}%
               </p>
             </div>
@@ -208,7 +200,7 @@ const ProjectOverview: React.FC = () => {
           </div>
         </div>
         {project.context && (
-          <p className="font-body text-sm text-text-muted mt-4 leading-relaxed border-t border-border pt-4">
+          <p className="font-body text-sm mt-4 leading-relaxed pt-4" style={{ color: 'var(--t-text-sec)', borderTop: '1px solid var(--t-border)' }}>
             {project.context}
           </p>
         )}

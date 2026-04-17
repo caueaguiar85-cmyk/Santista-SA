@@ -66,10 +66,10 @@ const RoadmapPage: React.FC = () => {
             <div className="text-5xl mb-4" role="img" aria-label="roadmap vazio">
               🗺️
             </div>
-            <h3 className="font-heading text-lg font-semibold text-primary mb-2">
+            <h3 className="font-heading text-lg font-semibold mb-2" style={{ color: 'var(--t-text)' }}>
               Roadmap ainda nao gerado
             </h3>
-            <p className="text-sm text-text-muted max-w-sm mx-auto">
+            <p className="text-sm max-w-sm mx-auto" style={{ color: 'var(--t-text-sec)' }}>
               Execute o diagnostico completo para que os agentes de IA construam o plano de
               transformacao automaticamente.
             </p>
@@ -80,38 +80,27 @@ const RoadmapPage: React.FC = () => {
           {/* Stats row */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
             {[
-              { label: 'Total de iniciativas', value: stats.total, color: 'text-primary' },
-              {
-                label: 'Estabilizar (0–6m)',
-                value: stats.stabilize,
-                color: 'text-red-600',
-              },
-              {
-                label: 'Otimizar (6–18m)',
-                value: stats.optimize,
-                color: 'text-amber-600',
-              },
-              {
-                label: 'Transformar (18–36m)',
-                value: stats.transform,
-                color: 'text-emerald-600',
-              },
+              { label: 'Total de iniciativas', value: stats.total, color: 'var(--t-text)' },
+              { label: 'Estabilizar (0–6m)', value: stats.stabilize, color: '#EF4444' },
+              { label: 'Otimizar (6–18m)', value: stats.optimize, color: '#F59E0B' },
+              { label: 'Transformar (18–36m)', value: stats.transform, color: '#10B981' },
             ].map(({ label, value, color }) => (
               <div
                 key={label}
-                className="bg-surface-2 rounded-xl border border-border p-4 shadow-sm text-center"
+                className="rounded-xl p-4 shadow-sm text-center"
+                style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}
               >
-                <p className={`text-3xl font-bold ${color} font-heading`}>{value}</p>
-                <p className="text-xs text-text-muted mt-1 leading-tight">{label}</p>
+                <p className="text-3xl font-bold font-heading" style={{ color }}>{value}</p>
+                <p className="text-xs mt-1 leading-tight" style={{ color: 'var(--t-text-sec)' }}>{label}</p>
               </div>
             ))}
           </div>
 
           {/* Impacto medio badge */}
           {stats.avgImpact > 0 && (
-            <div className="flex items-center gap-2 mb-6 text-sm text-text-muted">
+            <div className="flex items-center gap-2 mb-6 text-sm" style={{ color: 'var(--t-text-sec)' }}>
               <span>Impacto medio das iniciativas:</span>
-              <span className="font-bold text-accent">{stats.avgImpact}/100</span>
+              <span className="font-bold" style={{ color: 'var(--t-accent)' }}>{stats.avgImpact}/100</span>
             </div>
           )}
 
