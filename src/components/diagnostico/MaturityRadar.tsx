@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {
   RadarChart,
   Radar,
@@ -61,16 +62,16 @@ const CustomTooltip = ({
 }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-lg shadow-lg p-3 font-body" style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}>
-      <p className="text-xs font-semibold mb-2" style={{ color: 'var(--t-text)' }}>{label}</p>
+    <div className="rounded-lg shadow-lg p-3 font-body bg-surface-2 border border-border">
+      <p className="text-xs font-semibold mb-2 text-text">{label}</p>
       {payload.map((entry, i) => (
         <div key={i} className="flex items-center gap-2 text-xs">
           <span
             className="inline-block w-2.5 h-2.5 rounded-full shrink-0"
             style={{ backgroundColor: entry.color }}
           />
-          <span style={{ color: 'var(--t-text-sec)' }}>{entry.name}:</span>
-          <span className="font-semibold" style={{ color: 'var(--t-text)' }}>{entry.value.toFixed(1)}</span>
+          <span className="text-text-secondary">{entry.name}:</span>
+          <span className="font-semibold text-text">{entry.value.toFixed(1)}</span>
         </div>
       ))}
     </div>
@@ -86,23 +87,30 @@ function overallScore(report: DiagnosticReport | null, useMock: boolean): number
   return parseFloat((vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1));
 }
 
+const SCORE_COLOR_CLASS: Record<string, string> = {
+  success: 'text-success',
+  info: 'text-info',
+  warning: 'text-warning',
+  danger: 'text-danger',
+};
+
+function scoreColorKey(score: number): string {
+  if (score >= 4) return 'success';
+  if (score >= 3) return 'info';
+  if (score >= 2) return 'warning';
+  return 'danger';
+}
+
 function ScoreBadge({ score }: { score: number }) {
-  const color =
-    score >= 4
-      ? '#10B981'
-      : score >= 3
-      ? '#3B82F6'
-      : score >= 2
-      ? '#F59E0B'
-      : '#EF4444';
+  const colorClass = SCORE_COLOR_CLASS[scoreColorKey(score)];
 
   return (
     <div className="text-center">
-      <span className="font-heading text-5xl font-bold" style={{ color }}>
+      <span className={clsx('font-heading text-5xl font-bold', colorClass)}>
         {score.toFixed(1)}
       </span>
-      <span className="font-body text-lg ml-1" style={{ color: 'var(--t-text-ter)' }}>/5.0</span>
-      <p className="font-body text-xs mt-1" style={{ color: 'var(--t-text-sec)' }}>Score de Maturidade Geral</p>
+      <span className="font-body text-lg ml-1 text-text-tertiary">/5.0</span>
+      <p className="font-body text-xs mt-1 text-text-secondary">Score de Maturidade Geral</p>
     </div>
   );
 }
@@ -143,17 +151,14 @@ const MaturityRadar: React.FC<MaturityRadarProps> = ({ report }) => {
         </div>
         <div className="flex-1 min-w-0">
           {useMock && (
-            <div
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg mb-3"
-              style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.15)' }}
-            >
-              <Activity size={14} style={{ color: '#F59E0B' }} />
-              <span className="font-body text-xs font-medium" style={{ color: '#F59E0B' }}>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg mb-3 bg-warning/[0.08] border border-warning/[0.15]">
+              <Activity size={14} className="text-warning" />
+              <span className="font-body text-xs font-medium text-warning">
                 Dados de demonstracao — execute o diagnostico para ver resultados reais
               </span>
             </div>
           )}
-          <p className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>
+          <p className="font-body text-sm text-text-secondary">
             Comparativo de maturidade nos 5 pilares da cadeia de suprimentos versus o benchmark do setor de alimentos & bebidas.
           </p>
         </div>
@@ -224,13 +229,12 @@ const MaturityRadar: React.FC<MaturityRadarProps> = ({ report }) => {
           return (
             <div
               key={pillar}
-              className="rounded-lg p-3 text-center"
-              style={{ background: 'var(--t-surface-alt)', border: '1px solid var(--t-border)' }}
+              className="rounded-lg p-3 text-center bg-surface-3 border border-border"
             >
-              <p className="font-body text-xs mb-1 leading-tight" style={{ color: 'var(--t-text-ter)' }}>
+              <p className="font-body text-xs mb-1 leading-tight text-text-tertiary">
                 {PILLAR_LABELS[pillar].split(' ')[0]}
               </p>
-              <p className="font-heading text-xl font-bold" style={{ color: 'var(--t-text)' }}>
+              <p className="font-heading text-xl font-bold text-text">
                 {santistaScore.toFixed(1)}
               </p>
               <p className="font-body text-xs font-medium text-red-500">

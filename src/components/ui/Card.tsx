@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ReactNode } from 'react';
+import clsx from 'clsx';
 
 type CardPadding = 'sm' | 'md' | 'lg';
 
@@ -42,31 +43,26 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div
-      className={[
-        't-card t-transition',
-        !hasHeader ? paddingClasses[padding] : '',
+      className={clsx(
+        'bg-surface-2 border border-border rounded-2xl shadow-xs hover:shadow-sm transition-all duration-200',
+        !hasHeader && paddingClasses[padding],
         className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      )}
     >
       {hasHeader ? (
         <>
           <div
-            className={[
+            className={clsx(
               'flex items-start justify-between gap-4',
               headerPaddingClasses[padding],
-            ].join(' ')}
+            )}
           >
             <div className="min-w-0 flex-1">
-              <h3
-                className="font-heading text-base font-semibold leading-tight truncate"
-                style={{ color: 'var(--t-text)' }}
-              >
+              <h3 className="font-heading text-base font-semibold leading-tight truncate text-text">
                 {title}
               </h3>
               {subtitle && (
-                <p className="font-body text-sm mt-0.5" style={{ color: 'var(--t-text-ter)' }}>
+                <p className="font-body text-sm mt-0.5 text-text-tertiary">
                   {subtitle}
                 </p>
               )}
@@ -76,7 +72,7 @@ const Card: React.FC<CardProps> = ({
             )}
           </div>
 
-          <div style={{ borderTop: '1px solid var(--t-border)' }} />
+          <div className="border-t border-border" />
 
           <div className={bodyPaddingClasses[padding]}>{children}</div>
         </>

@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import { useDiagnosticoStore } from '../../store/diagnosticoStore';
 import InitiativeCard from './InitiativeCard';
 import type { Initiative } from '../../types/diagnostico';
@@ -8,10 +9,10 @@ const WAVE_ORDER: Initiative['wave'][] = ['stabilize', 'optimize', 'transform'];
 interface WaveConfig {
   label: string;
   period: string;
-  headerBg: string;
-  headerText: string;
-  borderColor: string;
-  bgColor: string;
+  headerBgClass: string;
+  headerTextClass: string;
+  borderClass: string;
+  bgClass: string;
   icon: string;
 }
 
@@ -19,28 +20,28 @@ const WAVE_CONFIG: Record<Initiative['wave'], WaveConfig> = {
   stabilize: {
     label: 'Estabilizar',
     period: '0 – 6 meses',
-    headerBg: '#EF4444',
-    headerText: '#FFFFFF',
-    borderColor: 'rgba(239,68,68,0.3)',
-    bgColor: 'rgba(239,68,68,0.04)',
+    headerBgClass: 'bg-danger',
+    headerTextClass: 'text-white',
+    borderClass: 'border-2 border-danger/[0.3]',
+    bgClass: 'bg-danger/[0.04]',
     icon: '🔧',
   },
   optimize: {
     label: 'Otimizar',
     period: '6 – 18 meses',
-    headerBg: '#F59E0B',
-    headerText: '#FFFFFF',
-    borderColor: 'rgba(245,158,11,0.3)',
-    bgColor: 'rgba(245,158,11,0.04)',
+    headerBgClass: 'bg-warning',
+    headerTextClass: 'text-white',
+    borderClass: 'border-2 border-warning/[0.3]',
+    bgClass: 'bg-warning/[0.04]',
     icon: '⚙️',
   },
   transform: {
     label: 'Transformar',
     period: '18 – 36 meses',
-    headerBg: '#10B981',
-    headerText: '#FFFFFF',
-    borderColor: 'rgba(16,185,129,0.3)',
-    bgColor: 'rgba(16,185,129,0.04)',
+    headerBgClass: 'bg-success',
+    headerTextClass: 'text-white',
+    borderClass: 'border-2 border-success/[0.3]',
+    bgClass: 'bg-success/[0.04]',
     icon: '🚀',
   },
 };
@@ -54,41 +55,34 @@ const WaveSection: React.FC<WaveSectionProps> = ({ wave, initiatives }) => {
   const config = WAVE_CONFIG[wave];
 
   return (
-    <section
-      className="rounded-xl overflow-hidden shadow-sm"
-      style={{ border: `2px solid ${config.borderColor}` }}
-    >
+    <section className={clsx('rounded-xl overflow-hidden shadow-sm', config.borderClass)}>
       {/* Wave header */}
-      <div
-        className="px-6 py-4 flex items-center justify-between gap-4"
-        style={{ background: config.headerBg }}
-      >
+      <div className={clsx('px-6 py-4 flex items-center justify-between gap-4', config.headerBgClass)}>
         <div className="flex items-center gap-3">
           <span className="text-2xl" role="img" aria-hidden>
             {config.icon}
           </span>
           <div>
-            <h2
-              className="font-heading text-xl font-bold leading-tight"
-              style={{ color: config.headerText }}
-            >
+            <h2 className={clsx('font-heading text-xl font-bold leading-tight', config.headerTextClass)}>
               {config.label}
             </h2>
-            <p className="text-sm" style={{ color: config.headerText, opacity: 0.8 }}>{config.period}</p>
+            <p className={clsx('text-sm opacity-80', config.headerTextClass)}>{config.period}</p>
           </div>
         </div>
         <span
-          className="shrink-0 inline-flex items-center justify-center px-3 py-1 rounded-full text-sm font-semibold"
-          style={{ background: 'rgba(255,255,255,0.2)', color: config.headerText }}
+          className={clsx(
+            'shrink-0 inline-flex items-center justify-center px-3 py-1 rounded-full text-sm font-semibold bg-white/20',
+            config.headerTextClass,
+          )}
         >
           {initiatives.length} iniciativa{initiatives.length !== 1 ? 's' : ''}
         </span>
       </div>
 
       {/* Initiative cards */}
-      <div className="p-6" style={{ background: config.bgColor }}>
+      <div className={clsx('p-6', config.bgClass)}>
         {initiatives.length === 0 ? (
-          <p className="text-sm text-center py-6" style={{ color: 'var(--t-text-sec)' }}>
+          <p className="text-sm text-center py-6 text-text-secondary">
             Nenhuma iniciativa nesta onda ainda.
           </p>
         ) : (

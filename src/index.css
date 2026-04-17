@@ -2,82 +2,112 @@
 @plugin "@tailwindcss/typography";
 
 /* ═══════════════════════════════════════════════════════════════
-   SANTISTA S.A. — Design System
-   Light / Dark theme via data-theme attribute
+   SANTISTA S.A. — Premium Design System
+   Inspired by Vercel/Stripe zinc palette
+   Light/Dark via data-theme attribute
    ═══════════════════════════════════════════════════════════════ */
 
-/* ── Theme Tokens (CSS custom properties) ───────────────────── */
+/* ── Theme Tokens ───────────────────────────────────────────── */
 :root,
 [data-theme="light"] {
-  --t-bg:          #F5F6FA;
+  --t-bg:          #FAFAFA;
   --t-surface:     #FFFFFF;
-  --t-surface-alt: #F0F1F5;
-  --t-text:        #111827;
-  --t-text-sec:    #6B7280;
-  --t-text-ter:    #9CA3AF;
-  --t-border:      #E5E7EB;
-  --t-border-sub:  #F3F4F6;
+  --t-surface-alt: #F4F4F5;
+  --t-text:        #09090B;
+  --t-text-sec:    #71717A;
+  --t-text-ter:    #A1A1AA;
+  --t-border:      #E4E4E7;
+  --t-border-sub:  #F4F4F5;
   --t-accent:      #C41E3A;
   --t-accent-h:    #A3182F;
-  --t-accent-soft: rgba(196,30,58,0.08);
-  --t-shadow:      0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --t-shadow-md:   0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
-  --t-shadow-lg:   0 10px 30px rgba(0,0,0,0.08);
-  --t-overlay:     rgba(0,0,0,0.4);
-  --t-scrollbar:   #D1D5DB;
-  --t-scrollbar-h: #9CA3AF;
+  --t-accent-soft: rgba(196,30,58,0.06);
   --t-input:       #FFFFFF;
+  --t-overlay:     rgba(9,9,11,0.5);
+  --t-shadow-xs:   0 1px 2px rgba(0,0,0,0.04);
+  --t-shadow-sm:   0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --t-shadow-md:   0 4px 12px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03);
+  --t-shadow-lg:   0 10px 30px rgba(0,0,0,0.08);
+  --t-scrollbar:   #D4D4D8;
+  --t-scrollbar-h: #A1A1AA;
 }
 
 [data-theme="dark"] {
-  --t-bg:          #0C0D12;
-  --t-surface:     #15161E;
-  --t-surface-alt: #1C1D28;
-  --t-text:        #F0F1F5;
-  --t-text-sec:    #9CA3AF;
-  --t-text-ter:    #6B7280;
-  --t-border:      #2A2C38;
-  --t-border-sub:  #1E1F2A;
+  --t-bg:          #09090B;
+  --t-surface:     #18181B;
+  --t-surface-alt: #27272A;
+  --t-text:        #FAFAFA;
+  --t-text-sec:    #A1A1AA;
+  --t-text-ter:    #71717A;
+  --t-border:      #27272A;
+  --t-border-sub:  #18181B;
   --t-accent:      #E8384F;
   --t-accent-h:    #FF4D65;
-  --t-accent-soft: rgba(232,56,79,0.12);
-  --t-shadow:      0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
-  --t-shadow-md:   0 4px 12px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
-  --t-shadow-lg:   0 10px 30px rgba(0,0,0,0.4);
-  --t-overlay:     rgba(0,0,0,0.6);
-  --t-scrollbar:   #3A3C48;
-  --t-scrollbar-h: #4A4C58;
-  --t-input:       #1C1D28;
+  --t-accent-soft: rgba(232,56,79,0.10);
+  --t-input:       #27272A;
+  --t-overlay:     rgba(0,0,0,0.7);
+  --t-shadow-xs:   0 1px 2px rgba(0,0,0,0.2);
+  --t-shadow-sm:   0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --t-shadow-md:   0 4px 12px rgba(0,0,0,0.3);
+  --t-shadow-lg:   0 10px 30px rgba(0,0,0,0.5);
+  --t-scrollbar:   #3F3F46;
+  --t-scrollbar-h: #52525B;
 }
 
-/* ── Tailwind Theme Bridge ──────────────────────────────────── */
+/* ── Tailwind v4 Theme Bridge ───────────────────────────────── */
 @theme {
-  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 
+  /* Surfaces */
+  --color-bg:          var(--t-bg);
   --color-surface:     var(--t-bg);
   --color-surface-2:   var(--t-surface);
   --color-surface-3:   var(--t-surface-alt);
-  --color-primary:     var(--t-text);
-  --color-primary-light: var(--t-text-sec);
-  --color-primary-lighter: var(--t-text-ter);
-  --color-text:        var(--t-text);
-  --color-text-muted:  var(--t-text-sec);
-  --color-border:      var(--t-border);
-  --color-accent:      var(--t-accent);
-  --color-accent-light: var(--t-accent-h);
-  --color-accent-dark: var(--t-accent-h);
+  --color-input:       var(--t-input);
+  --color-overlay:     var(--t-overlay);
 
+  /* Text */
+  --color-text:             var(--t-text);
+  --color-text-secondary:   var(--t-text-sec);
+  --color-text-tertiary:    var(--t-text-ter);
+  /* Aliases for backward compat */
+  --color-primary:          var(--t-text);
+  --color-text-muted:       var(--t-text-sec);
+
+  /* Borders */
+  --color-border:        var(--t-border);
+  --color-border-subtle: var(--t-border-sub);
+
+  /* Accent */
+  --color-accent:       var(--t-accent);
+  --color-accent-hover: var(--t-accent-h);
+  --color-accent-soft:  var(--t-accent-soft);
+  --color-accent-light: var(--t-accent-h);
+  --color-accent-dark:  var(--t-accent-h);
+
+  /* Semantic */
   --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-danger:  #EF4444;
   --color-info:    #3B82F6;
 
+  /* Pillar colors */
   --color-pilar-1: #3B82F6;
   --color-pilar-2: #8B5CF6;
   --color-pilar-3: #10B981;
   --color-pilar-4: #F59E0B;
   --color-pilar-5: #EF4444;
+
+  /* Shadows */
+  --shadow-xs: var(--t-shadow-xs);
+  --shadow-sm: var(--t-shadow-sm);
+  --shadow-md: var(--t-shadow-md);
+  --shadow-lg: var(--t-shadow-lg);
+
+  /* Radius */
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-2xl: 20px;
 }
 
 /* ── Global Reset ───────────────────────────────────────────── */
@@ -94,14 +124,14 @@
 
 body {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   background: var(--t-bg);
   color: var(--t-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  letter-spacing: -0.01em;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  letter-spacing: -0.011em;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -116,55 +146,16 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--t-scrollbar);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--t-scrollbar-h);
-}
+::-webkit-scrollbar-thumb:hover { background: var(--t-scrollbar-h); }
 
-/* ── Utility classes ──��─────────────────────────────────────── */
-.t-surface    { background: var(--t-surface); }
-.t-surface-alt{ background: var(--t-surface-alt); }
-.t-border     { border-color: var(--t-border); }
-.t-shadow     { box-shadow: var(--t-shadow); }
-.t-shadow-md  { box-shadow: var(--t-shadow-md); }
-.t-shadow-lg  { box-shadow: var(--t-shadow-lg); }
-.t-input      { background: var(--t-input); }
-
-.t-card {
-  background: var(--t-surface);
-  border: 1px solid var(--t-border);
-  border-radius: 14px;
-  box-shadow: var(--t-shadow);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.t-card:hover {
-  box-shadow: var(--t-shadow-md);
-}
-
-/* Accent glow on hover (optional class) */
-.t-card-accent:hover {
-  border-color: var(--t-accent);
-  box-shadow: var(--t-shadow-md), 0 0 0 1px var(--t-accent-soft);
-}
-
-/* Smooth theme transitions for layout elements */
-.t-transition {
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
-}
-
-/* Badge base for semantic colors */
-.badge-success { background: rgba(16,185,129,0.1); color: #10B981; border: 1px solid rgba(16,185,129,0.2); }
-.badge-warning { background: rgba(245,158,11,0.1); color: #D97706; border: 1px solid rgba(245,158,11,0.2); }
-.badge-danger  { background: rgba(239,68,68,0.1);  color: #EF4444; border: 1px solid rgba(239,68,68,0.2);  }
-.badge-info    { background: rgba(59,130,246,0.1);  color: #3B82F6; border: 1px solid rgba(59,130,246,0.2);  }
-
-[data-theme="dark"] .badge-warning { color: #F59E0B; }
-
-/* Input styling */
+/* ── Form elements ──────────────────────────────────────────── */
 input, select, textarea {
   background: var(--t-input);
-  border-color: var(--t-border);
+  border: 1px solid var(--t-border);
   color: var(--t-text);
+  border-radius: 12px;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -173,12 +164,21 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 3px var(--t-accent-soft);
 }
 
-/* Fade in animation */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(8px); }
+/* ── Animations ─────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
 .animate-fade-in {
-  animation: fadeInUp 0.35s ease-out both;
+  animation: fade-in 0.3s ease-out both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out both;
 }

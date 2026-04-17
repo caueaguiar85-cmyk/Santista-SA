@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import Card from '../ui/Card';
 import { useProjectStore } from '../../store/projectStore';
 import type { TeamMember } from '../../types/project';
@@ -38,11 +39,11 @@ const allocationLabel = (pct: number): string => {
   return 'Baixa dedicacao';
 };
 
-const allocationBadgeStyle = (pct: number): React.CSSProperties => {
-  if (pct >= 100) return { color: '#10B981' };
-  if (pct >= 75) return { color: 'var(--t-accent)' };
-  if (pct >= 50) return { color: '#3B82F6' };
-  return { color: 'var(--t-text-sec)' };
+const allocationBadgeClass = (pct: number): string => {
+  if (pct >= 100) return 'text-success';
+  if (pct >= 75) return 'text-accent';
+  if (pct >= 50) return 'text-info';
+  return 'text-text-secondary';
 };
 
 interface MemberRowProps {
@@ -55,7 +56,7 @@ const MemberRow: React.FC<MemberRowProps> = ({ member }) => {
   const clampedAlloc = Math.min(Math.max(member.allocation, 0), 100);
 
   return (
-    <div className="py-3" style={{ borderBottom: '1px solid var(--t-border)' }}>
+    <div className="py-3 border-b border-border">
       <div className="flex items-center gap-3 mb-2">
         {/* Avatar */}
         <div
@@ -68,16 +69,15 @@ const MemberRow: React.FC<MemberRowProps> = ({ member }) => {
 
         {/* Name & role */}
         <div className="flex-1 min-w-0">
-          <p className="font-body text-sm font-semibold leading-tight truncate" style={{ color: 'var(--t-text)' }}>
+          <p className="font-body text-sm font-semibold leading-tight truncate text-text">
             {member.name}
           </p>
-          <p className="font-body text-xs truncate" style={{ color: 'var(--t-text-sec)' }}>{member.role}</p>
+          <p className="font-body text-xs truncate text-text-secondary">{member.role}</p>
         </div>
 
         {/* Allocation % */}
         <span
-          className="font-body text-xs font-bold shrink-0"
-          style={allocationBadgeStyle(member.allocation)}
+          className={clsx('font-body text-xs font-bold shrink-0', allocationBadgeClass(member.allocation))}
         >
           {clampedAlloc}%
         </span>
@@ -86,8 +86,7 @@ const MemberRow: React.FC<MemberRowProps> = ({ member }) => {
       {/* Allocation bar */}
       <div className="flex items-center gap-2">
         <div
-          className="flex-1 h-1.5 rounded-full overflow-hidden"
-          style={{ background: 'var(--t-surface-alt)', border: '1px solid var(--t-border)' }}
+          className="flex-1 h-1.5 rounded-full overflow-hidden bg-surface-3 border border-border"
           role="progressbar"
           aria-valuenow={clampedAlloc}
           aria-valuemin={0}
@@ -95,11 +94,11 @@ const MemberRow: React.FC<MemberRowProps> = ({ member }) => {
           aria-label={`Alocacao de ${member.name}: ${clampedAlloc}%`}
         >
           <div
-            className="h-full rounded-full transition-[width] duration-500 ease-in-out"
-            style={{ width: `${clampedAlloc}%`, background: 'var(--t-accent)' }}
+            className="h-full rounded-full transition-[width] duration-500 ease-in-out bg-accent"
+            style={{ width: `${clampedAlloc}%` }}
           />
         </div>
-        <span className="font-body text-xs w-28 shrink-0" style={{ color: 'var(--t-text-sec)' }}>
+        <span className="font-body text-xs w-28 shrink-0 text-text-secondary">
           {allocationLabel(member.allocation)}
         </span>
       </div>
@@ -129,7 +128,7 @@ const TeamPanel: React.FC = () => {
     >
       {team.length === 0 ? (
         <div className="text-center py-6">
-          <p className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>
+          <p className="font-body text-sm text-text-secondary">
             Nenhum membro adicionado a este projeto.
           </p>
         </div>

@@ -21,11 +21,8 @@ const DEFAULT_FILTERS: Filters = { pillar: '', level: '', status: '' };
 
 // ─── component ────────────────────────────────────────────────────────────────
 
-const selectStyle: React.CSSProperties = {
-  background: 'var(--t-input)',
-  color: 'var(--t-text)',
-  border: '1px solid var(--t-border)',
-};
+const selectClass =
+  'h-9 rounded-lg px-3 font-body text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40 bg-input text-text border border-border';
 
 const EntrevistasPage: React.FC = () => {
   const [isFormOpen, setFormOpen] = useState(false);
@@ -60,17 +57,13 @@ const EntrevistasPage: React.FC = () => {
         {/* ── Filter bar ────────────────────────────────────────────────── */}
         <section
           aria-label="Filtros"
-          className="rounded-xl p-4 flex flex-wrap items-center gap-3"
-          style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}
+          className="rounded-xl p-4 flex flex-wrap items-center gap-3 bg-surface-2 border border-border"
         >
-          <div className="flex items-center gap-2 shrink-0" style={{ color: 'var(--t-text-sec)' }}>
+          <div className="flex items-center gap-2 shrink-0 text-text-secondary">
             <SlidersHorizontal size={16} aria-hidden="true" />
             <span className="font-body text-sm font-medium">Filtros</span>
             {total > 0 && (
-              <span
-                className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium font-body"
-                style={{ background: 'var(--t-accent-soft)', color: 'var(--t-text)' }}
-              >
+              <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium font-body bg-accent-soft text-text">
                 {total} {total === 1 ? 'entrevista' : 'entrevistas'}
               </span>
             )}
@@ -81,8 +74,7 @@ const EntrevistasPage: React.FC = () => {
             id="filter-pillar"
             value={filters.pillar}
             onChange={(e) => setFilter('pillar', e.target.value as PillarType | '')}
-            className="h-9 rounded-lg px-3 font-body text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40"
-            style={selectStyle}
+            className={selectClass}
             aria-label="Filtrar por pilar"
           >
             <option value="">Todos os pilares</option>
@@ -96,8 +88,7 @@ const EntrevistasPage: React.FC = () => {
             id="filter-level"
             value={filters.level}
             onChange={(e) => setFilter('level', e.target.value as HierarchyLevel | '')}
-            className="h-9 rounded-lg px-3 font-body text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40"
-            style={selectStyle}
+            className={selectClass}
             aria-label="Filtrar por nivel hierarquico"
           >
             <option value="">Todos os niveis</option>
@@ -111,8 +102,7 @@ const EntrevistasPage: React.FC = () => {
             id="filter-status"
             value={filters.status}
             onChange={(e) => setFilter('status', e.target.value as InterviewStatus | '')}
-            className="h-9 rounded-lg px-3 font-body text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40"
-            style={selectStyle}
+            className={selectClass}
             aria-label="Filtrar por status"
           >
             <option value="">Todos os status</option>
@@ -126,8 +116,7 @@ const EntrevistasPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setFilters(DEFAULT_FILTERS)}
-              className="h-9 px-3 rounded-lg font-body text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
-              style={{ color: 'var(--t-text-sec)', border: '1px solid transparent' }}
+              className="h-9 px-3 rounded-lg font-body text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 text-text-secondary border border-transparent"
             >
               Limpar filtros
             </button>

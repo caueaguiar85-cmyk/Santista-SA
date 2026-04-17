@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import clsx from 'clsx';
 import {
   LayoutDashboard,
   Users,
@@ -30,28 +31,18 @@ const Sidebar: React.FC = () => {
   const completion = project?.completionPercent ?? 0;
 
   return (
-    <aside
-      className="fixed top-0 left-0 h-screen flex flex-col z-40 t-transition"
-      style={{
-        width: 256,
-        background: 'var(--t-surface)',
-        borderRight: '1px solid var(--t-border)',
-      }}
-    >
+    <aside className="bg-surface-2 border-r border-border w-64 fixed top-0 left-0 h-screen flex flex-col z-40 transition-colors duration-200">
       {/* Brand */}
       <div className="px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">
-          <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center font-heading font-bold text-white text-sm"
-            style={{ background: 'var(--t-accent)' }}
-          >
+          <div className="w-9 h-9 bg-accent rounded-xl flex items-center justify-center font-heading font-bold text-white text-sm">
             S
           </div>
           <div className="leading-tight">
-            <p className="font-heading text-[15px] font-bold" style={{ color: 'var(--t-text)' }}>
+            <p className="font-heading text-[15px] font-bold text-text">
               Santista S.A.
             </p>
-            <p className="text-[11px] font-medium" style={{ color: 'var(--t-text-ter)' }}>
+            <p className="text-[11px] font-medium text-text-tertiary">
               Stoken Advisory
             </p>
           </div>
@@ -59,11 +50,11 @@ const Sidebar: React.FC = () => {
       </div>
 
       {/* Divider */}
-      <div className="mx-5 h-px" style={{ background: 'var(--t-border)' }} />
+      <div className="mx-5 border-t border-border" />
 
       {/* Nav label */}
       <div className="px-5 pt-5 pb-2">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.08em]" style={{ color: 'var(--t-text-ter)' }}>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-text-tertiary">
           Menu
         </p>
       </div>
@@ -75,33 +66,27 @@ const Sidebar: React.FC = () => {
             key={to}
             to={to}
             className={({ isActive }) =>
-              [
-                'flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium',
-                'transition-all duration-150',
+              clsx(
+                'flex items-center gap-3 px-3 h-11 rounded-xl text-sm font-medium transition-colors duration-150',
                 isActive
-                  ? 'font-semibold'
-                  : '',
-              ].join(' ')
+                  ? 'bg-accent-soft text-accent font-semibold'
+                  : 'text-text-secondary hover:text-text hover:bg-surface-3',
+              )
             }
-            style={({ isActive }) => ({
-              background: isActive ? 'var(--t-accent-soft)' : 'transparent',
-              color: isActive ? 'var(--t-accent)' : 'var(--t-text-sec)',
-            })}
           >
             {({ isActive }) => (
               <>
                 <Icon
                   size={18}
-                  className="shrink-0"
-                  style={{ color: isActive ? 'var(--t-accent)' : 'var(--t-text-ter)' }}
+                  className={clsx(
+                    'shrink-0',
+                    isActive ? 'text-accent' : 'text-text-tertiary',
+                  )}
                   aria-hidden="true"
                 />
                 <span>{label}</span>
                 {isActive && (
-                  <span
-                    className="ml-auto w-1.5 h-1.5 rounded-full"
-                    style={{ background: 'var(--t-accent)' }}
-                  />
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-accent" />
                 )}
               </>
             )}
@@ -111,38 +96,31 @@ const Sidebar: React.FC = () => {
 
       {/* Progress */}
       <div className="px-4 py-4">
-        <div
-          className="rounded-xl p-4 t-transition"
-          style={{
-            background: 'var(--t-surface-alt)',
-            border: '1px solid var(--t-border)',
-          }}
-        >
+        <div className="bg-surface-3 border border-border rounded-xl p-4 transition-colors duration-200">
           <div className="flex items-center justify-between mb-2.5">
-            <span className="text-[11px] font-semibold" style={{ color: 'var(--t-text-sec)' }}>
+            <span className="text-[11px] font-semibold text-text-secondary">
               Progresso do Projeto
             </span>
-            <span className="text-[11px] font-bold tabular-nums" style={{ color: 'var(--t-accent)' }}>
+            <span className="text-[11px] font-bold tabular-nums text-accent">
               {completion}%
             </span>
           </div>
 
           <div
-            className="w-full rounded-full overflow-hidden"
-            style={{ height: 5, background: 'var(--t-border)' }}
+            className="w-full h-1.5 rounded-full overflow-hidden bg-surface-3 border border-border-subtle"
             role="progressbar"
             aria-valuenow={completion}
             aria-valuemin={0}
             aria-valuemax={100}
           >
             <div
-              className="h-full rounded-full transition-all duration-500"
-              style={{ width: `${completion}%`, background: 'var(--t-accent)' }}
+              className="h-full rounded-full bg-accent transition-all duration-500"
+              style={{ width: `${completion}%` }}
             />
           </div>
 
           {project && (
-            <p className="mt-2 text-[11px]" style={{ color: 'var(--t-text-ter)' }}>
+            <p className="mt-2 text-[11px] text-text-tertiary">
               Fase {project.currentPhase} de 3
             </p>
           )}

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ReactNode } from 'react';
+import clsx from 'clsx';
 
 type ButtonVariant = 'primary' | 'accent' | 'outline' | 'ghost' | 'danger';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -22,20 +23,13 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: 'h-12 px-6 text-base gap-2.5',
 };
 
-function getVariantStyle(variant: ButtonVariant): React.CSSProperties {
-  switch (variant) {
-    case 'primary':
-      return { background: 'var(--t-text)', color: 'var(--t-bg)' };
-    case 'accent':
-      return { background: 'var(--t-accent)', color: '#fff' };
-    case 'outline':
-      return { background: 'var(--t-surface)', color: 'var(--t-text)', border: '1px solid var(--t-border)' };
-    case 'ghost':
-      return { background: 'transparent', color: 'var(--t-text)' };
-    case 'danger':
-      return { background: '#DC2626', color: '#fff' };
-  }
-}
+const variantClasses: Record<ButtonVariant, string> = {
+  primary: 'bg-text text-bg hover:opacity-90',
+  accent: 'bg-accent text-white hover:bg-accent-hover',
+  outline: 'bg-surface-2 text-text border border-border hover:bg-surface-3',
+  ghost: 'bg-transparent text-text hover:bg-surface-3',
+  danger: 'bg-danger text-white hover:bg-red-700',
+};
 
 const LoadingSpinner = () => (
   <svg
@@ -68,21 +62,15 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       onClick={onClick}
       disabled={isDisabled}
-      className={[
-        'inline-flex items-center justify-center font-body font-medium rounded-xl',
-        'transition-all duration-150 ease-out',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+      className={clsx(
+        'inline-flex items-center justify-center font-body rounded-xl font-medium',
+        'transition-all duration-150 active:scale-[0.98]',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-2',
         'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
-        'hover:opacity-90 active:scale-[0.98]',
+        variantClasses[variant],
         sizeClasses[size],
         className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-      style={{
-        ...getVariantStyle(variant),
-        ...(variant === 'outline' ? {} : { border: 'none' }),
-      }}
+      )}
     >
       {loading ? (
         <LoadingSpinner />

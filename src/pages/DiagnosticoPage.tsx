@@ -7,6 +7,7 @@ import {
   ChevronDown,
   Award,
 } from 'lucide-react';
+import clsx from 'clsx';
 import Header from '../components/layout/Header';
 import Tabs from '../components/ui/Tabs';
 import Card from '../components/ui/Card';
@@ -50,16 +51,16 @@ function BenchmarkCard({ report }: { report: ReportType }) {
       <Card title="Benchmark do Setor" subtitle="Dados de referencia">
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Score da empresa</span>
-            <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>—</span>
+            <span className="font-body text-sm text-text-secondary">Score da empresa</span>
+            <span className="font-body text-sm font-semibold text-text">—</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Media do setor</span>
-            <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>3.1</span>
+            <span className="font-body text-sm text-text-secondary">Media do setor</span>
+            <span className="font-body text-sm font-semibold text-text">3.1</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Top quartil</span>
-            <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>4.0</span>
+            <span className="font-body text-sm text-text-secondary">Top quartil</span>
+            <span className="font-body text-sm font-semibold text-text">4.0</span>
           </div>
         </div>
       </Card>
@@ -73,15 +74,15 @@ function BenchmarkCard({ report }: { report: ReportType }) {
     <Card title="Benchmark do Setor" subtitle="Comparativo com o mercado">
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Score da empresa</span>
-          <span className="font-heading text-sm font-bold" style={{ color: 'var(--t-text)' }}>
+          <span className="font-body text-sm text-text-secondary">Score da empresa</span>
+          <span className="font-heading text-sm font-bold text-text">
             {companyScore.toFixed(1)}
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Media do setor</span>
+          <span className="font-body text-sm text-text-secondary">Media do setor</span>
           <div className="flex items-center gap-1.5">
-            <span className="font-body text-sm font-semibold" style={{ color: '#F59E0B' }}>
+            <span className="font-body text-sm font-semibold text-warning">
               {sectorAverage.toFixed(1)}
             </span>
             {gap > 0 && (
@@ -92,14 +93,14 @@ function BenchmarkCard({ report }: { report: ReportType }) {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>Top quartil</span>
-          <span className="font-body text-sm font-semibold" style={{ color: '#10B981' }}>
+          <span className="font-body text-sm text-text-secondary">Top quartil</span>
+          <span className="font-body text-sm font-semibold text-success">
             {topQuartile.toFixed(1)}
           </span>
         </div>
         {report.marketBenchmark.references.length > 0 && (
-          <div className="pt-2" style={{ borderTop: '1px solid var(--t-border)' }}>
-            <p className="font-body text-xs" style={{ color: 'var(--t-text-ter)' }}>
+          <div className="pt-2 border-t border-border">
+            <p className="font-body text-xs text-text-tertiary">
               {report.marketBenchmark.references[0]}
             </p>
           </div>
@@ -129,17 +130,14 @@ function DashboardTab() {
         <div className="flex flex-col gap-4">
           <Card>
             <div className="text-center py-2">
-              <div
-                className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-3"
-                style={{ background: 'var(--t-accent-soft)' }}
-              >
-                <Award size={22} style={{ color: 'var(--t-text)' }} />
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 bg-accent-soft">
+                <Award size={22} className="text-text" />
               </div>
-              <p className="font-body text-sm mb-1" style={{ color: 'var(--t-text-sec)' }}>Maturidade Geral</p>
-              <p className="font-heading text-5xl font-bold" style={{ color: 'var(--t-text)' }}>
+              <p className="font-body text-sm mb-1 text-text-secondary">Maturidade Geral</p>
+              <p className="font-heading text-5xl font-bold text-text">
                 {report ? report.overallScore.toFixed(1) : '—'}
               </p>
-              <p className="font-body text-xs mt-1" style={{ color: 'var(--t-text-ter)' }}>escala CMMI 1–5</p>
+              <p className="font-body text-xs mt-1 text-text-tertiary">escala CMMI 1–5</p>
               {report && (
                 <div className="mt-3">
                   <Badge variant="warning">
@@ -165,10 +163,10 @@ function DashboardTab() {
                 <Badge variant={PILLAR_BADGE_VARIANTS[i]} size="sm" className="mb-2">
                   {PILLAR_LABELS[pillar].split(' ')[0]}
                 </Badge>
-                <p className="font-heading text-3xl font-bold mt-1" style={{ color: 'var(--t-text)' }}>
+                <p className="font-heading text-3xl font-bold mt-1 text-text">
                   {ps ? ps.score.toFixed(1) : '—'}
                 </p>
-                <p className="font-body text-xs mt-0.5" style={{ color: 'var(--t-text-ter)' }}>
+                <p className="font-body text-xs mt-0.5 text-text-tertiary">
                   {ps ? ps.level : 'Pendente'}
                 </p>
               </Card>
@@ -202,12 +200,12 @@ function PilaresTab() {
               key={pillar}
               type="button"
               onClick={() => setActivePillar(pillar)}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg font-body text-sm font-medium transition-all"
-              style={
+              className={clsx(
+                'inline-flex items-center gap-2 px-3 py-2 rounded-lg font-body text-sm font-medium transition-all border',
                 isActive
-                  ? { border: '1px solid var(--t-text)', background: 'var(--t-surface-alt)', color: 'var(--t-text)' }
-                  : { border: '1px solid var(--t-border)', background: 'var(--t-surface)', color: 'var(--t-text-sec)' }
-              }
+                  ? 'border-text bg-surface-3 text-text'
+                  : 'border-border bg-surface-2 text-text-secondary'
+              )}
             >
               <Badge variant={PILLAR_BADGE_VARIANTS[i]} size="sm" className="shrink-0">
                 {i + 1}
@@ -244,7 +242,7 @@ const DiagnosticoPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen px-6 py-8 max-w-7xl mx-auto" style={{ background: 'var(--t-bg)' }}>
+    <div className="bg-bg">
       <Header
         title="Diagnostico"
         subtitle="Centro de analise estrategica"

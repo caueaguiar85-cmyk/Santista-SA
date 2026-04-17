@@ -2,6 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
+import clsx from 'clsx';
 
 type ModalSize = 'sm' | 'md' | 'lg' | 'xl';
 
@@ -52,58 +53,48 @@ const Modal: React.FC<ModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-label={title}
-      className={[
+      className={clsx(
         'fixed inset-0 z-50 flex items-center justify-center p-4',
         'transition-opacity duration-200',
         isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none',
-      ].join(' ')}
+      )}
     >
       {/* Backdrop */}
       <div
-        className={[
-          'absolute inset-0 backdrop-blur-sm transition-opacity duration-200',
+        className={clsx(
+          'absolute inset-0 bg-overlay backdrop-blur-sm transition-opacity duration-200',
           isOpen ? 'opacity-100' : 'opacity-0',
-        ].join(' ')}
-        style={{ background: 'var(--t-overlay)' }}
+        )}
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Panel */}
       <div
-        className={[
-          'relative w-full rounded-2xl flex flex-col max-h-[90vh]',
+        className={clsx(
+          'relative w-full bg-surface-2 border border-border rounded-2xl shadow-lg flex flex-col max-h-[90vh]',
           'transition-all duration-200',
           isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
           sizeClasses[size],
-        ].join(' ')}
-        style={{
-          background: 'var(--t-surface)',
-          border: '1px solid var(--t-border)',
-          boxShadow: 'var(--t-shadow-lg)',
-        }}
+        )}
       >
         {/* Header */}
         {title && (
           <>
             <div className="flex items-center justify-between gap-4 px-6 py-4">
-              <h2
-                className="font-heading text-lg font-semibold leading-tight"
-                style={{ color: 'var(--t-text)' }}
-              >
+              <h2 className="font-heading text-lg font-semibold leading-tight text-text">
                 {title}
               </h2>
               <button
                 type="button"
                 onClick={onClose}
                 aria-label="Fechar modal"
-                className="shrink-0 inline-flex items-center justify-center h-8 w-8 rounded-lg transition-colors duration-150"
-                style={{ color: 'var(--t-text-ter)' }}
+                className="shrink-0 inline-flex items-center justify-center h-8 w-8 rounded-xl text-text-tertiary hover:text-text hover:bg-surface-3 transition-colors duration-150"
               >
                 <X size={18} />
               </button>
             </div>
-            <div style={{ borderTop: '1px solid var(--t-border)' }} />
+            <div className="border-t border-border" />
           </>
         )}
 
@@ -112,8 +103,7 @@ const Modal: React.FC<ModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label="Fechar modal"
-            className="absolute top-4 right-4 z-10 inline-flex items-center justify-center h-8 w-8 rounded-lg transition-colors duration-150"
-            style={{ color: 'var(--t-text-ter)' }}
+            className="absolute top-4 right-4 z-10 inline-flex items-center justify-center h-8 w-8 rounded-xl text-text-tertiary hover:text-text hover:bg-surface-3 transition-colors duration-150"
           >
             <X size={18} />
           </button>

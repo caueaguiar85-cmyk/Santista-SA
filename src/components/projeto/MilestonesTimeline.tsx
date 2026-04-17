@@ -2,6 +2,7 @@ import React from 'react';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { CheckCircle2, CircleDot, Circle } from 'lucide-react';
+import clsx from 'clsx';
 import Card from '../ui/Card';
 import Badge from '../ui/Badge';
 import { useProjectStore } from '../../store/projectStore';
@@ -35,15 +36,21 @@ const StatusIcon: React.FC<StatusIconProps> = ({ status }) => {
     return <CheckCircle2 size={20} className="text-success shrink-0" />;
   }
   if (status === 'in_progress') {
-    return <CircleDot size={20} className="shrink-0" style={{ color: 'var(--t-accent)' }} />;
+    return <CircleDot size={20} className="shrink-0 text-accent" />;
   }
-  return <Circle size={20} className="shrink-0" style={{ color: 'var(--t-border)' }} />;
+  return <Circle size={20} className="shrink-0 text-border" />;
 };
 
 const connectorColor = (status: Milestone['status']): string => {
   if (status === 'completed') return 'bg-success';
   if (status === 'in_progress') return 'bg-accent';
   return 'bg-border';
+};
+
+const PHASE_CLASS: Record<number, string> = {
+  1: 'bg-info/[0.08] text-info border border-info/20',
+  2: 'bg-violet-500/[0.08] text-violet-500 border border-violet-500/20',
+  3: 'bg-teal-500/[0.08] text-teal-500 border border-teal-500/20',
 };
 
 interface MilestoneRowProps {
@@ -61,12 +68,12 @@ const MilestoneRow: React.FC<MilestoneRowProps> = ({ milestone, isLast, onToggle
     }
   })();
 
-  const labelStyle: React.CSSProperties =
+  const labelClass =
     milestone.status === 'completed'
-      ? { color: 'var(--t-text)' }
+      ? 'text-text'
       : milestone.status === 'in_progress'
-      ? { color: 'var(--t-text)', fontWeight: 600 }
-      : { color: 'var(--t-text-sec)' };
+      ? 'text-text font-semibold'
+      : 'text-text-secondary';
 
   return (
     <div className="flex gap-4">
@@ -81,14 +88,14 @@ const MilestoneRow: React.FC<MilestoneRowProps> = ({ milestone, isLast, onToggle
           <StatusIcon status={milestone.status} />
         </button>
         {!isLast && (
-          <div className={['w-0.5 flex-1 mt-1 mb-0 rounded-full min-h-[24px]', connectorColor(milestone.status)].join(' ')} />
+          <div className={clsx('w-0.5 flex-1 mt-1 mb-0 rounded-full min-h-[24px]', connectorColor(milestone.status))} />
         )}
       </div>
 
       {/* Content */}
-      <div className={['pb-5 flex-1', isLast ? '' : ''].join(' ')}>
+      <div className="pb-5 flex-1">
         <div className="flex flex-wrap items-center gap-2 mb-0.5">
-          <span className="font-body text-sm" style={labelStyle}>
+          <span className={clsx('font-body text-sm', labelClass)}>
             {milestone.label}
           </span>
           <Badge variant={phaseBadgeVariant[milestone.phase]} size="sm">
@@ -101,9 +108,9 @@ const MilestoneRow: React.FC<MilestoneRowProps> = ({ milestone, isLast, onToggle
             <Badge variant="success" size="sm">Concluido</Badge>
           )}
         </div>
-        <p className="font-body text-xs" style={{ color: 'var(--t-text-sec)' }}>{formattedDate}</p>
+        <p className="font-body text-xs text-text-secondary">{formattedDate}</p>
         {milestone.deliverable && (
-          <p className="font-body text-xs mt-1 italic" style={{ color: 'var(--t-text-sec)' }}>
+          <p className="font-body text-xs mt-1 italic text-text-secondary">
             Entregavel: {milestone.deliverable}
           </p>
         )}
@@ -139,24 +146,19 @@ const MilestonesTimeline: React.FC = () => {
           const milestones = grouped[phase];
           if (!milestones || milestones.length === 0) return null;
 
-          const phaseStyle: React.CSSProperties =
-            phase === 1
-              ? { background: 'rgba(59,130,246,0.08)', color: '#3B82F6', border: '1px solid rgba(59,130,246,0.2)' }
-              : phase === 2
-              ? { background: 'rgba(139,92,246,0.08)', color: '#8B5CF6', border: '1px solid rgba(139,92,246,0.2)' }
-              : { background: 'rgba(20,184,166,0.08)', color: '#14B8A6', border: '1px solid rgba(20,184,166,0.2)' };
-
           return (
             <div key={phase}>
               {/* Phase header */}
               <div className="flex items-center gap-3 mb-4">
                 <span
-                  className="font-body text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
-                  style={phaseStyle}
+                  className={clsx(
+                    'font-body text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full',
+                    PHASE_CLASS[phase]
+                  )}
                 >
                   {phaseLabel[phase]}
                 </span>
-                <div className="flex-1 h-px" style={{ background: 'var(--t-border)' }} />
+                <div className="flex-1 h-px bg-border" />
               </div>
 
               {/* Milestones */}
@@ -175,7 +177,7 @@ const MilestonesTimeline: React.FC = () => {
         })}
 
         {project.milestones.length === 0 && (
-          <p className="font-body text-sm text-center py-8" style={{ color: 'var(--t-text-sec)' }}>
+          <p className="font-body text-sm text-center py-8 text-text-secondary">
             Nenhum marco cadastrado para este projeto.
           </p>
         )}

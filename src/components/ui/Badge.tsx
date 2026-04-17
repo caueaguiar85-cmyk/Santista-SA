@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ReactNode } from 'react';
+import clsx from 'clsx';
 
 type BadgeVariant =
   | 'default'
@@ -23,18 +24,18 @@ interface BadgeProps {
   size?: BadgeSize;
 }
 
-const variantStyles: Record<BadgeVariant, React.CSSProperties> = {
-  default:  { background: 'var(--t-surface-alt)', color: 'var(--t-text-sec)', border: '1px solid var(--t-border)' },
-  success:  { background: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' },
-  warning:  { background: 'rgba(245,158,11,0.1)', color: '#D97706', border: '1px solid rgba(245,158,11,0.2)' },
-  danger:   { background: 'rgba(239,68,68,0.1)',  color: '#EF4444', border: '1px solid rgba(239,68,68,0.2)' },
-  info:     { background: 'rgba(59,130,246,0.1)',  color: '#3B82F6', border: '1px solid rgba(59,130,246,0.2)' },
-  accent:   { background: 'var(--t-accent-soft)',  color: 'var(--t-accent)', border: '1px solid transparent' },
-  'pilar-1': { background: 'rgba(59,130,246,0.1)',  color: '#3B82F6', border: '1px solid rgba(59,130,246,0.2)' },
-  'pilar-2': { background: 'rgba(139,92,246,0.1)',  color: '#8B5CF6', border: '1px solid rgba(139,92,246,0.2)' },
-  'pilar-3': { background: 'rgba(16,185,129,0.1)',  color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' },
-  'pilar-4': { background: 'rgba(245,158,11,0.1)',  color: '#F59E0B', border: '1px solid rgba(245,158,11,0.2)' },
-  'pilar-5': { background: 'rgba(239,68,68,0.1)',   color: '#EF4444', border: '1px solid rgba(239,68,68,0.2)' },
+const variantClasses: Record<BadgeVariant, string> = {
+  default:   'bg-surface-3 text-text-secondary border border-border',
+  success:   'bg-success/10 text-success border border-success/20',
+  warning:   'bg-warning/10 text-warning border border-warning/20',
+  danger:    'bg-danger/10 text-danger border border-danger/20',
+  info:      'bg-info/10 text-info border border-info/20',
+  accent:    'bg-accent-soft text-accent',
+  'pilar-1': 'bg-pilar-1/10 text-pilar-1 border border-pilar-1/20',
+  'pilar-2': 'bg-pilar-2/10 text-pilar-2 border border-pilar-2/20',
+  'pilar-3': 'bg-pilar-3/10 text-pilar-3 border border-pilar-3/20',
+  'pilar-4': 'bg-pilar-4/10 text-pilar-4 border border-pilar-4/20',
+  'pilar-5': 'bg-pilar-5/10 text-pilar-5 border border-pilar-5/20',
 };
 
 const sizeClasses: Record<BadgeSize, string> = {
@@ -50,15 +51,13 @@ const Badge: React.FC<BadgeProps> = ({
 }) => {
   return (
     <span
-      className={[
+      className={clsx(
         'inline-flex items-center gap-1 font-body font-medium rounded-full',
         'transition-colors duration-200',
+        variantClasses[variant],
         sizeClasses[size],
         className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-      style={variantStyles[variant]}
+      )}
     >
       {children}
     </span>

@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import {
   Search,
   ShieldAlert,
@@ -86,6 +87,30 @@ function formatDuration(startedAt?: string, completedAt?: string): string {
   return `${seconds}s`;
 }
 
+// ----------------------------
+// Card / Icon / Name class maps
+// ----------------------------
+const CARD_CLASSES: Record<string, string> = {
+  running: 'border border-info/[0.15] bg-info/[0.05]',
+  completed: 'border border-success/[0.15] bg-success/[0.05]',
+  error: 'border border-danger/[0.15] bg-danger/[0.05]',
+  waiting: 'border border-border bg-surface-2',
+};
+
+const ICON_CLASSES: Record<string, string> = {
+  running: 'bg-info/[0.12] text-blue-400',
+  completed: 'bg-success/[0.12] text-emerald-400',
+  error: 'bg-danger/[0.12] text-red-400',
+  waiting: 'bg-surface-3 text-text-tertiary',
+};
+
+const NAME_CLASSES: Record<string, string> = {
+  running: 'text-blue-400',
+  completed: 'text-emerald-400',
+  error: 'text-red-400',
+  waiting: 'text-text-tertiary',
+};
+
 const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
   const completed = agentRuns.filter((r) => r.status === 'completed').length;
   const total = agentRuns.length || 9;
@@ -94,13 +119,10 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
   if (agentRuns.length === 0) {
     return (
       <div className="text-center py-8">
-        <div
-          className="inline-flex items-center justify-center w-14 h-14 rounded-full mb-4"
-          style={{ background: 'var(--t-surface-alt)' }}
-        >
-          <FileText size={24} style={{ color: 'var(--t-text-ter)' }} />
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full mb-4 bg-surface-3">
+          <FileText size={24} className="text-text-tertiary" />
         </div>
-        <p className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>
+        <p className="font-body text-sm text-text-secondary">
           Nenhuma execucao iniciada ainda
         </p>
       </div>
@@ -111,10 +133,10 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
     <div className="space-y-4">
       {/* Overall progress */}
       <div className="flex items-center justify-between mb-1">
-        <span className="font-body text-sm font-medium" style={{ color: 'var(--t-text-sec)' }}>
+        <span className="font-body text-sm font-medium text-text-secondary">
           Progresso geral
         </span>
-        <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>
+        <span className="font-body text-sm font-semibold text-text">
           {completed}/{total} agentes
         </span>
       </div>
@@ -133,40 +155,28 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
           const isError = run.status === 'error';
           const duration = formatDuration(run.startedAt, run.completedAt);
 
-          const cardStyle: React.CSSProperties = isRunning
-            ? { border: '1px solid rgba(59,130,246,0.15)', background: 'rgba(59,130,246,0.05)' }
+          const statusKey = isRunning
+            ? 'running'
             : isCompleted
-            ? { border: '1px solid rgba(16,185,129,0.15)', background: 'rgba(16,185,129,0.05)' }
+            ? 'completed'
             : isError
-            ? { border: '1px solid rgba(239,68,68,0.15)', background: 'rgba(239,68,68,0.05)' }
-            : { border: '1px solid var(--t-border)', background: 'var(--t-surface)' };
-
-          const iconStyle: React.CSSProperties = isRunning
-            ? { background: 'rgba(59,130,246,0.12)', color: '#60A5FA' }
-            : isCompleted
-            ? { background: 'rgba(16,185,129,0.12)', color: '#34D399' }
-            : isError
-            ? { background: 'rgba(239,68,68,0.12)', color: '#F87171' }
-            : { background: 'var(--t-surface-alt)', color: 'var(--t-text-ter)' };
-
-          const nameStyle: React.CSSProperties = isCompleted
-            ? { color: '#34D399' }
-            : isError
-            ? { color: '#F87171' }
-            : isRunning
-            ? { color: '#60A5FA' }
-            : { color: 'var(--t-text-ter)' };
+            ? 'error'
+            : 'waiting';
 
           return (
             <div
               key={run.id}
-              className="flex gap-3 p-3 rounded-lg transition-all duration-300"
-              style={cardStyle}
+              className={clsx(
+                'flex gap-3 p-3 rounded-lg transition-all duration-300',
+                CARD_CLASSES[statusKey],
+              )}
             >
               {/* Icon */}
               <div
-                className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center"
-                style={iconStyle}
+                className={clsx(
+                  'flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center',
+                  ICON_CLASSES[statusKey],
+                )}
               >
                 {isRunning ? (
                   <Loader2 size={18} className="animate-spin" />
@@ -179,14 +189,16 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <span
-                    className="font-body text-sm font-semibold"
-                    style={nameStyle}
+                    className={clsx(
+                      'font-body text-sm font-semibold',
+                      NAME_CLASSES[statusKey],
+                    )}
                   >
                     {run.name}
                   </span>
                   <div className="flex items-center gap-2">
                     {duration && (
-                      <span className="font-body text-xs" style={{ color: 'var(--t-text-ter)' }}>
+                      <span className="font-body text-xs text-text-tertiary">
                         {duration}
                       </span>
                     )}
@@ -194,17 +206,14 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
                   </div>
                 </div>
 
-                <p className="font-body text-xs mt-0.5 truncate" style={{ color: 'var(--t-text-sec)' }}>
+                <p className="font-body text-xs mt-0.5 truncate text-text-secondary">
                   {AGENT_DESCRIPTIONS[index] ?? ''}
                 </p>
 
                 {/* Preview text when completed */}
                 {isCompleted && run.preview && (
-                  <div
-                    className="mt-2 p-2"
-                    style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.12)', borderRadius: 6 }}
-                  >
-                    <p className="font-body text-xs line-clamp-2" style={{ color: '#34D399' }}>
+                  <div className="mt-2 p-2 rounded-md bg-success/[0.08] border border-success/[0.12]">
+                    <p className="font-body text-xs line-clamp-2 text-emerald-400">
                       {run.preview}
                     </p>
                   </div>
@@ -212,11 +221,8 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
 
                 {/* Error message */}
                 {isError && run.error && (
-                  <div
-                    className="mt-2 p-2"
-                    style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.12)', borderRadius: 6 }}
-                  >
-                    <p className="font-body text-xs" style={{ color: '#F87171' }}>{run.error}</p>
+                  <div className="mt-2 p-2 rounded-md bg-danger/[0.08] border border-danger/[0.12]">
+                    <p className="font-body text-xs text-red-400">{run.error}</p>
                   </div>
                 )}
               </div>

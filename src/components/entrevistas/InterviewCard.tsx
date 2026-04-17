@@ -72,18 +72,13 @@ const InterviewCard: React.FC<InterviewCardProps> = ({ interview, onClick }) => 
     <button
       type="button"
       onClick={onClick}
-      className="w-full text-left group rounded-xl p-5 flex flex-col gap-4 transition-all duration-300 ease-in-out hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-      style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)', boxShadow: 'var(--t-shadow)' }}
+      className="w-full text-left group rounded-xl p-5 flex flex-col gap-4 transition-all duration-300 ease-in-out hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 bg-surface-2 border border-border shadow-sm"
     >
       {/* Top row: avatar + name/role + IA badge */}
       <div className="flex items-start gap-3">
         {/* Avatar */}
         <div
-          className={[
-            'shrink-0 h-10 w-10 rounded-full flex items-center justify-center',
-            'text-white font-heading font-semibold text-base select-none',
-            PILLAR_AVATAR_CLASS[pillar],
-          ].join(' ')}
+          className={`shrink-0 h-10 w-10 rounded-full flex items-center justify-center text-white font-heading font-semibold text-base select-none ${PILLAR_AVATAR_CLASS[pillar]}`}
           aria-hidden="true"
         >
           {initials}
@@ -91,10 +86,10 @@ const InterviewCard: React.FC<InterviewCardProps> = ({ interview, onClick }) => 
 
         {/* Name + role */}
         <div className="min-w-0 flex-1">
-          <p className="font-heading font-semibold text-sm leading-snug truncate" style={{ color: 'var(--t-text)' }}>
+          <p className="font-heading font-semibold text-sm leading-snug truncate text-text">
             {intervieweeName}
           </p>
-          <p className="font-body text-xs truncate mt-0.5" style={{ color: 'var(--t-text-sec)' }}>
+          <p className="font-body text-xs truncate mt-0.5 text-text-secondary">
             {role} &middot; {area}
           </p>
         </div>
@@ -103,8 +98,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({ interview, onClick }) => 
         {aiInsights && (
           <span
             title="Analisado por IA"
-            className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium font-body"
-            style={{ background: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }}
+            className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium font-body bg-success/10 text-success border border-success/20"
           >
             <Sparkles size={11} aria-hidden="true" />
             IA
@@ -126,7 +120,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({ interview, onClick }) => 
       </div>
 
       {/* Date */}
-      <div className="flex items-center gap-1.5 text-xs font-body" style={{ color: 'var(--t-text-sec)' }}>
+      <div className="flex items-center gap-1.5 text-xs font-body text-text-secondary">
         <CalendarDays size={13} aria-hidden="true" />
         <span>{formattedDate}</span>
       </div>

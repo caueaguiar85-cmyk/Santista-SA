@@ -1,6 +1,7 @@
 import React from 'react';
 import { differenceInDays, parseISO } from 'date-fns';
 import { Layers, TrendingUp, Clock, Users } from 'lucide-react';
+import clsx from 'clsx';
 import Card from '../ui/Card';
 import { useProjectStore } from '../../store/projectStore';
 import { useInterviewStore } from '../../store/interviewStore';
@@ -58,37 +59,30 @@ interface MetricCardProps {
 
 const MetricCard: React.FC<MetricCardProps> = ({ icon, label, value, sub, accent }) => (
   <div
-    className="flex flex-col gap-3 rounded-xl p-5"
-    style={
+    className={clsx(
+      'flex flex-col gap-3 rounded-xl p-5 border',
       accent
-        ? { background: 'var(--t-accent-soft)', border: '1px solid rgba(227,30,36,0.15)' }
-        : { background: 'var(--t-surface)', border: '1px solid var(--t-border)' }
-    }
+        ? 'bg-accent-soft border-accent/15'
+        : 'bg-surface-2 border-border'
+    )}
   >
-    <div
-      className="w-10 h-10 rounded-lg flex items-center justify-center"
-      style={{ background: 'var(--t-accent-soft)' }}
-    >
-      <span style={{ color: 'var(--t-accent)' }}>{icon}</span>
+    <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-accent-soft">
+      <span className="text-accent">{icon}</span>
     </div>
     <div>
-      <p
-        className="font-body text-xs font-medium uppercase tracking-wide mb-1"
-        style={{ color: accent ? 'var(--t-text-sec)' : 'var(--t-text-sec)' }}
-      >
+      <p className="font-body text-xs font-medium uppercase tracking-wide mb-1 text-text-secondary">
         {label}
       </p>
       <div
-        className="font-heading text-2xl font-bold"
-        style={{ color: accent ? 'var(--t-accent)' : 'var(--t-text)' }}
+        className={clsx(
+          'font-heading text-2xl font-bold',
+          accent ? 'text-accent' : 'text-text'
+        )}
       >
         {value}
       </div>
       {sub && (
-        <p
-          className="font-body text-xs mt-0.5"
-          style={{ color: accent ? 'var(--t-text-sec)' : 'var(--t-text-sec)' }}
-        >
+        <p className="font-body text-xs mt-0.5 text-text-secondary">
           {sub}
         </p>
       )}
@@ -103,9 +97,9 @@ interface InfoRowProps {
 }
 
 const InfoRow: React.FC<InfoRowProps> = ({ label, value }) => (
-  <div className="flex items-center justify-between py-2.5" style={{ borderBottom: '1px solid var(--t-border)' }}>
-    <span className="font-body text-sm" style={{ color: 'var(--t-text-sec)' }}>{label}</span>
-    <span className="font-body text-sm font-semibold" style={{ color: 'var(--t-text)' }}>{value}</span>
+  <div className="flex items-center justify-between py-2.5 border-b border-border">
+    <span className="font-body text-sm text-text-secondary">{label}</span>
+    <span className="font-body text-sm font-semibold text-text">{value}</span>
   </div>
 );
 
@@ -140,25 +134,25 @@ const ProjectOverview: React.FC = () => {
         />
 
         {/* Conclusao */}
-        <div className="flex flex-col gap-3 rounded-xl p-5" style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}>
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: 'var(--t-accent-soft)' }}>
-            <TrendingUp size={20} style={{ color: 'var(--t-accent)' }} />
+        <div className="flex flex-col gap-3 rounded-xl p-5 bg-surface-2 border border-border">
+          <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-accent-soft">
+            <TrendingUp size={20} className="text-accent" />
           </div>
           <div className="flex items-center gap-3">
             <div className="relative flex items-center justify-center">
               <CircularProgress value={project.completionPercent} size={56} strokeWidth={5} />
               <span
-                className="absolute font-body text-xs font-bold"
-                style={{ fontSize: '10px', color: 'var(--t-text)' }}
+                className="absolute font-body text-xs font-bold text-text"
+                style={{ fontSize: '10px' }}
               >
                 {project.completionPercent}%
               </span>
             </div>
             <div>
-              <p className="font-body text-xs font-medium uppercase tracking-wide mb-0.5" style={{ color: 'var(--t-text-sec)' }}>
+              <p className="font-body text-xs font-medium uppercase tracking-wide mb-0.5 text-text-secondary">
                 Conclusao
               </p>
-              <p className="font-heading text-xl font-bold" style={{ color: 'var(--t-text)' }}>
+              <p className="font-heading text-xl font-bold text-text">
                 {project.completionPercent}%
               </p>
             </div>
@@ -200,7 +194,7 @@ const ProjectOverview: React.FC = () => {
           </div>
         </div>
         {project.context && (
-          <p className="font-body text-sm mt-4 leading-relaxed pt-4" style={{ color: 'var(--t-text-sec)', borderTop: '1px solid var(--t-border)' }}>
+          <p className="font-body text-sm mt-4 leading-relaxed pt-4 text-text-secondary border-t border-border">
             {project.context}
           </p>
         )}

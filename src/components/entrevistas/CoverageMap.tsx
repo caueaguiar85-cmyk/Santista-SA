@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 import type { PillarType, HierarchyLevel } from '../../types/interview';
 import { PILLAR_LABELS, HIERARCHY_LABELS } from '../../types/interview';
 import { useInterviewStore } from '../../store/interviewStore';
@@ -31,10 +32,10 @@ interface CellInfo {
   count: number;
 }
 
-const CELL_STYLES: Record<CellState, React.CSSProperties> = {
-  analyzed: { background: 'rgba(16,185,129,0.12)', borderColor: 'rgba(16,185,129,0.3)', color: '#10B981' },
-  completed: { background: 'rgba(245,158,11,0.08)', borderColor: 'rgba(245,158,11,0.25)', color: '#F59E0B' },
-  empty: { background: 'rgba(239,68,68,0.08)', borderColor: 'rgba(239,68,68,0.2)', color: '#EF4444' },
+const CELL_CLASS: Record<CellState, string> = {
+  analyzed:  'bg-success/[0.12] border-success/30 text-success',
+  completed: 'bg-warning/[0.08] border-warning/25 text-warning',
+  empty:     'bg-danger/[0.08] border-danger/20 text-danger',
 };
 
 const CELL_LABEL: Record<CellState, string> = {
@@ -48,6 +49,13 @@ const LEGEND_ITEMS: { state: CellState; label: string }[] = [
   { state: 'completed', label: 'Concluida (sem analise IA)' },
   { state: 'empty',     label: 'Sem entrevista' },
 ];
+
+const STAT_COLOR_CLASS: Record<string, string> = {
+  'Total': 'text-text',
+  'Analisadas': 'text-success',
+  'Concluidas': 'text-warning',
+  'Cobertura': 'text-info',
+};
 
 const CoverageMap: React.FC = () => {
   const interviews = useInterviewStore((s) => s.interviews);
@@ -73,14 +81,14 @@ const CoverageMap: React.FC = () => {
   const totalCells = PILLARS.length * LEVELS.length;
 
   return (
-    <div className="rounded-xl shadow-sm p-6 flex flex-col gap-6" style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}>
+    <div className="rounded-xl shadow-sm p-6 flex flex-col gap-6 bg-surface-2 border border-border">
       {/* Section header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h2 className="font-heading text-lg font-semibold" style={{ color: 'var(--t-text)' }}>
+          <h2 className="font-heading text-lg font-semibold text-text">
             Mapa de Cobertura
           </h2>
-          <p className="font-body text-sm mt-0.5" style={{ color: 'var(--t-text-sec)' }}>
+          <p className="font-body text-sm mt-0.5 text-text-secondary">
             Distribuicao das entrevistas por pilar e nivel hierarquico
           </p>
         </div>
@@ -88,14 +96,14 @@ const CoverageMap: React.FC = () => {
         {/* Quick stats */}
         <div className="flex flex-wrap gap-4">
           {[
-            { label: 'Total',      value: totalInterviews, color: 'var(--t-text)' },
-            { label: 'Analisadas', value: analyzedCount,   color: '#10B981' },
-            { label: 'Concluidas', value: completedCount,  color: '#F59E0B' },
-            { label: 'Cobertura',  value: `${coveredCells}/${totalCells}`, color: '#3B82F6' },
-          ].map(({ label, value, color }) => (
+            { label: 'Total',      value: totalInterviews },
+            { label: 'Analisadas', value: analyzedCount },
+            { label: 'Concluidas', value: completedCount },
+            { label: 'Cobertura',  value: `${coveredCells}/${totalCells}` },
+          ].map(({ label, value }) => (
             <div key={label} className="text-center">
-              <p className="font-heading text-xl font-bold" style={{ color }}>{value}</p>
-              <p className="font-body text-xs" style={{ color: 'var(--t-text-sec)' }}>{label}</p>
+              <p className={clsx('font-heading text-xl font-bold', STAT_COLOR_CLASS[label])}>{value}</p>
+              <p className="font-body text-xs text-text-secondary">{label}</p>
             </div>
           ))}
         </div>
@@ -110,11 +118,11 @@ const CoverageMap: React.FC = () => {
             {PILLARS.map((pillar) => (
               <div
                 key={pillar}
-                className={[
+                className={clsx(
                   'rounded-lg px-2 py-1.5 text-center',
                   'text-white text-xs font-body font-semibold',
                   PILLAR_HEADER_CLASS[pillar],
-                ].join(' ')}
+                )}
               >
                 {PILLAR_SHORT[pillar]}
               </div>
@@ -130,7 +138,7 @@ const CoverageMap: React.FC = () => {
             >
               {/* Row label */}
               <div className="flex items-center">
-                <span className="font-body text-sm font-medium" style={{ color: 'var(--t-text-sec)' }}>
+                <span className="font-body text-sm font-medium text-text-secondary">
                   {HIERARCHY_LABELS[level]}
                 </span>
               </div>
@@ -141,8 +149,10 @@ const CoverageMap: React.FC = () => {
                   <div
                     key={pillar}
                     title={`${PILLAR_LABELS[pillar]} · ${HIERARCHY_LABELS[level]} · ${CELL_LABEL[state]}`}
-                    className="rounded-lg border flex flex-col items-center justify-center py-3 gap-0.5 transition-all duration-200 hover:brightness-95"
-                    style={CELL_STYLES[state]}
+                    className={clsx(
+                      'rounded-lg border flex flex-col items-center justify-center py-3 gap-0.5 transition-all duration-200 hover:brightness-95',
+                      CELL_CLASS[state],
+                    )}
                   >
                     <span className="font-heading text-lg font-bold leading-none">
                       {state === 'empty' ? '—' : count}
@@ -159,18 +169,17 @@ const CoverageMap: React.FC = () => {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap items-center gap-4 pt-2" style={{ borderTop: '1px solid var(--t-border)' }}>
-        <span className="font-body text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--t-text-sec)' }}>
+      <div className="flex flex-wrap items-center gap-4 pt-2 border-t border-border">
+        <span className="font-body text-xs font-semibold uppercase tracking-wide text-text-secondary">
           Legenda:
         </span>
         {LEGEND_ITEMS.map(({ state, label }) => (
           <div key={state} className="flex items-center gap-1.5">
             <span
-              className="h-3 w-3 rounded border shrink-0"
-              style={CELL_STYLES[state]}
+              className={clsx('h-3 w-3 rounded border shrink-0', CELL_CLASS[state])}
               aria-hidden="true"
             />
-            <span className="font-body text-xs" style={{ color: 'var(--t-text-sec)' }}>{label}</span>
+            <span className="font-body text-xs text-text-secondary">{label}</span>
           </div>
         ))}
       </div>

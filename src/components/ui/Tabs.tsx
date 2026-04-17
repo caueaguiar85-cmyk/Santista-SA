@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ReactNode } from 'react';
+import clsx from 'clsx';
 
 interface Tab {
   id: string;
@@ -24,13 +25,10 @@ const Tabs: React.FC<TabsProps> = ({
     <div
       role="tablist"
       aria-label="Navegacao por abas"
-      className={[
-        'flex items-end gap-0 overflow-x-auto scrollbar-none',
+      className={clsx(
+        'flex items-end gap-0 overflow-x-auto scrollbar-none border-b border-border',
         className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-      style={{ borderBottom: '1px solid var(--t-border)' }}
+      )}
     >
       {tabs.map((tab) => {
         const isActive = tab.id === activeTab;
@@ -44,17 +42,17 @@ const Tabs: React.FC<TabsProps> = ({
             id={`tab-${tab.id}`}
             type="button"
             onClick={() => onTabChange(tab.id)}
-            className={[
+            className={clsx(
               'relative inline-flex items-center gap-2 shrink-0',
               'px-4 pb-3 pt-2',
               'font-body text-sm font-medium',
               'transition-all duration-150',
               'focus-visible:outline-none',
               'rounded-t-md',
-            ].join(' ')}
-            style={{
-              color: isActive ? 'var(--t-accent)' : 'var(--t-text-ter)',
-            }}
+              isActive
+                ? 'text-accent'
+                : 'text-text-tertiary hover:text-text-secondary hover:bg-surface-3',
+            )}
           >
             {tab.icon && (
               <span className="shrink-0" aria-hidden="true">
@@ -66,11 +64,10 @@ const Tabs: React.FC<TabsProps> = ({
 
             {/* Underline indicator */}
             <span
-              className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200"
-              style={{
-                background: isActive ? 'var(--t-accent)' : 'transparent',
-                opacity: isActive ? 1 : 0,
-              }}
+              className={clsx(
+                'absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200',
+                isActive ? 'bg-accent opacity-100' : 'bg-transparent opacity-0',
+              )}
               aria-hidden="true"
             />
           </button>

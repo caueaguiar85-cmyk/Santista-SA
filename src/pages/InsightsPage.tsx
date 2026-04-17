@@ -32,12 +32,15 @@ const IMPACT_OPTIONS: { value: Insight['impact'] | ''; label: string }[] = [
   { value: 'Baixo', label: 'Baixo' },
 ];
 
-const CHIP_STYLES: { label: string; bg: string; color: string; border: string }[] = [
-  { label: 'Riscos', bg: 'rgba(239,68,68,0.08)', color: '#EF4444', border: '1px solid rgba(239,68,68,0.2)' },
-  { label: 'Oportunidades', bg: 'rgba(34,197,94,0.08)', color: '#22C55E', border: '1px solid rgba(34,197,94,0.2)' },
-  { label: 'Quick Wins', bg: 'rgba(245,158,11,0.08)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.2)' },
-  { label: 'Estrategicos', bg: 'rgba(59,130,246,0.08)', color: '#3B82F6', border: '1px solid rgba(59,130,246,0.2)' },
+const CHIP_STYLES: { label: string; className: string }[] = [
+  { label: 'Riscos', className: 'bg-danger/[0.08] text-danger border border-danger/20' },
+  { label: 'Oportunidades', className: 'bg-success/[0.08] text-success border border-success/20' },
+  { label: 'Quick Wins', className: 'bg-warning/[0.08] text-warning border border-warning/20' },
+  { label: 'Estrategicos', className: 'bg-info/[0.08] text-info border border-info/20' },
 ];
+
+const selectClass =
+  'text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 min-w-[160px] border border-border bg-input text-text';
 
 const InsightsPage: React.FC = () => {
   const insights = useDiagnosticoStore((s) => s.insights);
@@ -78,8 +81,8 @@ const InsightsPage: React.FC = () => {
         title="Insights"
         subtitle="Feed de insights gerados pelos agentes de IA"
         actions={
-          <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--t-text-sec)' }}>
-            <span className="font-semibold" style={{ color: 'var(--t-text)' }}>{counts.total}</span> insights
+          <div className="flex items-center gap-2 text-sm text-text-secondary">
+            <span className="font-semibold text-text">{counts.total}</span> insights
             &nbsp;|&nbsp;
             <span className="text-danger font-semibold">{counts.alto}</span> alto impacto
           </div>
@@ -96,11 +99,10 @@ const InsightsPage: React.FC = () => {
       {/* Summary chips */}
       {insights.length > 0 && (
         <div className="flex flex-wrap gap-3 mb-6">
-          {CHIP_STYLES.map(({ label, bg, color, border }, idx) => (
+          {CHIP_STYLES.map(({ label, className }, idx) => (
             <div
               key={label}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium"
-              style={{ background: bg, color, border }}
+              className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${className}`}
             >
               <span className="font-bold text-sm">{chipCounts[idx]}</span>
               {label}
@@ -110,8 +112,8 @@ const InsightsPage: React.FC = () => {
       )}
 
       {/* Filter bar */}
-      <div className="flex flex-wrap items-center gap-3 mb-6 p-4 rounded-xl" style={{ background: 'var(--t-surface)', border: '1px solid var(--t-border)' }}>
-        <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--t-text-sec)' }}>
+      <div className="flex flex-wrap items-center gap-3 mb-6 p-4 rounded-xl bg-surface-2 border border-border">
+        <span className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
           Filtros:
         </span>
 
@@ -119,8 +121,7 @@ const InsightsPage: React.FC = () => {
         <select
           value={pillarFilter}
           onChange={(e) => setPillarFilter(e.target.value as PillarType | '')}
-          className="text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 min-w-[160px]"
-          style={{ border: '1px solid var(--t-border)', background: 'var(--t-input)', color: 'var(--t-text)' }}
+          className={selectClass}
           aria-label="Filtrar por pilar"
         >
           <option value="">Todos os pilares</option>
@@ -135,8 +136,7 @@ const InsightsPage: React.FC = () => {
         <select
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value as Insight['type'] | '')}
-          className="text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 min-w-[160px]"
-          style={{ border: '1px solid var(--t-border)', background: 'var(--t-input)', color: 'var(--t-text)' }}
+          className={selectClass}
           aria-label="Filtrar por tipo"
         >
           {TYPE_OPTIONS.map((opt) => (
@@ -150,8 +150,7 @@ const InsightsPage: React.FC = () => {
         <select
           value={impactFilter}
           onChange={(e) => setImpactFilter(e.target.value as Insight['impact'] | '')}
-          className="text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 min-w-[160px]"
-          style={{ border: '1px solid var(--t-border)', background: 'var(--t-input)', color: 'var(--t-text)' }}
+          className={selectClass}
           aria-label="Filtrar por impacto"
         >
           {IMPACT_OPTIONS.map((opt) => (
