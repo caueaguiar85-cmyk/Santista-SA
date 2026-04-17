@@ -58,7 +58,7 @@ const Card: React.FC<CardProps> = ({
             )}
           >
             <div className="min-w-0 flex-1">
-              <h3 className="font-heading text-base font-semibold leading-tight truncate text-text">
+              <h3 className="font-heading text-base font-semibold leading-tight text-text">
                 {title}
               </h3>
               {subtitle && (

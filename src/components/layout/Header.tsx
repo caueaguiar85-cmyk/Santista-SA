@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({ title, subtitle, actions }) => {
   return (
     <header className="flex items-center justify-between gap-4 pb-6 mb-6 border-b border-border">
       <div className="min-w-0">
-        <h1 className="text-2xl font-bold text-text tracking-tight font-heading leading-tight truncate">
+        <h1 className="text-2xl font-bold text-text tracking-tight font-heading leading-tight">
           {title}
         </h1>
         {subtitle && (

@@ -6,7 +6,6 @@ import { useThemeStore } from '../../store/themeStore';
 const Layout: React.FC = () => {
   const theme = useThemeStore((s) => s.theme);
 
-  /* Ensure data-theme is always synced on mount */
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
@@ -15,8 +14,8 @@ const Layout: React.FC = () => {
     <div className="flex min-h-screen bg-bg transition-colors duration-200">
       <Sidebar />
 
-      <main className="flex-1 overflow-y-auto min-h-screen lg:ml-64">
-        <div className="p-6 lg:p-8 max-w-6xl mx-auto">
+      <main className="flex-1 min-h-screen ml-64 overflow-x-hidden">
+        <div className="p-6 lg:p-8">
           <Outlet />
         </div>
       </main>
