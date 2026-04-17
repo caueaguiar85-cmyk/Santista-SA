@@ -31,7 +31,9 @@ O Assessment Estrategico contratado junto a Stoken Advisory tem como escopo mape
 
 Em abril de 2025, a Deloitte entregou o Plano Diretor de Digitalizacao e Industria 4.0 para a Santista, resultado de um trabalho extensivo que incluiu 46+ entrevistas distribuidas entre Financeiro (4), Comercial (11), Fabril (10), Industrial (3), Supply Chain (10), Gente e Gestao (1), TI (3), Corporativa (3) e Juridico (1). Duas plantas foram visitadas presencialmente — Americana e Tatui — entre 28 e 31 de janeiro de 2025, resultando em mapeamento de 32 sistemas classificados conforme o modelo ISA-95.
 
-O principal achado da Deloitte foi o gap critico na camada ISA-95 Nivel 3: ausencia completa de MES (Manufacturing Execution System), PIMS (Process Information Management System) e LIMS (Laboratory Information Management System). Essa lacuna faz com que dados de processo sejam coletados manualmente em mais de 40 formularios de papel, transcritos para Excel, e cheguem a gestao com dias de atraso. O sistema ERP PeopleSoft tem possibilidade de descontinuidade no Brasil em 2027, e o sistema Intex — que tenta ser simultaneamente ERP e MES textil — esta 20 versoes desatualizado. O gasto energetico da empresa e de R$ 70M/ano, com potencial de reducao de 10% mediante gestao inteligente de energia.`,
+O principal achado da Deloitte foi o gap critico na camada ISA-95 Nivel 3: ausencia completa de MES (Manufacturing Execution System), PIMS (Process Information Management System) e LIMS (Laboratory Information Management System). Essa lacuna faz com que dados de processo sejam coletados manualmente em mais de 40 formularios de papel, transcritos para Excel, e cheguem a gestao com dias de atraso. O sistema ERP PeopleSoft tem possibilidade de descontinuidade no Brasil em 2027, e o sistema Intex — que tenta ser simultaneamente ERP e MES textil — esta 20 versoes desatualizado. O gasto energetico da empresa e de R$ 70M/ano, com potencial de reducao de 10% mediante gestao inteligente de energia.
+
+Em abril de 2026, a Stoken Advisory elaborou o Plano de Transformacao por Area — um guia pratico de implementacao que organiza a transformacao em 4 horizontes de mudanca (AGORA 0-30 dias, CURTO 30-90 dias, MEDIO 90-180 dias, TRANSFORMACAO 6-18 meses) e 6 areas funcionais (Planejamento, Comercial, PCP/Fabrica, TI/Sistemas, Compras e Diretoria), totalizando 26 iniciativas concretas com responsaveis e entregas definidas. O plano prioriza acoes de impacto imediato — como a Validacao Estrategica de Demanda no S&OP (dia 8 do ciclo), MES piloto nas caldeiras, devolutiva de mix com Contribuicao Marginal e indicador de acuracia de cronograma para Compras — antes de avançar para iniciativas de maior complexidade como IoT nos teares, APS integrado ao MES, Data Lake na nuvem e consolidacao de 39 para 16 sistemas.`,
 
   milestones: [
     {
@@ -204,6 +206,13 @@ O principal achado da Deloitte foi o gap critico na camada ISA-95 Nivel 3: ausen
       type: 'data',
       uploadedAt: '2025-02-10',
       size: '5.8 MB',
+    },
+    {
+      id: 'd6',
+      name: 'Plano de Transformacao por Area — Guia para Equipes',
+      type: 'data',
+      uploadedAt: '2026-04-17',
+      size: '4.2 MB',
     },
   ],
 };
@@ -907,6 +916,99 @@ export const sampleInsights: Insight[] = [
     type: 'risk',
     pillar: 'sistemas',
   },
+
+  // ── INSIGHTS — Plano de Transformacao por Area (Stoken Advisory, Abr/2026) ──
+
+  {
+    id: 'ins17',
+    title: 'S&OP atual e reuniao de homologacao, nao de decisao estrategica',
+    description:
+      'O Forum de S&OP nao tem filtro estrategico. A reuniao do dia 12 homologa decisoes ja tomadas em vez de ser espaco de decisao real. A demanda irrestrita e superestimada sistematicamente e o Comercial nao entende por que o mix foi cortado. Falta uma etapa de Validacao Estrategica entre a Reuniao de Demanda (dia 7) e a Validacao de Fabrica (dia 8).',
+    impact: 'Alto',
+    estimatedValue: 'Desalinhamento estrategico custando R$ 15M/ano em mix sub-otimo',
+    origin: 'Plano de Transformacao por Area — Stoken Advisory (Abr/2026)',
+    benchmarkSource: 'Gartner — S&OP Maturity Model 2025',
+    suggestedAction:
+      'Implantar Validacao Estrategica de Demanda — reuniao de 30min no dia 8 onde Diretoria revisa os 3-5 maiores desvios de demanda vs estrategia.',
+    status: 'validated',
+    type: 'risk',
+    pillar: 'processos',
+  },
+  {
+    id: 'ins18',
+    title: '40% das vendas concentradas nos ultimos 4 dias do mes — pressao operacional insustentavel',
+    description:
+      'A concentracao de 40% do volume de vendas nos ultimos 4 dias do mes (DPA) gera pressao extrema na fabrica, logistica e expedicao. Causas: incentivos comerciais desalinhados, comportamento de compra do cliente e falta de visibilidade de estoque. Meta: distribuir para 25% por semana.',
+    impact: 'Alto',
+    estimatedValue: 'R$ 8M/ano em reducao de horas extras e logistica emergencial',
+    origin: 'Plano de Transformacao por Area — Stoken Advisory (Abr/2026)',
+    benchmarkSource: 'ILOS — Benchmarking de Distribuicao de Vendas Mensal 2025',
+    suggestedAction:
+      'Mapear causas do DPA concentrado e redesenhar incentivos comerciais + processo de liberacao de pedidos ao longo do mes.',
+    status: 'validated',
+    type: 'opportunity',
+    pillar: 'processos',
+  },
+  {
+    id: 'ins19',
+    title: 'Comercial opera como caixa preta — sem visibilidade de CM por produto',
+    description:
+      'A area Comercial nao tem acesso a Contribuicao Marginal real por produto, familia ou canal. As decisoes de mix e desconto sao baseadas em intuicao e volume, nao em margem. O Standard de custo esta em Excel e nao integrado ao fluxo de vendas. Vendedores nao sabem quais itens sao mais rentaveis.',
+    impact: 'Alto',
+    estimatedValue: 'R$ 20M/ano em melhoria de mix orientado por margem',
+    origin: 'Plano de Transformacao por Area — Stoken Advisory (Abr/2026)',
+    benchmarkSource: 'McKinsey — Commercial Excellence in B2B Manufacturing 2025',
+    suggestedAction:
+      'Migrar Standard de custo para ERP Senior, criar dashboard de CM por produto no Sense e App de forca de vendas com insights de margem.',
+    status: 'validated',
+    type: 'opportunity',
+    pillar: 'processos',
+  },
+  {
+    id: 'ins20',
+    title: 'Compras opera sem grau de confianca do plano de producao',
+    description:
+      'O Suprimentos recebe o plano de producao M+1 e M+2 sem indicacao do grau de confianca. Planos com MAPE alto recebem o mesmo tratamento que planos estaveis, gerando tanto rupturas quanto excessos de estoque. Nao existe integracao entre consumo real (MES) e sugestao de compra.',
+    impact: 'Medio',
+    estimatedValue: 'R$ 5M/ano em reducao de rupturas e excessos',
+    origin: 'Plano de Transformacao por Area — Stoken Advisory (Abr/2026)',
+    benchmarkSource: 'Gartner Supply Chain Top 25 — Procurement Intelligence 2025',
+    suggestedAction:
+      'Implantar indicador de confianca do cronograma baseado em MAPE historico e integrar sugestao de compra ao MES/APS.',
+    status: 'validated',
+    type: 'risk',
+    pillar: 'processos',
+  },
+  {
+    id: 'ins21',
+    title: 'IA generativa via MCP do Sense e vantagem competitiva imediata',
+    description:
+      'O QlikSense ja possui MCP embarcado, o que permite conectar um LLM para analise em linguagem natural dos dashboards operacionais e financeiros. Em vez de substituir o Sense, o projeto pode potencializa-lo conectando IA generativa via MCP. Qualquer gestor poderia perguntar ao dado em linguagem natural.',
+    impact: 'Medio',
+    estimatedValue: 'Produtividade analitica 3x maior para gestores',
+    origin: 'Plano de Transformacao por Area — Stoken Advisory (Abr/2026)',
+    benchmarkSource: 'Qlik — MCP Integration Architecture 2025',
+    suggestedAction:
+      'Conectar LLM ao Sense via MCP para analise conversacional dos dashboards de producao, vendas e financeiro.',
+    status: 'new',
+    type: 'quick_win',
+    pillar: 'sistemas',
+  },
+  {
+    id: 'ins22',
+    title: 'Projeto Polux depende de ambiente digital moderno para atrair talentos de fora do textil',
+    description:
+      'A iniciativa Polux de trazer profissionais de outros setores e diretamente impactada pelo estado dos sistemas. Profissionais de fora da industria textil precisam de sistemas modernos, dados acessiveis e processos digitalizados para contribuir. Um ambiente com 39 sistemas legados e Excel no chao de fabrica e barreira de entrada.',
+    impact: 'Medio',
+    estimatedValue: 'Aceleracao da diversificacao profissional e retencao de talentos',
+    origin: 'Plano de Transformacao por Area — Stoken Advisory (Abr/2026)',
+    benchmarkSource: 'BCG — Digital Talent Attraction in Traditional Industries 2025',
+    suggestedAction:
+      'Priorizar a modernizacao dos sistemas mais visiveis aos novos profissionais como pre-requisito da Polux.',
+    status: 'new',
+    type: 'strategic',
+    pillar: 'organizacao',
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1197,6 +1299,164 @@ export const sampleInitiatives: Initiative[] = [
     startMonth: 19,
     durationMonths: 12,
   },
+
+  // ── INICIATIVAS — Plano de Transformacao por Area (Stoken Advisory, Abr/2026) ─
+
+  // WAVE 1 - STABILIZE (0-6 meses)
+  {
+    id: 'init19',
+    name: 'Validacao Estrategica de Demanda no S&OP',
+    description:
+      'Implantar reuniao obrigatoria de 30min no dia 8 do ciclo S&OP onde a Diretoria de Negocios revisa os 3-5 maiores desvios de demanda vs estrategia. Output: direcionamentos formalizados em ata. Transforma o S&OP de homologacao em decisao.',
+    pillar: 'processos',
+    wave: 'stabilize',
+    effort: 'P',
+    impact: 90,
+    responsible: 'Diretoria de Negocios + Gerente de S&OP',
+    dependencies: [],
+    status: 'proposed',
+    startMonth: 1,
+    durationMonths: 2,
+  },
+  {
+    id: 'init20',
+    name: 'Devolutiva de Mix com Contribuicao Marginal',
+    description:
+      'O Solver gera relatorio mostrando quais itens foram negados, motivo do corte e CM comparada. Comercial recebe junto com a PV. Fim da caixa preta do planejamento.',
+    pillar: 'processos',
+    wave: 'stabilize',
+    effort: 'P',
+    impact: 85,
+    responsible: 'Planejamento + Comercial',
+    dependencies: [],
+    status: 'proposed',
+    startMonth: 1,
+    durationMonths: 3,
+  },
+  {
+    id: 'init21',
+    name: 'MES Piloto nas Caldeiras — Primeiro Dado OT Real',
+    description:
+      'Sensores coletam temperatura, pressao, consumo de energia e status operacional das caldeiras em tempo real. Dashboard no PCP sem planilha. Primeiro caso de uso do MES com dado OT real.',
+    pillar: 'operacoes',
+    wave: 'stabilize',
+    effort: 'P',
+    impact: 80,
+    responsible: 'Automacao + TI + PCP',
+    dependencies: [],
+    status: 'proposed',
+    startMonth: 2,
+    durationMonths: 3,
+  },
+  {
+    id: 'init22',
+    name: 'Indicador de Acuracia de Cronograma para Compras',
+    description:
+      'PCP comunica ao Suprimentos nao so o que planeja produzir, mas o grau de confianca do plano (baseado em MAPE historico). Permite politica de estoque de seguranca inteligente.',
+    pillar: 'processos',
+    wave: 'stabilize',
+    effort: 'P',
+    impact: 75,
+    responsible: 'PCP + Suprimentos',
+    dependencies: [],
+    status: 'proposed',
+    startMonth: 2,
+    durationMonths: 2,
+  },
+
+  // WAVE 2 - OPTIMIZE (6-18 meses)
+  {
+    id: 'init23',
+    name: 'IoT nos Teares + Alerta Automatico de Desvio',
+    description:
+      'Sensores nos teares detectam quebra de fio, variacao de rendimento e paradas nao planejadas. PCP recebe alerta no mesmo dia. Reprogramacao do cronograma antes que o impacto escale.',
+    pillar: 'operacoes',
+    wave: 'optimize',
+    effort: 'M',
+    impact: 90,
+    responsible: 'Automacao + PCP',
+    dependencies: ['init21'],
+    status: 'proposed',
+    startMonth: 4,
+    durationMonths: 6,
+  },
+  {
+    id: 'init24',
+    name: 'APS Integrado ao MES — Programacao Avancada',
+    description:
+      'Com dados reais do MES, o APS recalcula cronograma considerando situacao atual da fabrica — restricoes de maquina, rendimento real e estoque atualizado. Cronograma realista, nao otimista.',
+    pillar: 'operacoes',
+    wave: 'optimize',
+    effort: 'G',
+    impact: 95,
+    responsible: 'TI + PCP + Planejamento',
+    dependencies: ['init21', 'init23'],
+    status: 'proposed',
+    startMonth: 7,
+    durationMonths: 8,
+  },
+  {
+    id: 'init25',
+    name: 'App Forca de Vendas com Insights de Margem',
+    description:
+      'App mobile para vendedores com itens de maior margem, estoque disponivel e previsao de entrega em tempo real. Venda orientada a resultado, nao so a volume.',
+    pillar: 'processos',
+    wave: 'optimize',
+    effort: 'M',
+    impact: 80,
+    responsible: 'Comercial + TI',
+    dependencies: ['init20'],
+    status: 'proposed',
+    startMonth: 6,
+    durationMonths: 5,
+  },
+  {
+    id: 'init26',
+    name: 'Data Lake na Nuvem + Catalogo de Dados',
+    description:
+      'Migrar Sense para nuvem com arquitetura em camadas (bronze/silver/gold). Cada dominio tem dono de dado. Catalogo navegavel por qualquer area. Uma unica fonte de verdade.',
+    pillar: 'sistemas',
+    wave: 'optimize',
+    effort: 'G',
+    impact: 95,
+    responsible: 'TI + Todas as Areas',
+    dependencies: ['init1'],
+    status: 'proposed',
+    startMonth: 4,
+    durationMonths: 8,
+  },
+
+  // WAVE 3 - TRANSFORM (18-36 meses)
+  {
+    id: 'init27',
+    name: 'Consolidacao de Sistemas (39→16) com Cronograma de Desativacao',
+    description:
+      'Data de morte de cada sistema legado, responsavel pela migracao dos dados e criterio de aceite. Sem prazo definido os dois mundos coexistem indefinidamente. Senior como ERP central.',
+    pillar: 'sistemas',
+    wave: 'transform',
+    effort: 'G',
+    impact: 100,
+    responsible: 'TI + Todas as Diretorias',
+    dependencies: ['init26'],
+    status: 'proposed',
+    startMonth: 12,
+    durationMonths: 18,
+  },
+  {
+    id: 'init28',
+    name: 'IA Generativa via MCP do Sense',
+    description:
+      'Conectar LLM ao QlikSense via MCP para analise conversacional dos dashboards. Qualquer gestor pergunta ao dado em linguagem natural. Aproveita infraestrutura existente do Sense.',
+    pillar: 'sistemas',
+    wave: 'transform',
+    effort: 'M',
+    impact: 80,
+    responsible: 'TI + CoE Digital',
+    dependencies: ['init26'],
+    status: 'proposed',
+    startMonth: 10,
+    durationMonths: 6,
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1417,5 +1677,63 @@ export const sampleKPIs: KPI[] = [
     target: '90%',
     unit: '%',
     timeframe: '36 meses',
+  },
+
+  // ── KPIs — Plano de Transformacao por Area (Stoken Advisory, Abr/2026) ──────
+
+  {
+    id: 'kpi15',
+    pillar: 'processos',
+    name: 'Acuracia de Cronograma de Producao',
+    description:
+      'Percentual de aderencia do plano de producao semanal versus producao realizada, medido por linha.',
+    currentBaseline: 'Nao medido formalmente',
+    target: '90%',
+    unit: '%',
+    timeframe: '12 meses',
+  },
+  {
+    id: 'kpi16',
+    pillar: 'processos',
+    name: 'Concentracao de DPA (Distribuicao de Vendas)',
+    description:
+      'Percentual do volume de vendas mensal realizado nos ultimos 4 dias uteis do mes.',
+    currentBaseline: '40%',
+    target: '25%',
+    unit: '%',
+    timeframe: '12 meses',
+  },
+  {
+    id: 'kpi17',
+    pillar: 'operacoes',
+    name: 'Tempo de Resposta a Desvio de Producao',
+    description:
+      'Tempo medio entre deteccao de desvio de rendimento/parada e acao corretiva pelo PCP.',
+    currentBaseline: '3-5 dias (detectado no N4 semanal)',
+    target: 'Mesmo dia (<8h)',
+    unit: 'horas',
+    timeframe: '6 meses (apos IoT teares)',
+  },
+  {
+    id: 'kpi18',
+    pillar: 'sistemas',
+    name: 'Consolidacao de Sistemas Legados',
+    description:
+      'Numero de sistemas em producao versus meta de consolidacao.',
+    currentBaseline: '39 sistemas',
+    target: '16 sistemas',
+    unit: 'sistemas',
+    timeframe: '18 meses',
+  },
+  {
+    id: 'kpi19',
+    pillar: 'sistemas',
+    name: 'Cobertura de IA Conversacional (MCP/Sense)',
+    description:
+      'Numero de dashboards do Sense conectados ao LLM via MCP para analise em linguagem natural.',
+    currentBaseline: '0',
+    target: '15 dashboards',
+    unit: 'dashboards',
+    timeframe: '12 meses',
   },
 ];
