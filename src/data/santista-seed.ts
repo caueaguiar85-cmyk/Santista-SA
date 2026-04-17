@@ -27,7 +27,11 @@ No plano industrial, a produtividade atual e de 34 km de tecido por funcionario 
 
 Em abril de 2025, a Santista constituiu o Escritorio de Transformacao (Transformation Office), liderado pela Diretora de Estrategia, com o objetivo de coordenar as iniciativas de modernizacao. A parceria com a Vexia — startup especializada em automacao industrial — esta em fase de piloto na planta de Americana, com resultados preliminares de reducao de paradas nao planejadas em 18%.
 
-O Assessment Estrategico contratado junto a Stoken Advisory tem como escopo mapear os cinco pilares de maturidade (Processos & Governanca, Sistemas & Dados, Operacoes & Eficiencia, Organizacao & Capacidade e Roadmap de Transformacao), identificar gaps criticos, quantificar o potencial de ganho e entregar um roadmap priorizando iniciativas nas tres ondas: Estabilizar (0–6 meses), Otimizar (6–18 meses) e Transformar (18–36 meses).`,
+O Assessment Estrategico contratado junto a Stoken Advisory tem como escopo mapear os cinco pilares de maturidade (Processos & Governanca, Sistemas & Dados, Operacoes & Eficiencia, Organizacao & Capacidade e Roadmap de Transformacao), identificar gaps criticos, quantificar o potencial de ganho e entregar um roadmap priorizando iniciativas nas tres ondas: Estabilizar (0–6 meses), Otimizar (6–18 meses) e Transformar (18–36 meses).
+
+Em abril de 2025, a Deloitte entregou o Plano Diretor de Digitalizacao e Industria 4.0 para a Santista, resultado de um trabalho extensivo que incluiu 46+ entrevistas distribuidas entre Financeiro (4), Comercial (11), Fabril (10), Industrial (3), Supply Chain (10), Gente e Gestao (1), TI (3), Corporativa (3) e Juridico (1). Duas plantas foram visitadas presencialmente — Americana e Tatui — entre 28 e 31 de janeiro de 2025, resultando em mapeamento de 32 sistemas classificados conforme o modelo ISA-95.
+
+O principal achado da Deloitte foi o gap critico na camada ISA-95 Nivel 3: ausencia completa de MES (Manufacturing Execution System), PIMS (Process Information Management System) e LIMS (Laboratory Information Management System). Essa lacuna faz com que dados de processo sejam coletados manualmente em mais de 40 formularios de papel, transcritos para Excel, e cheguem a gestao com dias de atraso. O sistema ERP PeopleSoft tem possibilidade de descontinuidade no Brasil em 2027, e o sistema Intex — que tenta ser simultaneamente ERP e MES textil — esta 20 versoes desatualizado. O gasto energetico da empresa e de R$ 70M/ano, com potencial de reducao de 10% mediante gestao inteligente de energia.`,
 
   milestones: [
     {
@@ -179,6 +183,27 @@ O Assessment Estrategico contratado junto a Stoken Advisory tem como escopo mape
       type: 'organogram',
       uploadedAt: '2026-04-15',
       size: '1.1 MB',
+    },
+    {
+      id: 'd3',
+      name: 'Entregavel Deloitte — Entendimento Inicial As-Is',
+      type: 'data',
+      uploadedAt: '2025-04-15',
+      size: '18.4 MB',
+    },
+    {
+      id: 'd4',
+      name: 'Mapeamento de Variaveis Criticas (Deloitte)',
+      type: 'data',
+      uploadedAt: '2025-04-15',
+      size: '3.2 MB',
+    },
+    {
+      id: 'd5',
+      name: 'Fluxo de Processos Americana e Tatui',
+      type: 'data',
+      uploadedAt: '2025-02-10',
+      size: '5.8 MB',
     },
   ],
 };
@@ -362,6 +387,276 @@ ROBERTO NASCIMENTO: Existe. A area Comercial e muito autonoma e tem receio de pe
     aiInsights: null,
     transcript: '',
   },
+
+  // ── ENTREVISTAS DELOITTE — Visitas Americana e Tatui (Jan/2025) ───────────
+
+  {
+    id: 'i6',
+    intervieweeName: 'Ibsen Borges Filho',
+    role: 'Diretor Industrial',
+    area: 'Diretoria Industrial',
+    level: 'c-level',
+    pillar: 'operacoes',
+    date: '2025-01-29',
+    status: 'analyzed',
+    readyForAI: true,
+    tags: ['ISA-95', 'MES', 'PIMS', 'automacao', 'produtividade', 'Industria 4.0'],
+    aiInsights: {
+      summary:
+        'Ibsen apresentou uma visao clara dos gaps de automacao e sistemas industriais. A ausencia de MES/PIMS e o principal gargalo para a evolucao da produtividade. O sistema BMS opera em modo somente leitura, sem capacidade de escrita nas maquinas, e o Intex esta 20 versoes atrasado, comprometendo a gestao da producao.',
+      keyFindings: [
+        'Gap critico ISA-95 Nivel 3: ausencia total de MES, PIMS e LIMS entre o chao de fabrica (Nivel 2) e o ERP (Nivel 4)',
+        'Sistema BMS opera em modo read-only — consegue ler dados das maquinas mas nao consegue enviar comandos de volta, limitando a automacao',
+        'Intex esta 20 versoes desatualizado, acumulando funcoes de ERP e MES sem cumprir adequadamente nenhuma delas',
+        'Meta de produtividade de 40 km/per capita ate 2027 depende de conectividade de maquinas e coleta automatica de dados',
+        'OEE atual e baixo e sem medicao automatizada — calculo depende de apontamentos manuais com horas de atraso',
+        'Conectividade das maquinas e limitada: PLCs antigos sem protocolo padrao, sensores analogicos e falta de rede industrial',
+      ],
+      tags: ['ISA-95', 'MES', 'PIMS', 'BMS', 'Intex', 'OEE', 'automacao', 'Industria 4.0'],
+      sentiment: 'negative',
+      maturityIndicators: [
+        'ISA-95 Nivel 3 inexistente — funcionalidades de MES/PIMS/LIMS ausentes ou em papel/Excel',
+        'Automacao industrial em estagio basico — PLCs isolados sem conectividade com camada de gestao',
+        'BMS limitado a leitura de dados, sem capacidade de controle ou escrita nas maquinas',
+        'Sistema Intex 20 versoes atrasado — interface obsoleta e funcionalidades subutilizadas',
+        'Apontamentos de producao manuais com latencia de horas, inviabilizando gestao em tempo real',
+      ],
+    },
+    transcript: `ENTREVISTADOR: Ibsen, obrigado por nos receber na planta de Americana. Gostriamos de entender sua visao sobre os desafios de automacao e sistemas industriais da Santista.
+
+IBSEN BORGES FILHO: Obrigado pela visita. Olha, o cenario e desafiador. Quando a gente olha o modelo ISA-95, que e a referencia mundial para integracao de sistemas industriais, a Santista tem um buraco enorme no Nivel 3. Nos temos o chao de fabrica la embaixo com PLCs e sensores — Nivel 0, 1 e 2 — e temos o ERP la em cima no Nivel 4. Mas no meio, onde deveria ter MES, PIMS, LIMS, nao tem nada. E como se faltasse o andar inteiro de um predio. O resultado e que os dados de processo sao coletados na mao, em formulario de papel, e digitados em planilhas. Isso nao e Industria 4.0, isso e Industria 1.5.
+
+ENTREVISTADOR: E o sistema BMS que voces utilizam? Ele nao cobre parte dessa lacuna?
+
+IBSEN BORGES FILHO: O BMS e uma ferramenta limitada. Ele consegue ler dados das maquinas — temperatura, pressao, velocidade — mas e somente leitura. Nao consegue escrever de volta na maquina. Entao se eu detecto um desvio, eu nao consigo corrigir automaticamente. Preciso que um operador va ate a maquina e faca o ajuste manual. Isso e inaceitavel para quem quer chegar a 40 km por capita ate 2027. E o Intex, que deveria ser o nosso MES textil, esta 20 versoes atrasado. A interface e dos anos 2000, os usuarios resistem a usar, e os apontamentos que entram tem baixa qualidade. O Intex tenta ser ERP e MES ao mesmo tempo e nao faz bem nenhum dos dois.
+
+ENTREVISTADOR: Qual e a sua prioridade para resolver esses gaps?
+
+IBSEN BORGES FILHO: Primeiro, precisamos de um PIMS para historizar os dados de processo em tempo real. Isso e a fundacao. Sem dado bom, nao tem analytics, nao tem OEE confiavel, nao tem nada. Depois, um MES que integre com o PIMS e com o ERP para gestao de ordens, rastreabilidade e qualidade. E por fim, conectar as maquinas — muitos PLCs sao antigos e nao tem protocolo padrao. Precisamos de gateways e padronizacao de comunicacao. Sem isso, a meta de produtividade de 40 km/per capita e inatingivel.`,
+  },
+
+  {
+    id: 'i7',
+    intervieweeName: 'Adilson Ferrari',
+    role: 'Gerente de Manutencao e Automacao',
+    area: 'Manutencao e Engenharia',
+    level: 'gerencia',
+    pillar: 'operacoes',
+    date: '2025-01-28',
+    status: 'analyzed',
+    readyForAI: true,
+    tags: ['manutencao', 'Engeman', 'automacao', 'PLC', 'cyberseguranca', 'preditiva'],
+    aiInsights: {
+      summary:
+        'Adilson revelou um cenario de manutencao predominantemente reativa com o sistema Engeman limitado a gestao de ordens de servico, sem modulo de custos ou integracao com sistemas de processo. A automacao esta restrita a 2 recursos tecnicos para toda a planta, e a cyberseguranca OT e praticamente inexistente.',
+      keyFindings: [
+        'Engeman utilizado apenas para gestao de ordens de servico — sem modulo de custos, sem integracao com sistemas de processo ou ERP',
+        'Rondas de inspecao sao 100% manuais com prancheta e papel, sem uso de dispositivos moveis ou sensores',
+        'Nao existe programa de manutencao preditiva — toda a manutencao e corretiva ou preventiva baseada em calendario',
+        'Apenas 2 recursos de automacao para toda a planta — PLC acesso restrito, dependencia critica de pessoas',
+        'Cobertura Wi-Fi do processo e parcial, impossibilitando uso de dispositivos moveis no chao de fabrica',
+        'Cyberseguranca OT e inexistente — sem segmentacao de rede TI/OT, dados transferidos via pen-drive entre maquinas',
+      ],
+      tags: ['Engeman', 'manutencao reativa', 'automacao', 'PLC', 'cyberseguranca OT', 'Wi-Fi'],
+      sentiment: 'negative',
+      maturityIndicators: [
+        'Manutencao no estagio reativo/preventivo basico — sem analytics preditivo ou prescritivo',
+        'Engeman como sistema isolado sem integracao com ERP, PIMS ou MES',
+        'Automacao com apenas 2 recursos tecnicos — risco critico de dependencia de pessoas',
+        'Infraestrutura de rede industrial insuficiente — Wi-Fi parcial e sem segmentacao TI/OT',
+        'Transferencia de dados via pen-drive — risco de cyberseguranca e contaminacao por malware',
+      ],
+    },
+    transcript: `ENTREVISTADOR: Adilson, como funciona a gestao de manutencao e automacao hoje na planta de Americana?
+
+ADILSON FERRARI: A gente usa o Engeman como sistema de manutencao, mas ele e bem limitado no nosso contexto. Basicamente serve para abrir e fechar ordem de servico e controlar o calendario de preventiva. Nao tem modulo de custos integrado — a gente nao sabe quanto gasta por equipamento, por linha ou por tipo de falha. Nao tem integracao com o ERP pra material de reposicao, entao o almoxarifado de pecas e controlado em paralelo numa planilha. E nao tem integracao com nenhum sistema de processo — se uma maquina parou, o Engeman nao sabe automaticamente, alguem tem que ir la e registrar.
+
+ENTREVISTADOR: E sobre as rondas de inspecao e manutencao preventiva?
+
+ADILSON FERRARI: As rondas sao feitas com prancheta e formulario impresso. O mecanico vai ate o equipamento, anota temperatura, vibracao percebida, ruido, estado visual, e depois alguem digita isso no sistema. Nao temos nenhum sensor online para monitoramento continuo. Nao temos analytics preditivo — nenhum modelo que me diga "essa maquina vai falhar em 72 horas". Tudo e baseado em calendario ou na experiencia do mecanico. Quando eu falo que precisamos de preditiva, o pessoal concorda, mas nao temos infraestrutura de dados para isso.
+
+ENTREVISTADOR: Como esta a situacao da automacao e da cyberseguranca?
+
+ADILSON FERRARI: A automacao e um ponto critico. Eu tenho 2 pessoas de automacao para toda a planta. Sao eles que acessam os PLCs, fazem ajustes, fazem backup de programas. Se esses dois saem, a planta fica sem capacidade de intervir na automacao. O acesso aos PLCs e restrito a essas 2 pessoas por seguranca, mas tambem por falta de gente qualificada. Sobre cyberseguranca, sinceramente, e preocupante. Nao tem segmentacao entre a rede de TI e a rede de automacao. Dados de processo sao transferidos de maquinas para a rede via pen-drive — isso e um risco enorme de malware. A cobertura Wi-Fi no processo e parcial, entao o pessoal usa pen-drive porque nao tem outra opcao. Precisamos urgentemente de uma estrategia de cyberseguranca OT antes que aconteca um incidente.`,
+  },
+
+  {
+    id: 'i8',
+    intervieweeName: 'Caio Cardoso Campiotto',
+    role: 'Gerente de Excelencia Operacional',
+    area: 'Excelencia Operacional',
+    level: 'gerencia',
+    pillar: 'processos',
+    date: '2025-01-29',
+    status: 'analyzed',
+    readyForAI: true,
+    tags: ['standards', 'Excel', 'KPIs', 'SIDD', 'dados manuais', 'variabilidade'],
+    aiInsights: {
+      summary:
+        'Caio descreveu um cenario de gestao de performance baseado em Excel e dados manuais, com mais de 200 KPIs no sistema CID sendo desmembrados em 2000 indicadores sem governanca clara. A coleta de dados para standards e manual e a producao consistentemente fica 10% abaixo do plano, sem ferramentas de controle estatistico de processo.',
+      keyFindings: [
+        'Mais de 200 KPIs no sistema CID sendo desmembrados em cerca de 2000 indicadores — excesso de metricas sem governanca clara',
+        'Coleta de dados para definicao de standards e 100% manual, baseada em cronometragem no chao de fabrica',
+        'Existem 4 fichas tecnicas diferentes entre BDI, Intex, PeopleSoft e Standard Industrial — sem fonte unica de verdade',
+        'Producao consistentemente 10% abaixo do plano — sem ferramenta de analise de causa raiz automatizada',
+        'Nao existe controle estatistico de processo (SPC) — variabilidade e detectada apenas por inspeccao visual ou reclamacao do cliente',
+        'Excel e a ferramenta dominante para toda a gestao de excelencia operacional, incluindo analises de produtividade e qualidade',
+      ],
+      tags: ['KPIs', 'CID', 'standards', 'Excel', 'SPC', 'ficha tecnica', 'variabilidade'],
+      sentiment: 'negative',
+      maturityIndicators: [
+        'Gestao de KPIs sem governanca — 200 indicadores proliferando para 2000 sem priorizacao',
+        'Coleta de dados para standards manual — cronometragem no chao de fabrica sem automacao',
+        '4 fichas tecnicas concorrentes — ausencia de Master Data Management para dados de produto',
+        'Ausencia de SPC — controle de qualidade reativo e nao preventivo',
+        'Excel como plataforma principal de analytics — sem BI integrado ou dashboards automatizados',
+      ],
+    },
+    transcript: `ENTREVISTADOR: Caio, como funciona o processo de excelencia operacional e gestao de standards na Santista hoje?
+
+CAIO CARDOSO CAMPIOTTO: A excelencia operacional aqui e um trabalho de formiguinha. Nos temos mais de 200 KPIs cadastrados no sistema CID, e na pratica eles se desdobram em quase 2000 indicadores quando voce olha por maquina, por turno, por artigo. O problema e que nao tem governanca clara sobre o que realmente importa. Todo mundo olha o seu indicador favorito e ninguem tem a visao integrada. A coleta de dados para definicao de standards — tempo de setup, velocidade de tear, rendimento de tingimento — e feita manualmente, com cronometro e prancheta no chao de fabrica. E um processo caro, demorado e que fica defasado rapidamente.
+
+ENTREVISTADOR: Voce mencionou fichas tecnicas. Como funciona a gestao de dados de produto?
+
+CAIO CARDOSO CAMPIOTTO: Esse e um dos maiores problemas que eu enfrento. Nos temos 4 fichas tecnicas diferentes. A ficha do BDI, a ficha do Intex, a ficha do PeopleSoft e o Standard Industrial. Cada uma com dados ligeiramente diferentes, mantidas por equipes diferentes, sem sincronizacao. Quando eu preciso do dado correto de consumo de fio para um artigo, eu tenho que consultar as 4 fichas e cruzar manualmente. Isso e absurdo para uma empresa do porte da Santista. Precisamos de uma ficha tecnica unica, digital, integrada com o MES e o ERP.
+
+ENTREVISTADOR: E sobre a aderencia ao plano de producao e controle de variabilidade?
+
+CAIO CARDOSO CAMPIOTTO: A producao fica consistentemente uns 10% abaixo do plano. E quando eu vou investigar por que, nao tenho ferramenta de analise de causa raiz automatizada. E tudo manual — eu pego os dados do Intex, exporto para Excel, cruzo com os apontamentos de parada, e tento montar uma historia. Demora dias para ter uma analise que deveria ser instantanea. E sobre controle estatistico de processo, simplesmente nao existe. Nos nao temos SPC. A variabilidade e detectada quando o tecido ja saiu da maquina — as vezes dias depois, na inspecao final. Ou pior, pelo cliente. Isso e inaceitavel numa operacao que quer ser de classe mundial.`,
+  },
+
+  {
+    id: 'i9',
+    intervieweeName: 'Rodrigo Nogaroto',
+    role: 'Gerente de Producao Tinturaria-Acabamento',
+    area: 'Tinturaria e Acabamento',
+    level: 'gerencia',
+    pillar: 'operacoes',
+    date: '2025-01-28',
+    status: 'analyzed',
+    readyForAI: true,
+    tags: ['tinturaria', 'acabamento', 'qualidade', 'apontamento manual', 'Intex', 'papel'],
+    aiInsights: {
+      summary:
+        'Rodrigo revelou problemas criticos de qualidade e rastreabilidade na tinturaria e acabamento: defeitos detectados com 25 dias de atraso, diferencas de rendimento de 15% entre turnos sem explicacao clara, coleta de dados inteiramente em papel e transferencia de dados via pen-drive representando risco de seguranca.',
+      keyFindings: [
+        'Defeitos de qualidade detectados com ate 25 dias de atraso — inspecao visual manual ao final do processo',
+        'Diferenca de rendimento de 15% entre turnos: 85% no turno noturno vs 65% no turno diurno, possivelmente relacionada a controle climatico',
+        'Coleta de dados 100% em papel com formularios impressos — transcricao posterior para Excel e Intex',
+        'Transferencia de dados entre maquinas e rede feita via pen-drive — risco grave de cyberseguranca',
+        'Sem rastreabilidade automatizada de lotes — impossivel correlacionar defeito com parametros de processo',
+        'Desvios de qualidade estimados em 5-10% da producao, sendo 60% atribuidos a processo e 40% a manutencao',
+      ],
+      tags: ['qualidade', 'tinturaria', 'acabamento', 'defeitos', 'pen-drive', 'apontamento manual'],
+      sentiment: 'negative',
+      maturityIndicators: [
+        'Controle de qualidade reativo — deteccao de defeitos com 25 dias de atraso',
+        'Coleta de dados em papel sem digitalizacao no ponto de captura',
+        'Sem rastreabilidade automatizada de lotes na tinturaria e acabamento',
+        'Variabilidade entre turnos de 15% sem ferramenta de analise de causa raiz',
+        'Pen-drive como meio de transferencia de dados — ausencia de rede industrial adequada',
+      ],
+    },
+    transcript: `ENTREVISTADOR: Rodrigo, como funciona o controle de qualidade e a coleta de dados na tinturaria e acabamento?
+
+RODRIGO NOGAROTO: O controle de qualidade aqui e um desafio diario. A inspecao e visual, feita por operadores no final do processo. O problema e que entre o momento que o defeito acontece — la no tingimento ou no acabamento — e o momento que ele e detectado na inspecao final, podem se passar ate 25 dias. Vinte e cinco dias. Nesse tempo, voce ja produziu toneladas de tecido com o mesmo defeito sem saber. Nao temos nenhum sistema de deteccao em linha, nenhuma camera, nenhum sensor de qualidade automatico.
+
+ENTREVISTADOR: E sobre a coleta de dados de processo? Como funciona no dia a dia?
+
+RODRIGO NOGAROTO: Tudo em papel. O operador preenche formularios impressos a cada lote — temperatura, pressao, velocidade, produtos quimicos, tempos de processo. Depois, alguem pega esses formularios e digita no Intex ou numa planilha Excel. So que muitas vezes o dado chega incompleto, ilegivel ou com atraso. E o pior: a transferencia de dados de algumas maquinas mais modernas, que tem PLC com dados digitais, e feita via pen-drive. O operador espeta o pen-drive na maquina, copia o arquivo, e leva ate um computador da rede. Isso e um risco de seguranca enorme — qualquer virus no pen-drive pode contaminar tanto a maquina quanto a rede.
+
+ENTREVISTADOR: Voce mencionou diferenca de rendimento entre turnos. Pode detalhar?
+
+RODRIGO NOGAROTO: Sim, isso e algo que me intriga. O turno da noite tem um rendimento de aproximadamente 85%, enquanto o turno do dia fica em torno de 65%. Uma diferenca de 15 pontos percentuais. A minha hipotese e que tem relacao com o controle climatico — temperatura e umidade do ar influenciam muito o tingimento e o acabamento. A noite e mais frio e umido, e aparentemente isso beneficia o processo. Mas eu nao tenho dados para provar porque nao temos sensores ambientais integrados. E tudo empirico, baseado na experiencia dos mestres de turno. Nos estimamos que entre 5 e 10% da producao tem algum desvio de qualidade, sendo que 60% dos defeitos sao de processo e 40% sao de manutencao — maquina desregulada, rolo danificado, coisas assim.`,
+  },
+
+  {
+    id: 'i10',
+    intervieweeName: 'Vanessa Bellote',
+    role: 'Gerente de PCP e Expedicao',
+    area: 'PCP e Expedicao (Tatui)',
+    level: 'gerencia',
+    pillar: 'processos',
+    date: '2025-01-31',
+    status: 'analyzed',
+    readyForAI: true,
+    tags: ['PCP', 'expedicao', 'planejamento', 'estoque', 'Intex', 'custo'],
+    aiInsights: {
+      summary:
+        'Vanessa descreveu um processo de planejamento de producao quase inteiramente em Excel devido a lentidao e limitacoes do Intex. O calculo de custos demora 20-25 dias para 1500 SKUs, e a visibilidade de estoque entre plantas e precaria, gerando decisoes de expedição sub-otimas.',
+      keyFindings: [
+        'Planejamento de producao feito em Excel porque o Intex e lento demais para simulacoes e reprogramacoes',
+        'Calculo de custos leva 20-25 dias para processar 1500 SKUs — totalmente manual com coleta de dados de multiplas areas',
+        'Falta de visibilidade de estoque em tempo real entre as plantas — decisoes de expedicao baseadas em dados defasados',
+        'Intex possui funcionalidades de PCP mas a lentidao e interface obsoleta fazem com que os usuarios prefiram Excel',
+        'Acuracidade de estoque comprometida — diferencas frequentes entre estoque fisico e sistema',
+      ],
+      tags: ['PCP', 'planejamento', 'Excel', 'Intex', 'custeio', 'estoque', 'expedicao'],
+      sentiment: 'negative',
+      maturityIndicators: [
+        'Planejamento de producao em Excel — sistema Intex subutilizado por lentidao',
+        'Custeio manual levando 20-25 dias — sem integracao automatica de dados de consumo',
+        'Visibilidade de estoque entre plantas deficiente — sem consolidacao em tempo real',
+        'Acuracidade de estoque baixa — divergencias frequentes entre fisico e sistema',
+      ],
+    },
+    transcript: `ENTREVISTADOR: Vanessa, como funciona o planejamento de producao e a gestao de expedicao aqui em Tatui?
+
+VANESSA BELLOTE: O planejamento de producao deveria ser feito no Intex, que tem modulo de PCP. Mas na pratica, a gente faz tudo em Excel. O motivo e simples: o Intex e muito lento. Quando eu preciso reprogramar uma ordem ou simular um cenario alternativo, o sistema demora minutos para responder. No Excel eu faco em segundos. Entao o Plano Mestre de Producao e montado em planilha, e depois a gente "empurra" as ordens para o Intex para execucao. E um retrabalho absurdo, porque eu mantenho dois controles paralelos. Mas nao tenho alternativa enquanto o sistema nao for atualizado.
+
+ENTREVISTADOR: E sobre o processo de custeio? Como funciona?
+
+VANESSA BELLOTE: O custeio e um processo doloroso. Para calcular o custo de 1500 SKUs, a equipe precisa coletar dados de multiplas areas — consumo de materia-prima, tempos de maquina, energia, mao de obra, produtos quimicos. Esses dados vem de fontes diferentes: Intex, PeopleSoft, planilhas dos gestores de area. Juntar tudo, conciliar e calcular leva entre 20 e 25 dias. Sao 2 pessoas dedicadas a isso. E quando termina, ja esta desatualizado porque os precos de insumos mudaram. Nos precisamos de um sistema de custeio integrado que colete automaticamente os dados de consumo.
+
+ENTREVISTADOR: E a gestao de estoques e expedicao?
+
+VANESSA BELLOTE: A visibilidade de estoque e um problema serio. Eu nao consigo ver em tempo real o que tem em Americana, em Juiz de Fora ou em Blumenau. Quando o comercial vende algo que esta em outra planta, a gente descobre depois. A acuracidade do estoque tem problema tambem — frequentemente o estoque fisico nao bate com o sistema. Isso gera expedicoes erradas, devolvidas, e atraso no atendimento ao cliente. O Intex tem modulo de estoque, mas como os apontamentos de producao sao manuais e atrasados, o saldo do sistema nunca esta correto no momento da decisao.`,
+  },
+
+  {
+    id: 'i11',
+    intervieweeName: 'Adalberto',
+    role: 'Gerente de Custos Industriais',
+    area: 'Custos Industriais',
+    level: 'gerencia',
+    pillar: 'processos',
+    date: '2025-01-29',
+    status: 'analyzed',
+    readyForAI: true,
+    tags: ['custeio', 'Excel', 'custos', 'PeopleSoft', 'alocacao', 'SKU'],
+    aiInsights: {
+      summary:
+        'Adalberto detalhou um processo de custeio industrial totalmente manual e fragmentado, dependente de coleta de dados de multiplas fontes desconectadas. O calculo de custos para 1500 SKUs leva 20-25 dias e a alocacao de custos entre as linhas JW e WW e imprecisa, comprometendo a rentabilidade por produto.',
+      keyFindings: [
+        'Calculo de custo de 1500 SKUs requer 20-25 dias de trabalho manual com 2 pessoas dedicadas',
+        'Dados de custos coletados de fontes desconectadas: PeopleSoft (contabilidade), Intex (producao), planilhas de gestores (utilidades)',
+        'Alocacao de custos entre linhas Jeanswear (JW) e Workwear (WW) e feita por rateio simplificado, nao por custeio ABC',
+        'Nao existe sistema integrado de custeio — toda a analise e feita em planilhas Excel complexas',
+        'Custos de energia, agua e utilidades sao alocados por volume de producao e nao por consumo real por area',
+        'Impossibilidade de calcular margem por cliente ou por pedido — apenas por linha de produto agregada',
+      ],
+      tags: ['custeio', 'Excel', 'PeopleSoft', 'Intex', 'alocacao', 'margem', 'SKU'],
+      sentiment: 'negative',
+      maturityIndicators: [
+        'Custeio manual em Excel sem sistema integrado — ciclo de 20-25 dias para 1500 SKUs',
+        'Alocacao de custos por rateio simplificado — sem custeio ABC ou por atividade',
+        'Dados de custos fragmentados entre PeopleSoft, Intex e planilhas sem integracao',
+        'Impossibilidade de custeio por cliente ou pedido — visibilidade limitada a linha de produto',
+        'Custos indiretos alocados por volume e nao por consumo real — distorcao de rentabilidade',
+      ],
+    },
+    transcript: `ENTREVISTADOR: Adalberto, como funciona o processo de custeio industrial na Santista hoje?
+
+ADALBERTO: O custeio aqui e um trabalho artesanal, infelizmente. Para calcular o custo dos nossos 1500 SKUs, eu preciso ir buscar informacao em varios lugares. O consumo de materia-prima vem do Intex, mas nem sempre esta atualizado porque os apontamentos de producao sao manuais. Os dados contabeis vem do PeopleSoft. Os custos de utilidades — energia, agua, biomassa, gas — vem de planilhas que os gestores de cada area me enviam por e-mail. Juntar tudo isso, conciliar, validar e calcular leva entre 20 e 25 dias. Eu tenho 2 pessoas na minha equipe dedicadas exclusivamente a esse processo todo mes.
+
+ENTREVISTADOR: Como e feita a alocacao de custos entre as diferentes linhas de produto?
+
+ADALBERTO: Ai esta outro problema. A Santista tem duas grandes linhas: Jeanswear e Workwear. Os custos diretos — fio, corante, produtos quimicos — a gente consegue alocar razoavelmente bem por linha. Mas os custos indiretos — energia, manutencao, depreciacao, overhead — sao alocados por um rateio simplificado baseado em volume de producao. Nao e custeio ABC, nao e custeio por atividade. E um rateio proporcional. Isso gera distorcoes. Um artigo de Workwear que usa muito acabamento quimico pode estar subsidiando um artigo de Jeanswear mais simples, e a gente nao sabe. Nao consigo dizer com precisao qual e a margem real de cada produto.
+
+ENTREVISTADOR: Qual seria a solucao ideal do seu ponto de vista?
+
+ADALBERTO: Eu precisaria de um sistema de custeio integrado que puxe automaticamente os dados de consumo do MES — quando existir um MES —, os dados contabeis do ERP, e os dados de utilidades de medidores digitais por area. Hoje os medidores de energia sao analogicos e a leitura e mensal. Se eu tivesse medidores digitais por area produtiva, eu conseguiria alocar o custo de energia de forma muito mais precisa. E com um sistema integrado, o calculo que leva 25 dias poderia ser feito em 2 ou 3 dias. Isso liberaria minha equipe para fazer analise de valor ao inves de ficar digitando dados em planilha.`,
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -488,6 +783,129 @@ export const sampleInsights: Insight[] = [
     status: 'new',
     type: 'strategic',
     pillar: 'organizacao',
+  },
+
+  // ── INSIGHTS DELOITTE — Plano Diretor de Digitalizacao e Industria 4.0 ────
+
+  {
+    id: 'ins9',
+    title: 'Ausencia completa de camada MES/PIMS/LIMS — gap critico ISA-95 Nivel 3',
+    description:
+      'A analise ISA-95 revela ausencia das camadas fundamentais de Nivel 3: sistema MES para gestao da manufatura, PIMS para historizacao de dados de processo e LIMS para gestao laboratorial. As funcionalidades que deveriam estar nesses sistemas estao distribuidas em planilhas Excel, registros manuais em papel e no sistema legado Intex, que esta 20 versoes desatualizado.',
+    impact: 'Alto',
+    estimatedValue: 'Habilitador de R$ 100M+ em ganhos de eficiencia operacional',
+    origin: 'Deloitte — Entregavel Entendimento Inicial As-Is (Abril/2025)',
+    benchmarkSource: 'ISA-95 Model — Niveis 0 a 4',
+    suggestedAction:
+      'Implantar PIMS como fundacao de dados, seguido de MES integrado e LIMS para gestao laboratorial.',
+    status: 'validated',
+    type: 'risk',
+    pillar: 'sistemas',
+  },
+  {
+    id: 'ins10',
+    title: 'PeopleSoft ERP com risco de descontinuidade no Brasil em 2027',
+    description:
+      'O ERP Oracle PeopleSoft utilizado pela Santista tem possibilidade de descontinuidade na regiao Brasil e Argentina em 2027. O sistema nao possui modulo de manufatura integrado e opera sem integracao com a camada de Nivel 3 (Intex). A falta do modulo de manufatura no ERP e um gap estrutural que compromete a gestao integrada da producao.',
+    impact: 'Alto',
+    estimatedValue: 'Risco de paralisacao operacional e custo de migracao emergencial',
+    origin: 'Deloitte — Landscape de Solucoes Existentes',
+    benchmarkSource: 'Oracle — Product Lifecycle Roadmap 2025',
+    suggestedAction:
+      'Iniciar planejamento de migracao do ERP com prioridade ao modulo de manufatura.',
+    status: 'validated',
+    type: 'risk',
+    pillar: 'sistemas',
+  },
+  {
+    id: 'ins11',
+    title: 'Intex com 20 versoes de atraso — funcionalidades MES e ERP subutilizadas',
+    description:
+      'O sistema Intex, que acumula funcionalidades tanto de ERP quanto de MES para a manufatura textil, esta 20 versoes desatualizado. Isso exige que o Plano Mestre de Producao seja feito em Excel. O sistema possui funcionalidades robustas de planejamento, sequenciamento, rastreabilidade e coleta de dados, mas a interface obsoleta e apontamentos de baixa qualidade geram resistencia dos usuarios.',
+    impact: 'Alto',
+    estimatedValue: 'R$ 15M/ano em ganhos de produtividade com atualizacao e adocao',
+    origin: 'Deloitte — Analise ISA-95 do Intex',
+    benchmarkSource: 'Datatex — Intex Funcionalidade ERP/MES Textil',
+    suggestedAction:
+      'Avaliar atualizacao do Intex ou substituicao por MES moderno com integracao ao novo ERP.',
+    status: 'validated',
+    type: 'risk',
+    pillar: 'sistemas',
+  },
+  {
+    id: 'ins12',
+    title: 'Coleta de dados 90% manual — 40+ formularios em papel no chao de fabrica',
+    description:
+      'O mapeamento Deloitte identificou mais de 40 formularios de papel utilizados na producao (FO13811, FO13961, FO18259, etc.) para controle de engomagem, tingimento, caldeiras, tecelagem e acabamento. Esses apontamentos sao valiosos mas chegam com atraso, nao estao integrados a MES/PIMS, e geram retrabalho na transcricao para Excel e sistemas.',
+    impact: 'Alto',
+    estimatedValue: 'R$ 4M/ano em retrabalho de transcricao + riscos de erro',
+    origin: 'Deloitte — Mapa de Apontamentos Manuais',
+    benchmarkSource: 'ISA-95 — Coleta de Dados de Producao (Nivel 2-3)',
+    suggestedAction:
+      'Digitalizar formularios criticos com tablets/IoT e integrar ao PIMS/MES.',
+    status: 'validated',
+    type: 'quick_win',
+    pillar: 'operacoes',
+  },
+  {
+    id: 'ins13',
+    title: 'Defeitos de qualidade detectados com 25 dias de atraso — perda de rastreabilidade',
+    description:
+      'Muitos problemas de qualidade do produto sao detectados tardiamente (~25 dias) por inspecao visual ao final do processo. Isso gera perdas, reprocessamentos e inviabiliza mecanismos como OEE em tempo real. A inspecao e controle de qualidade e totalmente manual e sem rastreabilidade. Desvios estimados de 5-10% na qualidade (60% processo, 40% manutencao).',
+    impact: 'Alto',
+    estimatedValue: 'R$ 12M/ano em perdas por defeitos e reprocessamento',
+    origin: 'Deloitte — Visita Tecnica Americana/Tatui (Jan/2025)',
+    benchmarkSource: 'ISA-95 — Gestao da Qualidade de Operacao',
+    suggestedAction:
+      'Implantar inspecao automatizada com visao computacional e SPC em tempo real integrado ao MES.',
+    status: 'validated',
+    type: 'opportunity',
+    pillar: 'operacoes',
+  },
+  {
+    id: 'ins14',
+    title: 'Gasto energetico de R$ 70M/ano com potencial de reducao de 10%',
+    description:
+      'A Santista gasta aproximadamente R$ 70M/ano em energia (eletrica, biomassa, gas). Nao possui sistema de gerenciamento de consumo e demanda, com medicao analogica mensal manual. O sistema de controle de demanda CCK esta aparentemente desativado. Potencial de economia de R$ 2-3M/ano com gestao inteligente.',
+    impact: 'Alto',
+    estimatedValue: 'R$ 2-3M/ano em economia de energia',
+    origin: 'Deloitte — Entrevistas com Executivos',
+    benchmarkSource: 'ABESCO — Benchmarking de Eficiencia Energetica Industrial 2025',
+    suggestedAction:
+      'Implementar sistema de gerenciamento energetico (EMS) com medicao digital por area e controle de demanda automatizado.',
+    status: 'validated',
+    type: 'quick_win',
+    pillar: 'operacoes',
+  },
+  {
+    id: 'ins15',
+    title: 'S&OP, custeio e planejamento 100% em Excel — risco de decisoes erradas',
+    description:
+      'O processo de S&OP e inteiramente realizado em planilhas Excel sem analise estatistica. O custeio requer 2 pessoas digitando 20-25 dias para 1500 SKUs. Existem 4 fichas tecnicas diferentes entre BDI, Intex, PeopleSoft e Standard Industrial. A producao nao consegue cumprir o plano, ficando ~10% abaixo da meta.',
+    impact: 'Alto',
+    estimatedValue: 'R$ 8M/ano em custo de ineficiencia + decisoes sub-otimas',
+    origin: 'Deloitte — Diagnostico Corporativo e Visita Tecnica',
+    benchmarkSource: 'Gartner — S&OP Maturity Model 2025',
+    suggestedAction:
+      'Implementar ferramenta sistemica de planning com modelos estatisticos embarcados e ficha tecnica unica.',
+    status: 'validated',
+    type: 'strategic',
+    pillar: 'processos',
+  },
+  {
+    id: 'ins16',
+    title: 'Cyberseguranca OT e foco exclusivo de TI — sistemas industriais expostos',
+    description:
+      'As politicas e praticas de cyberseguranca sao voltadas principalmente para TI, com apenas controles basicos para automacao/OT. Dados transferidos via pen-drive entre maquinas e rede representam risco. A cobertura Wi-Fi do processo e parcial. Nao ha segmentacao adequada de rede entre TI e OT.',
+    impact: 'Alto',
+    estimatedValue: 'Risco de parada total — incalculavel',
+    origin: 'Deloitte — Visita Tecnica Automacao',
+    benchmarkSource: 'NIST Cybersecurity Framework — Manufacturing Profile',
+    suggestedAction:
+      'Implementar segmentacao de rede TI/OT, eliminar uso de pen-drives, expandir Wi-Fi industrial e criar politica de cyberseguranca OT.',
+    status: 'validated',
+    type: 'risk',
+    pillar: 'sistemas',
   },
 ];
 
@@ -635,6 +1053,149 @@ export const sampleInitiatives: Initiative[] = [
     status: 'proposed',
     startMonth: 20,
     durationMonths: 16,
+  },
+
+  // ── INICIATIVAS DELOITTE — Plano Diretor de Digitalizacao e Industria 4.0 ─
+
+  // WAVE 1 - STABILIZE
+  {
+    id: 'init10',
+    name: 'Implantacao PIMS — Historiador de Dados de Processo',
+    description:
+      'Implementar sistema PIMS para gerenciamento e armazenamento historico de dados operacionais em tempo real, coletando dados de PLCs, sensores e instrumentacao existente. Fundacao para integracao com MES e analytics avancado.',
+    pillar: 'sistemas',
+    wave: 'stabilize',
+    effort: 'M',
+    impact: 90,
+    responsible: 'Gerente de Automacao + TI',
+    dependencies: [],
+    status: 'proposed',
+    startMonth: 1,
+    durationMonths: 5,
+  },
+  {
+    id: 'init11',
+    name: 'Digitalizacao de Apontamentos — Tablets no Chao de Fabrica',
+    description:
+      'Substituir os 40+ formularios em papel por coleta digital via tablets industriais integrados ao PIMS. Prioridade: formularios de tingimento (FO18200, FO18272), acabamento (FO18273, FO18286) e caldeiras (FO18626, FO18632).',
+    pillar: 'operacoes',
+    wave: 'stabilize',
+    effort: 'P',
+    impact: 75,
+    responsible: 'Excelencia Operacional + Automacao',
+    dependencies: ['init10'],
+    status: 'proposed',
+    startMonth: 3,
+    durationMonths: 4,
+  },
+  {
+    id: 'init12',
+    name: 'Gestao Energetica — EMS e Medicao Digital',
+    description:
+      'Implantar sistema de gerenciamento energetico (EMS) com medidores digitais por area produtiva, substituindo medicao analogica mensal. Reativar e modernizar sistema de controle de demanda CCK. Meta: reducao de 10% no gasto energetico (R$ 7M/ano de economia).',
+    pillar: 'operacoes',
+    wave: 'stabilize',
+    effort: 'P',
+    impact: 80,
+    responsible: 'Manutencao + Utilidades',
+    dependencies: [],
+    status: 'proposed',
+    startMonth: 2,
+    durationMonths: 4,
+  },
+  {
+    id: 'init13',
+    name: 'Cyberseguranca OT — Segmentacao TI/OT e Eliminacao de Pen-Drives',
+    description:
+      'Implementar segmentacao de rede entre TI e OT conforme IEC 62443, eliminar transferencia de dados via pen-drive, expandir Wi-Fi industrial para cobertura completa do processo e criar politica de cyberseguranca OT.',
+    pillar: 'sistemas',
+    wave: 'stabilize',
+    effort: 'M',
+    impact: 85,
+    responsible: 'TI + Automacao',
+    dependencies: [],
+    status: 'proposed',
+    startMonth: 1,
+    durationMonths: 6,
+  },
+
+  // WAVE 2 - OPTIMIZE
+  {
+    id: 'init14',
+    name: 'MES Textil Integrado — ISA-95 Nivel 3 Completo',
+    description:
+      'Implantar MES completo cobrindo as 4 dimensoes ISA-95 Nivel 3: Gestao da Producao (GPO), Gestao da Qualidade (GQO), Gestao da Manutencao (GMO) e Gestao de Inventario (GIO). Integracao com PIMS, ERP e Engeman. Inclui APS para sequenciamento otimizado.',
+    pillar: 'operacoes',
+    wave: 'optimize',
+    effort: 'G',
+    impact: 100,
+    responsible: 'Diretoria Industrial + TI',
+    dependencies: ['init10', 'init11'],
+    status: 'proposed',
+    startMonth: 7,
+    durationMonths: 12,
+  },
+  {
+    id: 'init15',
+    name: 'LIMS — Gestao Laboratorial Integrada',
+    description:
+      'Implementar sistema LIMS para gestao dos laboratorios de qualidade, com integracao ao MES e ERP. Automatizar planos de inspecao, registro de resultados, SPC e gestao de nao-conformidades. Reduzir o delay de deteccao de defeitos de 25 dias para tempo real.',
+    pillar: 'operacoes',
+    wave: 'optimize',
+    effort: 'M',
+    impact: 85,
+    responsible: 'Qualidade + TI',
+    dependencies: ['init14'],
+    status: 'proposed',
+    startMonth: 10,
+    durationMonths: 6,
+  },
+  {
+    id: 'init16',
+    name: 'Ficha Tecnica Unica e PLM Digital',
+    description:
+      'Consolidar as 4 fichas tecnicas dispersas (BDI, Intex, PeopleSoft, Standard Industrial) em uma ficha tecnica unica digital. Implantar PLM para gestao do ciclo de vida do produto, simulacao de custos e integracao com MES para execucao.',
+    pillar: 'processos',
+    wave: 'optimize',
+    effort: 'M',
+    impact: 80,
+    responsible: 'Desenvolvimento + TI + Custos',
+    dependencies: ['init14'],
+    status: 'proposed',
+    startMonth: 8,
+    durationMonths: 8,
+  },
+
+  // WAVE 3 - TRANSFORM
+  {
+    id: 'init17',
+    name: 'Inspecao Automatica por Visao Computacional',
+    description:
+      'Implantar sistemas de inspecao automatica de tecidos usando cameras e IA para deteccao de defeitos em tempo real durante a producao, substituindo inspecao visual manual. Integracao com MES para bloqueio automatico de lotes fora de especificacao.',
+    pillar: 'operacoes',
+    wave: 'transform',
+    effort: 'G',
+    impact: 90,
+    responsible: 'CoE Digital + Parceiro de Visao Computacional',
+    dependencies: ['init14', 'init15'],
+    status: 'proposed',
+    startMonth: 20,
+    durationMonths: 10,
+  },
+  {
+    id: 'init18',
+    name: 'Manutencao Preditiva com Analytics Avancado',
+    description:
+      'Implementar plataforma de manutencao preditiva integrando dados de vibracao, temperatura e processo do PIMS com modelos de ML para antecipacao de falhas. Prioridade: compressores, teares e caldeiras. Meta: reducao de 50% em paradas nao planejadas.',
+    pillar: 'operacoes',
+    wave: 'transform',
+    effort: 'G',
+    impact: 85,
+    responsible: 'Manutencao + CoE Digital',
+    dependencies: ['init10', 'init14'],
+    status: 'proposed',
+    startMonth: 19,
+    durationMonths: 12,
   },
 ];
 
@@ -809,5 +1370,52 @@ export const sampleKPIs: KPI[] = [
     target: 'R$ 45M (ROI 1,8x sobre investimento de R$ 25M)',
     unit: 'R$ M',
     timeframe: '6 meses',
+  },
+
+  // ── KPIs DELOITTE — Plano Diretor de Digitalizacao e Industria 4.0 ────────
+
+  {
+    id: 'kpi11',
+    pillar: 'operacoes',
+    name: 'Formularios Digitalizados (%)',
+    description:
+      'Percentual dos 40+ formularios em papel substituidos por coleta digital via tablets/IoT.',
+    currentBaseline: '0%',
+    target: '100%',
+    unit: '%',
+    timeframe: '18 meses',
+  },
+  {
+    id: 'kpi12',
+    pillar: 'operacoes',
+    name: 'Tempo de Deteccao de Defeitos de Qualidade',
+    description:
+      'Tempo medio entre a ocorrencia de um defeito de qualidade e sua deteccao pelo sistema.',
+    currentBaseline: '25 dias',
+    target: 'Tempo real (<1h)',
+    unit: 'dias',
+    timeframe: '24 meses',
+  },
+  {
+    id: 'kpi13',
+    pillar: 'operacoes',
+    name: 'Custo Energetico por Metro de Tecido',
+    description:
+      'Custo de energia (eletrica + biomassa + gas) por metro linear de tecido produzido.',
+    currentBaseline: 'R$ 70M/ano total (sem granularidade)',
+    target: 'Reducao de 10% (R$ 7M/ano)',
+    unit: 'R$/metro',
+    timeframe: '12 meses',
+  },
+  {
+    id: 'kpi14',
+    pillar: 'sistemas',
+    name: 'Cobertura ISA-95 Nivel 3',
+    description:
+      'Percentual das funcionalidades ISA-95 Nivel 3 (Producao, Qualidade, Manutencao, Inventario) cobertas por sistemas digitais vs. papel/Excel.',
+    currentBaseline: '15% (apenas Intex parcial + BMS parcial)',
+    target: '90%',
+    unit: '%',
+    timeframe: '36 meses',
   },
 ];
