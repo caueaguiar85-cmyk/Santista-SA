@@ -1,6 +1,6 @@
 [variables]
-NODE_ENV = "production"
 NPM_CONFIG_PRODUCTION = "false"
+CI = "false"
 
 [phases.setup]
 nixPkgs = ["nodejs_20"]
@@ -12,4 +12,4 @@ cmds = ["npm install"]
 cmds = ["npm run build"]
 
 [start]
-cmd = "npx serve dist -s -l ${PORT:-3000}"
+cmd = "npx serve dist -s -l $PORT"
