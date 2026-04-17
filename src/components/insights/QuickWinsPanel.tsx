@@ -27,7 +27,7 @@ const QuickWinItem: React.FC<QuickWinItemProps> = ({ rank, insight }) => {
   return (
     <li className="flex items-start gap-3">
       {/* Rank */}
-      <span className="shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 text-amber-800 text-xs font-bold border border-amber-300">
+      <span className="shrink-0 flex items-center justify-center w-7 h-7 rounded-full bg-amber-500/15 text-amber-400 text-xs font-bold border border-amber-500/25">
         {rank}
       </span>
 
@@ -38,7 +38,7 @@ const QuickWinItem: React.FC<QuickWinItemProps> = ({ rank, insight }) => {
             {insight.title}
           </p>
           {insight.estimatedValue && (
-            <span className="shrink-0 text-sm font-bold text-emerald-700">
+            <span className="shrink-0 text-sm font-bold text-emerald-400">
               {roiLabel(insight.estimatedValue)}
             </span>
           )}
@@ -46,9 +46,9 @@ const QuickWinItem: React.FC<QuickWinItemProps> = ({ rank, insight }) => {
 
         {/* Value bar */}
         {value > 0 && (
-          <div className="mt-1.5 h-1.5 w-full bg-amber-100 rounded-full overflow-hidden">
+          <div className="mt-1.5 h-1.5 w-full bg-amber-500/15 rounded-full overflow-hidden">
             <div
-              className="h-full bg-amber-400 rounded-full transition-all duration-500"
+              className="h-full bg-amber-500 rounded-full transition-all duration-500"
               style={{ width: `${barWidth}%` }}
             />
           </div>
@@ -71,28 +71,28 @@ const QuickWinsPanel: React.FC = () => {
     .slice(0, 5);
 
   return (
-    <div className="rounded-xl border-2 border-amber-300 bg-amber-50 p-6 shadow-sm">
+    <div className="rounded-xl border-2 border-amber-500/25 bg-amber-500/5 p-6 shadow-sm">
       {/* Header */}
       <div className="flex items-center gap-3 mb-5">
-        <div className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-400 text-white text-lg font-bold shadow-sm">
+        <div className="flex items-center justify-center w-9 h-9 rounded-full bg-amber-500/30 text-white text-lg font-bold shadow-sm">
           ⚡
         </div>
         <div>
-          <h2 className="font-heading text-base font-bold text-amber-900 leading-tight">
+          <h2 className="font-heading text-base font-bold text-amber-400 leading-tight">
             Top 5 Quick Wins por ROI
           </h2>
-          <p className="text-xs text-amber-700">
+          <p className="text-xs text-amber-500">
             Iniciativas de alto retorno com baixo esforco de implementacao
           </p>
         </div>
-        <span className="ml-auto shrink-0 inline-flex items-center justify-center px-3 py-1 rounded-full bg-amber-200 text-amber-800 text-xs font-semibold border border-amber-300">
+        <span className="ml-auto shrink-0 inline-flex items-center justify-center px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 text-xs font-semibold border border-amber-500/25">
           {quickWins.length} identificado{quickWins.length !== 1 ? 's' : ''}
         </span>
       </div>
 
       {/* List */}
       {quickWins.length === 0 ? (
-        <p className="text-sm text-amber-700 text-center py-4">
+        <p className="text-sm text-amber-400 text-center py-4">
           Nenhum quick win identificado ainda. Execute o diagnostico para gerar oportunidades.
         </p>
       ) : (

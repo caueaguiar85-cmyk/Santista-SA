@@ -91,10 +91,10 @@ const InsightsPage: React.FC = () => {
       {insights.length > 0 && (
         <div className="flex flex-wrap gap-3 mb-6">
           {[
-            { label: 'Riscos', count: counts.risk, color: 'bg-red-100 text-red-700 border-red-200' },
-            { label: 'Oportunidades', count: counts.opportunity, color: 'bg-green-100 text-green-700 border-green-200' },
-            { label: 'Quick Wins', count: counts.quick_win, color: 'bg-amber-100 text-amber-700 border-amber-200' },
-            { label: 'Estrategicos', count: counts.strategic, color: 'bg-sky-100 text-sky-700 border-sky-200' },
+            { label: 'Riscos', count: counts.risk, color: 'bg-red-500/10 text-red-400 border-red-500/20' },
+            { label: 'Oportunidades', count: counts.opportunity, color: 'bg-green-500/10 text-green-400 border-green-500/20' },
+            { label: 'Quick Wins', count: counts.quick_win, color: 'bg-amber-500/10 text-amber-400 border-amber-500/20' },
+            { label: 'Estrategicos', count: counts.strategic, color: 'bg-sky-500/10 text-sky-400 border-sky-500/20' },
           ].map(({ label, count, color }) => (
             <div
               key={label}

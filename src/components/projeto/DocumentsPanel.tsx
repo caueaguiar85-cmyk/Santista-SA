@@ -31,10 +31,10 @@ const docTypeLabel: Record<ProjectDocument['type'], string> = {
 };
 
 const docTypeBg: Record<ProjectDocument['type'], string> = {
-  proposal: 'bg-blue-50 border-blue-100',
-  contract: 'bg-emerald-50 border-emerald-100',
-  data: 'bg-amber-50 border-amber-100',
-  organogram: 'bg-violet-50 border-violet-100',
+  proposal: 'bg-blue-500/10 border-blue-500/20',
+  contract: 'bg-emerald-500/10 border-emerald-500/20',
+  data: 'bg-amber-500/10 border-amber-500/20',
+  organogram: 'bg-violet-500/10 border-violet-500/20',
   other: 'bg-surface border-border',
 };
 

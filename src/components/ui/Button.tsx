@@ -18,13 +18,13 @@ interface ButtonProps {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-primary text-white hover:bg-primary/90 focus-visible:ring-primary/50',
+    'bg-[#1E293B] text-white hover:bg-[#334155] focus-visible:ring-[#1E293B]/50 border border-white/[0.06]',
   accent:
-    'bg-accent text-white hover:bg-accent-dark focus-visible:ring-accent/50',
+    'bg-accent text-white hover:bg-accent-dark focus-visible:ring-accent/50 shadow-[0_0_20px_rgba(227,30,36,0.2)]',
   outline:
-    'border border-border bg-white text-text hover:bg-surface focus-visible:ring-accent/30',
+    'border border-border bg-surface-2 text-text hover:bg-white/[0.04] focus-visible:ring-accent/30',
   ghost:
-    'bg-transparent text-text hover:bg-surface focus-visible:ring-accent/30',
+    'bg-transparent text-text hover:bg-white/[0.04] focus-visible:ring-accent/30',
   danger:
     'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500/50',
 };

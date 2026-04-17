@@ -61,14 +61,14 @@ const MetricCard: React.FC<MetricCardProps> = ({ icon, label, value, sub, accent
     className={[
       'flex flex-col gap-3 rounded-xl p-5 border',
       accent
-        ? 'bg-primary border-primary/20 text-white'
+        ? 'bg-accent/10 border-accent/20'
         : 'bg-surface-2 border-border',
     ].join(' ')}
   >
     <div
       className={[
         'w-10 h-10 rounded-lg flex items-center justify-center',
-        accent ? 'bg-white/10' : 'bg-accent/10',
+        accent ? 'bg-accent/15' : 'bg-accent/10',
       ].join(' ')}
     >
       <span className={accent ? 'text-accent' : 'text-accent'}>{icon}</span>
@@ -77,7 +77,7 @@ const MetricCard: React.FC<MetricCardProps> = ({ icon, label, value, sub, accent
       <p
         className={[
           'font-body text-xs font-medium uppercase tracking-wide mb-1',
-          accent ? 'text-white/60' : 'text-text-muted',
+          accent ? 'text-primary/60' : 'text-text-muted',
         ].join(' ')}
       >
         {label}
@@ -94,7 +94,7 @@ const MetricCard: React.FC<MetricCardProps> = ({ icon, label, value, sub, accent
         <p
           className={[
             'font-body text-xs mt-0.5',
-            accent ? 'text-white/50' : 'text-text-muted',
+            accent ? 'text-primary/50' : 'text-text-muted',
           ].join(' ')}
         >
           {sub}

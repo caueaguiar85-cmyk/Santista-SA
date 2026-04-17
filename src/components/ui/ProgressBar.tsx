@@ -28,9 +28,9 @@ const fillClasses: Record<ProgressVariant, string> = {
 const labelColorClasses: Record<ProgressVariant, string> = {
   primary: 'text-primary',
   accent:  'text-primary',
-  success: 'text-emerald-700',
-  warning: 'text-amber-700',
-  danger:  'text-red-700',
+  success: 'text-emerald-400',
+  warning: 'text-amber-400',
+  danger:  'text-red-400',
 };
 
 const clamp = (n: number, min: number, max: number) =>

@@ -136,11 +136,11 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
               className={[
                 'flex gap-3 p-3 rounded-lg border transition-all duration-300',
                 isRunning
-                  ? 'border-sky-200 bg-sky-50/60'
+                  ? 'border-sky-500/20 bg-sky-500/5'
                   : isCompleted
-                  ? 'border-emerald-200 bg-emerald-50/40'
+                  ? 'border-emerald-500/20 bg-emerald-500/5'
                   : isError
-                  ? 'border-red-200 bg-red-50/40'
+                  ? 'border-red-500/20 bg-red-500/5'
                   : 'border-border bg-surface-2',
               ]
                 .filter(Boolean)
@@ -151,11 +151,11 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
                 className={[
                   'flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center',
                   isRunning
-                    ? 'bg-sky-100 text-sky-600'
+                    ? 'bg-sky-500/15 text-sky-400'
                     : isCompleted
-                    ? 'bg-emerald-100 text-emerald-600'
+                    ? 'bg-emerald-500/15 text-emerald-400'
                     : isError
-                    ? 'bg-red-100 text-red-600'
+                    ? 'bg-red-500/15 text-red-400'
                     : 'bg-surface text-primary/30',
                 ]
                   .filter(Boolean)
@@ -175,11 +175,11 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
                     className={[
                       'font-body text-sm font-semibold',
                       isCompleted
-                        ? 'text-emerald-800'
+                        ? 'text-emerald-400'
                         : isError
-                        ? 'text-red-800'
+                        ? 'text-red-400'
                         : isRunning
-                        ? 'text-sky-800'
+                        ? 'text-sky-400'
                         : 'text-primary/50',
                     ]
                       .filter(Boolean)
@@ -203,8 +203,8 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
 
                 {/* Preview text when completed */}
                 {isCompleted && run.preview && (
-                  <div className="mt-2 p-2 bg-emerald-50 rounded border border-emerald-100">
-                    <p className="font-body text-xs text-emerald-700 line-clamp-2">
+                  <div className="mt-2 p-2 bg-emerald-500/10 rounded border border-emerald-500/15">
+                    <p className="font-body text-xs text-emerald-400 line-clamp-2">
                       {run.preview}
                     </p>
                   </div>
@@ -212,8 +212,8 @@ const AgentProgress: React.FC<AgentProgressProps> = ({ agentRuns }) => {
 
                 {/* Error message */}
                 {isError && run.error && (
-                  <div className="mt-2 p-2 bg-red-50 rounded border border-red-100">
-                    <p className="font-body text-xs text-red-700">{run.error}</p>
+                  <div className="mt-2 p-2 bg-red-500/10 rounded border border-red-500/15">
+                    <p className="font-body text-xs text-red-400">{run.error}</p>
                   </div>
                 )}
               </div>

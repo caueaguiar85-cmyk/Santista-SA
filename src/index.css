@@ -5,17 +5,19 @@
   --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
 
-  --color-primary: #1E293B;
-  --color-primary-light: #334155;
-  --color-primary-lighter: #475569;
-  --color-accent: #6366F1;
-  --color-accent-light: #818CF8;
-  --color-accent-dark: #4F46E5;
-  --color-surface: #F8FAFC;
-  --color-surface-2: #FFFFFF;
-  --color-text: #0F172A;
-  --color-text-muted: #94A3B8;
-  --color-border: #E2E8F0;
+  /* Dark theme — Santista S.A. */
+  --color-primary: #E2E8F0;
+  --color-primary-light: #CBD5E1;
+  --color-primary-lighter: #94A3B8;
+  --color-accent: #E31E24;
+  --color-accent-light: #FF4D52;
+  --color-accent-dark: #B8181D;
+  --color-surface: #0A0A0F;
+  --color-surface-2: #12121A;
+  --color-surface-3: #1A1A26;
+  --color-text: #F1F1F6;
+  --color-text-muted: #7878A0;
+  --color-border: rgba(255, 255, 255, 0.08);
   --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-danger: #EF4444;
@@ -26,12 +28,20 @@
   --color-pilar-3: #10B981;
   --color-pilar-4: #F59E0B;
   --color-pilar-5: #EF4444;
+
+  --color-glow-red: rgba(227, 30, 36, 0.15);
+  --color-glow-red-strong: rgba(227, 30, 36, 0.3);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
 }
 
 body {
@@ -50,8 +60,9 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.025em;
 }
 
+/* Premium scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -59,10 +70,63 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Ambient glow backgrounds */
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  animation: orbDrift 25s ease-in-out infinite;
+}
+
+.glow-orb--red {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(227,30,36,0.07) 0%, transparent 70%);
+  top: -5%;
+  right: -5%;
+}
+
+.glow-orb--blue {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59,130,246,0.04) 0%, transparent 70%);
+  bottom: 10%;
+  left: 20%;
+  animation-delay: -10s;
+}
+
+@keyframes orbDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -30px) scale(1.03); }
+  66% { transform: translate(-15px, 15px) scale(0.97); }
+}
+
+/* Card hover glow */
+.card-glow {
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.card-glow:hover {
+  border-color: rgba(227, 30, 36, 0.2) !important;
+  box-shadow: 0 0 30px rgba(227, 30, 36, 0.06);
+}
+
+/* Fade in animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.4s ease-out both;
 }

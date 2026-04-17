@@ -39,9 +39,9 @@ const allocationLabel = (pct: number): string => {
 };
 
 const allocationBadgeColor = (pct: number): string => {
-  if (pct >= 100) return 'text-emerald-700';
+  if (pct >= 100) return 'text-emerald-400';
   if (pct >= 75) return 'text-accent';
-  if (pct >= 50) return 'text-blue-600';
+  if (pct >= 50) return 'text-blue-400';
   return 'text-text-muted';
 };
 

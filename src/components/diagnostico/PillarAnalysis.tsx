@@ -45,9 +45,9 @@ function priorityVariant(priority: Recommendation['priority']): 'danger' | 'warn
 }
 
 function riskScoreColor(score: number): string {
-  if (score >= 3.5) return 'text-red-600 font-bold';
-  if (score >= 2.5) return 'text-amber-600 font-semibold';
-  return 'text-emerald-600';
+  if (score >= 3.5) return 'text-red-400 font-bold';
+  if (score >= 2.5) return 'text-amber-400 font-semibold';
+  return 'text-emerald-400';
 }
 
 function effortLabel(effort: 'P' | 'M' | 'G'): string {
@@ -234,10 +234,10 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
                     'px-3 py-1 rounded-full font-body text-xs font-medium border transition-all',
                     pillarScore.status === s
                       ? s === 'approved'
-                        ? 'bg-emerald-100 border-emerald-300 text-emerald-700'
+                        ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400'
                         : s === 'reviewed'
-                        ? 'bg-sky-100 border-sky-300 text-sky-700'
-                        : 'bg-amber-100 border-amber-300 text-amber-700'
+                        ? 'bg-sky-500/15 border-sky-500/30 text-sky-400'
+                        : 'bg-amber-500/15 border-amber-500/30 text-amber-400'
                       : 'border-border text-primary/40 hover:border-primary/30 hover:text-primary/60',
                   ]
                     .filter(Boolean)
@@ -330,19 +330,19 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
       {pillarScore.estimatedGains && (
         <Card title="Ganhos Estimados">
           <div className="flex items-start gap-4 flex-wrap">
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center min-w-[140px]">
-              <DollarSign size={20} className="text-emerald-600 mx-auto mb-1" />
-              <p className="font-heading text-2xl font-bold text-emerald-700">
+            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-center min-w-[140px]">
+              <DollarSign size={20} className="text-emerald-400 mx-auto mb-1" />
+              <p className="font-heading text-2xl font-bold text-emerald-400">
                 {pillarScore.estimatedGains.totalEstimatedGain}
               </p>
-              <p className="font-body text-xs text-emerald-600 mt-0.5">ganho total estimado</p>
+              <p className="font-body text-xs text-emerald-500 mt-0.5">ganho total estimado</p>
             </div>
-            <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 text-center min-w-[100px]">
-              <Clock size={20} className="text-sky-600 mx-auto mb-1" />
-              <p className="font-heading text-2xl font-bold text-sky-700">
+            <div className="bg-sky-500/10 border border-sky-500/20 rounded-xl p-4 text-center min-w-[100px]">
+              <Clock size={20} className="text-sky-400 mx-auto mb-1" />
+              <p className="font-heading text-2xl font-bold text-sky-400">
                 {pillarScore.estimatedGains.paybackMonths}m
               </p>
-              <p className="font-body text-xs text-sky-600 mt-0.5">payback medio</p>
+              <p className="font-body text-xs text-sky-500 mt-0.5">payback medio</p>
             </div>
           </div>
 
@@ -374,7 +374,7 @@ const PillarAnalysis: React.FC<PillarAnalysisProps> = ({ pillarScore, pillar }) 
                       >
                         {item.confidence}
                       </Badge>
-                      <span className="font-body text-sm font-semibold text-emerald-700">
+                      <span className="font-body text-sm font-semibold text-emerald-400">
                         {item.gain}
                       </span>
                     </div>

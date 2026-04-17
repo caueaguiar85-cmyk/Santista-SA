@@ -112,7 +112,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({ interview, onClick }) => 
             className={[
               'shrink-0 inline-flex items-center gap-1',
               'px-2 py-0.5 rounded-full text-xs font-medium font-body',
-              'bg-emerald-50 text-emerald-700 border border-emerald-200',
+              'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
             ].join(' ')}
           >
             <Sparkles size={11} aria-hidden="true" />

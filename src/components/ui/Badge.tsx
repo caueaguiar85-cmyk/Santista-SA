@@ -25,16 +25,16 @@ interface BadgeProps {
 
 const variantClasses: Record<BadgeVariant, string> = {
   default:  'bg-primary/10 text-primary border border-primary/20',
-  success:  'bg-emerald-50 text-emerald-700 border border-emerald-200',
-  warning:  'bg-amber-50 text-amber-700 border border-amber-200',
-  danger:   'bg-red-50 text-red-700 border border-red-200',
-  info:     'bg-sky-50 text-sky-700 border border-sky-200',
-  accent:   'bg-accent/15 text-primary border border-accent/30',
-  'pilar-1': 'bg-violet-50 text-violet-700 border border-violet-200',
-  'pilar-2': 'bg-blue-50 text-blue-700 border border-blue-200',
-  'pilar-3': 'bg-teal-50 text-teal-700 border border-teal-200',
-  'pilar-4': 'bg-orange-50 text-orange-700 border border-orange-200',
-  'pilar-5': 'bg-pink-50 text-pink-700 border border-pink-200',
+  success:  'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
+  warning:  'bg-amber-500/10 text-amber-400 border border-amber-500/20',
+  danger:   'bg-red-500/10 text-red-400 border border-red-500/20',
+  info:     'bg-sky-500/10 text-sky-400 border border-sky-500/20',
+  accent:   'bg-accent/15 text-accent-light border border-accent/30',
+  'pilar-1': 'bg-violet-500/10 text-violet-400 border border-violet-500/20',
+  'pilar-2': 'bg-blue-500/10 text-blue-400 border border-blue-500/20',
+  'pilar-3': 'bg-teal-500/10 text-teal-400 border border-teal-500/20',
+  'pilar-4': 'bg-orange-500/10 text-orange-400 border border-orange-500/20',
+  'pilar-5': 'bg-pink-500/10 text-pink-400 border border-pink-500/20',
 };
 
 const sizeClasses: Record<BadgeSize, string> = {

@@ -32,13 +32,13 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className="fixed top-0 left-0 h-screen flex flex-col z-40 border-r border-border bg-white"
+      className="fixed top-0 left-0 h-screen flex flex-col z-40 border-r border-border bg-surface-2 backdrop-blur-xl"
       style={{ width: 260 }}
     >
       {/* Logo */}
       <div className="px-5 pt-6 pb-4">
         <div className="flex items-center gap-2.5 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center shadow-[0_0_16px_rgba(227,30,36,0.3)]">
             <Hexagon size={16} className="text-white" aria-hidden="true" />
           </div>
           <span className="text-lg font-bold text-text tracking-tight" style={{ fontFamily: 'var(--font-heading)' }}>
@@ -70,8 +70,8 @@ const Sidebar: React.FC = () => {
                 'flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium',
                 'transition-all duration-200',
                 isActive
-                  ? 'bg-accent/10 text-accent'
-                  : 'text-text-muted hover:text-text hover:bg-surface',
+                  ? 'bg-accent/10 text-accent border-r-2 border-accent'
+                  : 'text-text-muted hover:text-text hover:bg-white/[0.03]',
               ].join(' ')
             }
           >
@@ -92,7 +92,7 @@ const Sidebar: React.FC = () => {
 
       {/* Project Progress */}
       <div className="px-4 py-4">
-        <div className="rounded-xl border border-border p-3.5 bg-surface">
+        <div className="rounded-xl border border-border p-3.5 bg-white/[0.02]">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-medium text-text-muted">
               Progresso
@@ -103,7 +103,7 @@ const Sidebar: React.FC = () => {
           </div>
 
           <div
-            className="w-full rounded-full overflow-hidden bg-border"
+            className="w-full rounded-full overflow-hidden bg-white/[0.06]"
             style={{ height: 4 }}
             role="progressbar"
             aria-valuenow={completion}
@@ -111,7 +111,7 @@ const Sidebar: React.FC = () => {
             aria-valuemax={100}
           >
             <div
-              className="h-full rounded-full transition-all duration-500 bg-accent"
+              className="h-full rounded-full transition-all duration-500 bg-accent shadow-[0_0_8px_rgba(227,30,36,0.4)]"
               style={{ width: `${completion}%` }}
             />
           </div>

@@ -96,7 +96,7 @@ const InsightCard: React.FC<{ insight: Insight }> = ({ insight }) => {
         {insight.estimatedValue && (
           <div>
             <span className="font-semibold text-text">Valor estimado:</span>{' '}
-            <span className="text-emerald-700 font-medium">{insight.estimatedValue}</span>
+            <span className="text-emerald-400 font-medium">{insight.estimatedValue}</span>
           </div>
         )}
         <div>

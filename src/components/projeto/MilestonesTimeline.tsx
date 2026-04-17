@@ -147,10 +147,10 @@ const MilestonesTimeline: React.FC = () => {
                   className={[
                     'font-body text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border',
                     phase === 1
-                      ? 'bg-blue-50 text-blue-700 border-blue-200'
+                      ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                       : phase === 2
-                      ? 'bg-violet-50 text-violet-700 border-violet-200'
-                      : 'bg-teal-50 text-teal-700 border-teal-200',
+                      ? 'bg-violet-500/10 text-violet-400 border-violet-500/20'
+                      : 'bg-teal-500/10 text-teal-400 border-teal-500/20',
                   ].join(' ')}
                 >
                   {phaseLabel[phase]}

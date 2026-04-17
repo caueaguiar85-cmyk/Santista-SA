@@ -77,7 +77,7 @@ const Modal: React.FC<ModalProps> = ({
       {/* Backdrop */}
       <div
         className={[
-          'absolute inset-0 bg-primary/60 backdrop-blur-sm',
+          'absolute inset-0 bg-black/70 backdrop-blur-sm',
           'transition-opacity duration-300',
           isOpen ? 'opacity-100' : 'opacity-0',
         ].join(' ')}
@@ -88,7 +88,7 @@ const Modal: React.FC<ModalProps> = ({
       {/* Panel */}
       <div
         className={[
-          'relative w-full bg-surface-2 rounded-2xl shadow-xl border border-border',
+          'relative w-full bg-surface-2 rounded-2xl shadow-2xl border border-border',
           'flex flex-col max-h-[90vh]',
           'transition-all duration-300',
           isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0',

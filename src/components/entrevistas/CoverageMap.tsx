@@ -32,9 +32,9 @@ interface CellInfo {
 }
 
 const CELL_CLASSES: Record<CellState, string> = {
-  analyzed: 'bg-emerald-100 border-emerald-300 text-emerald-800',
-  completed: 'bg-amber-50 border-amber-300 text-amber-800',
-  empty:    'bg-red-50 border-red-200 text-red-400',
+  analyzed: 'bg-emerald-500/15 border-emerald-500/30 text-emerald-400',
+  completed: 'bg-amber-500/10 border-amber-500/25 text-amber-400',
+  empty:    'bg-red-500/10 border-red-500/20 text-red-400',
 };
 
 const CELL_LABEL: Record<CellState, string> = {

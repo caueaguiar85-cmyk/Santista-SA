@@ -48,9 +48,9 @@ const SENTIMENT_CONFIG: Record<
   AIInsights['sentiment'],
   { label: string; classes: string }
 > = {
-  positive: { label: 'Positivo',  classes: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
-  neutral:  { label: 'Neutro',    classes: 'bg-sky-50 text-sky-700 border border-sky-200' },
-  negative: { label: 'Negativo',  classes: 'bg-red-50 text-red-700 border border-red-200' },
+  positive: { label: 'Positivo',  classes: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' },
+  neutral:  { label: 'Neutro',    classes: 'bg-sky-500/10 text-sky-400 border border-sky-500/20' },
+  negative: { label: 'Negativo',  classes: 'bg-red-500/10 text-red-400 border border-red-500/20' },
 };
 
 // Placeholder AI analysis that runs after 2 s
@@ -207,7 +207,7 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
 
       {/* AI Insights */}
       {aiInsights ? (
-        <div className="flex flex-col gap-5 border border-emerald-200 rounded-xl p-5 bg-emerald-50/40">
+        <div className="flex flex-col gap-5 border border-emerald-500/20 rounded-xl p-5 bg-emerald-500/5">
           <div className="flex items-center gap-2">
             <Sparkles size={16} className="text-emerald-600" aria-hidden="true" />
             <h3 className="font-heading font-semibold text-primary text-base">

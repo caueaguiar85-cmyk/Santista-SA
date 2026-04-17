@@ -89,12 +89,12 @@ function overallScore(report: DiagnosticReport | null, useMock: boolean): number
 function ScoreBadge({ score }: { score: number }) {
   const color =
     score >= 4
-      ? 'text-emerald-600'
+      ? 'text-emerald-400'
       : score >= 3
-      ? 'text-sky-600'
+      ? 'text-sky-400'
       : score >= 2
-      ? 'text-amber-600'
-      : 'text-red-600';
+      ? 'text-amber-400'
+      : 'text-red-400';
 
   return (
     <div className="text-center">
@@ -143,9 +143,9 @@ const MaturityRadar: React.FC<MaturityRadarProps> = ({ report }) => {
         </div>
         <div className="flex-1 min-w-0">
           {useMock && (
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-50 border border-amber-200 rounded-lg mb-3">
-              <Activity size={14} className="text-amber-600" />
-              <span className="font-body text-xs text-amber-700 font-medium">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-lg mb-3">
+              <Activity size={14} className="text-amber-400" />
+              <span className="font-body text-xs text-amber-400 font-medium">
                 Dados de demonstracao — execute o diagnostico para ver resultados reais
               </span>
             </div>
@@ -186,15 +186,15 @@ const MaturityRadar: React.FC<MaturityRadarProps> = ({ report }) => {
               dot={{ r: 3, fill: '#D4AF37', strokeWidth: 0 }}
             />
 
-            {/* Santista — solid fill, primary blue */}
+            {/* Santista — solid fill, red accent */}
             <Radar
               name="Santista"
               dataKey="Santista"
-              stroke="#1B3A5C"
+              stroke="#E31E24"
               strokeWidth={2}
-              fill="#1B3A5C"
-              fillOpacity={0.18}
-              dot={{ r: 4, fill: '#1B3A5C', strokeWidth: 0 }}
+              fill="#E31E24"
+              fillOpacity={0.15}
+              dot={{ r: 4, fill: '#E31E24', strokeWidth: 0 }}
             />
 
             <Tooltip content={<CustomTooltip />} />
