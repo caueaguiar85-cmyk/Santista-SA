@@ -31,7 +31,7 @@ const Sidebar: React.FC = () => {
   const completion = project?.completionPercent ?? 0;
 
   return (
-    <aside className="bg-surface-2 border-r border-border w-64 fixed top-0 left-0 h-screen flex flex-col z-40 transition-colors duration-200">
+    <aside className="bg-surface-2 border-r border-border fixed top-0 left-0 h-screen flex flex-col z-40 transition-colors duration-200" style={{ width: 256 }}>
       {/* Brand */}
       <div className="px-5 pt-6 pb-5">
         <div className="flex items-center gap-3">

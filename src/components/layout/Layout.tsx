@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { useThemeStore } from '../../store/themeStore';
 
+const SIDEBAR_W = 256;
+
 const Layout: React.FC = () => {
   const theme = useThemeStore((s) => s.theme);
 
@@ -11,10 +13,13 @@ const Layout: React.FC = () => {
   }, [theme]);
 
   return (
-    <div className="flex min-h-screen bg-bg transition-colors duration-200">
+    <div className="min-h-screen bg-bg transition-colors duration-200">
       <Sidebar />
 
-      <main className="flex-1 min-h-screen ml-64 overflow-x-hidden">
+      <main
+        className="min-h-screen overflow-x-hidden"
+        style={{ marginLeft: SIDEBAR_W }}
+      >
         <div className="p-6 lg:p-8">
           <Outlet />
         </div>
