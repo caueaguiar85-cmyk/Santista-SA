@@ -7,6 +7,7 @@ import {
   Loader2,
   CalendarDays,
   User,
+  UserCheck,
   Briefcase,
   Building2,
   Layers,
@@ -15,13 +16,12 @@ import {
   TrendingUp,
   MessageSquareText,
 } from 'lucide-react';
-import type { Interview, AIInsights } from '../../types/interview';
+import type { Interview, AIInsights, PillarType } from '../../types/interview';
 import { PILLAR_LABELS, HIERARCHY_LABELS } from '../../types/interview';
 import { useInterviewStore } from '../../store/interviewStore';
 import Badge from '../ui/Badge';
 import Button from '../ui/Button';
 
-type PillarType = Interview['pillar'];
 type BadgeVariant = 'pilar-1' | 'pilar-2' | 'pilar-3' | 'pilar-4' | 'pilar-5';
 
 const PILLAR_BADGE_VARIANT: Record<PillarType, BadgeVariant> = {
@@ -53,27 +53,106 @@ const SENTIMENT_CONFIG: Record<
   negative: { label: 'Negativo',  className: 'bg-danger/10 text-danger border border-danger/20' },
 };
 
-// Placeholder AI analysis that runs after 2 s
+// Pillar-specific AI analysis
 function simulateAIAnalysis(interview: Interview): Promise<AIInsights> {
   return new Promise((resolve) => {
     setTimeout(() => {
+      const pillarFindings: Record<PillarType, { findings: string[]; indicators: string[]; tags: string[] }> = {
+        processos: {
+          findings: [
+            'Processo de S&OP carece de validacao estrategica — decisoes de mix sem respaldo de margem',
+            'Planejamento de producao dependente de Excel — sistema Intex subutilizado por lentidao',
+            'Custeio manual fragmentado entre multiplas fontes — ciclo de 20-25 dias para 1500 SKUs',
+            'Ausencia de ficha tecnica unica — 4 versoes concorrentes entre BDI, Intex, PeopleSoft e Standard',
+            'Previsao de demanda com erro (MAPE) elevado — sem modelos estatisticos ou machine learning',
+            'Concentracao de 40% das vendas nos ultimos 4 dias do mes impacta toda a cadeia',
+          ],
+          indicators: [
+            'S&OP sem filtro estrategico — reuniao de homologacao, nao de decisao',
+            'Custeio manual sem integracao — impossibilidade de margem por cliente/pedido',
+            'Governanca de KPIs fragil — 200 indicadores proliferando sem priorizacao',
+          ],
+          tags: ['S&OP', 'custeio', 'planejamento', 'Excel', 'ficha-tecnica', 'MAPE'],
+        },
+        sistemas: {
+          findings: [
+            'Landscape de 39 sistemas com baixa integracao — transferencia de dados via Excel e FTP',
+            'PeopleSoft ERP com risco de descontinuidade no Brasil em 2027',
+            'Intex 20 versoes desatualizado — acumula funcoes de ERP e MES sem atender bem nenhuma',
+            'Ausencia de Data Warehouse ou Data Lake — dados dispersos em 17+ bases sem governanca',
+            'Cyberseguranca OT com controles basicos — pen-drives como meio de transferencia de dados',
+            'QlikSense com MCP embarcado representa oportunidade de IA generativa',
+          ],
+          indicators: [
+            'CMMI Nivel 1 em Gestao de Dados — sem politica formal de governanca',
+            'Arquitetura ponto-a-ponto com 200+ integracoes sem documentacao',
+            'Budget de TI 70% comprometido com manutencao do legado',
+          ],
+          tags: ['ERP', 'Intex', 'cyberseguranca', 'Data-Lake', 'integracao', 'legado'],
+        },
+        operacoes: {
+          findings: [
+            'Coleta de dados 90% manual — 40+ formularios em papel no chao de fabrica',
+            'Defeitos de qualidade detectados com ate 25 dias de atraso por inspecao visual',
+            'Gap critico ISA-95 Nivel 3 — ausencia de MES, PIMS e LIMS',
+            'OEE abaixo do benchmark setorial — paradas nao planejadas como principal causa',
+            'Diferenca de rendimento de 15% entre turnos sem ferramenta de analise',
+            'Gasto energetico de R$ 70M/ano sem sistema de gerenciamento ou medicao digital',
+          ],
+          indicators: [
+            'Automacao restrita — BMS cobre apenas tecelagem, sem escrita para maquinas',
+            'Manutencao reativa predominante — Engeman sem integracao com dados de processo',
+            'Controle estatistico de processo (SPC) inexistente',
+          ],
+          tags: ['MES', 'PIMS', 'IoT', 'qualidade', 'energia', 'ISA-95', 'OEE'],
+        },
+        organizacao: {
+          findings: [
+            'Turnover elevado (~2.5% ao mes) com dificuldade crescente de atracao e retencao',
+            'Capacitacao de novos funcionarios sem trilha estruturada — dependencia de treinamento informal',
+            'Perfil analitico escasso — Excel como principal ferramenta de analytics em toda a empresa',
+            'Gestao de mudanca inexistente como area formal — projetos anteriores (TPM) nao alcancaram resultado',
+            'Base de 2500 padroes no SoftExpert mas pouco utilizada — alta nao-conformidade por descumprimento',
+          ],
+          indicators: [
+            'Ausencia de area de Change Management — risco critico para transformacao digital',
+            'Literacia digital dos gestores baixa — 12% com certificacao minima',
+            'Dependencia de conhecimento tacito — risco de perda com turnover',
+          ],
+          tags: ['turnover', 'capacitacao', 'change-management', 'cultura', 'analytics'],
+        },
+        roadmap: {
+          findings: [
+            'Escritorio de Transformacao recente — mandato e poderes ainda nao consolidados',
+            'Meta de 40 km/per capita ate 2027 depende diretamente da transformacao digital',
+            'CAPEX de R$ 300M aprovado mas 80% direcionado a hardware sem resolver gestao',
+            'Piloto Vexia em Americana com resultados positivos (18% reducao paradas) mas escala incerta',
+            'Iniciativa Polux de diversificacao profissional precisa de ambiente digital moderno',
+          ],
+          indicators: [
+            'Roadmap de 4 horizontes definido: Agora (0-30d), Curto (30-90d), Medio (90-180d), Transformacao (6-18m)',
+            'Priorizacao de 28 iniciativas em 3 ondas: Estabilizar, Otimizar, Transformar',
+            'Quick wins identificados: Validacao Estrategica S&OP, MES caldeiras, IoT teares',
+          ],
+          tags: ['roadmap', 'transformacao', 'CAPEX', 'Polux', 'Vexia', 'quick-win'],
+        },
+      };
+
+      const data = pillarFindings[interview.pillar];
+      const shuffled = [...data.findings].sort(() => 0.5 - Math.random());
+      const selectedFindings = shuffled.slice(0, Math.min(5, shuffled.length));
+
+      const sentiments: AIInsights['sentiment'][] = ['negative', 'neutral', 'negative'];
+      const sentiment = sentiments[Math.floor(Math.random() * sentiments.length)];
+
       resolve({
-        summary: `Entrevista com ${interview.intervieweeName} revelou perspectivas relevantes sobre ${PILLAR_LABELS[interview.pillar]}. O entrevistado demonstrou visao critica e construtiva sobre os processos atuais.`,
-        keyFindings: [
-          'Necessidade de maior integração entre sistemas existentes',
-          'Oportunidade de automatização de processos repetitivos',
-          'Alinhamento estratégico parcialmente consolidado',
-          'Equipe demonstra abertura a novas metodologias',
-        ],
-        tags: ['transformacao-digital', 'eficiencia', interview.pillar, interview.level],
-        sentiment: 'neutral',
-        maturityIndicators: [
-          'Governança em nível inicial',
-          'Processos parcialmente documentados',
-          'Capacidade de melhoria identificada',
-        ],
+        summary: `Entrevista com ${interview.intervieweeName} (${interview.role}, ${interview.area}) revelou insights relevantes sobre ${PILLAR_LABELS[interview.pillar]}. A analise indica gaps significativos que corroboram os achados do diagnostico Deloitte, com oportunidades concretas de melhoria identificadas no contexto da transformacao digital da Santista.`,
+        keyFindings: selectedFindings,
+        tags: data.tags,
+        sentiment,
+        maturityIndicators: data.indicators,
       });
-    }, 2000);
+    }, 2500);
   });
 }
 
@@ -158,11 +237,12 @@ const InterviewDetail: React.FC<InterviewDetailProps> = ({ interview, onClose })
       {/* Info grid */}
       <div className="grid grid-cols-2 gap-3">
         {[
-          { icon: <User size={14} />,         label: 'Entrevistado', value: intervieweeName },
-          { icon: <Briefcase size={14} />,     label: 'Cargo',       value: role },
-          { icon: <Building2 size={14} />,     label: 'Area',        value: area },
-          { icon: <Layers size={14} />,        label: 'Nivel',       value: HIERARCHY_LABELS[level] },
-          { icon: <CalendarDays size={14} />,  label: 'Data',        value: formattedDate },
+          { icon: <User size={14} />,         label: 'Entrevistado',  value: intervieweeName },
+          { icon: <UserCheck size={14} />,    label: 'Entrevistador', value: interview.interviewerName || 'Nao informado' },
+          { icon: <Briefcase size={14} />,     label: 'Cargo',        value: role },
+          { icon: <Building2 size={14} />,     label: 'Area',         value: area },
+          { icon: <Layers size={14} />,        label: 'Nivel',        value: HIERARCHY_LABELS[level] },
+          { icon: <CalendarDays size={14} />,  label: 'Data',         value: formattedDate },
         ].map(({ icon, label, value }) => (
           <div key={label} className="rounded-lg p-3 bg-surface-3 border border-border">
             <div className="flex items-center gap-1.5 mb-1 text-text-secondary">

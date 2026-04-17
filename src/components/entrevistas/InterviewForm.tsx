@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import clsx from 'clsx';
+import { Lightbulb, Plus, ChevronDown, ChevronUp } from 'lucide-react';
 import type { Interview, PillarType, HierarchyLevel } from '../../types/interview';
-import { PILLAR_LABELS, HIERARCHY_LABELS } from '../../types/interview';
+import { PILLAR_LABELS, HIERARCHY_LABELS, SUGGESTED_QUESTIONS } from '../../types/interview';
 import { useInterviewStore } from '../../store/interviewStore';
-import Modal from '../ui/Modal';
 import Button from '../ui/Button';
 
 const PILLAR_OPTIONS = Object.entries(PILLAR_LABELS) as [PillarType, string][];
 const LEVEL_OPTIONS  = Object.entries(HIERARCHY_LABELS) as [HierarchyLevel, string][];
 
 interface FormValues {
+  interviewerName: string;
   intervieweeName: string;
   role: string;
   area: string;
@@ -20,6 +22,7 @@ interface FormValues {
 }
 
 const DEFAULT_VALUES: FormValues = {
+  interviewerName: '',
   intervieweeName: '',
   role: '',
   area: '',
@@ -34,16 +37,23 @@ function generateId(): string {
   return `interview-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
+const inputClass =
+  'w-full bg-input border border-border rounded-xl px-3 py-2.5 text-sm text-text focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-150';
+
+const labelClass =
+  'text-xs font-semibold text-text-secondary uppercase tracking-wide mb-1.5';
+
 interface LabeledFieldProps {
   label: string;
   htmlFor: string;
   required?: boolean;
   children: React.ReactNode;
+  className?: string;
 }
 
-const LabeledField: React.FC<LabeledFieldProps> = ({ label, htmlFor, required, children }) => (
-  <div className="flex flex-col gap-1.5">
-    <label htmlFor={htmlFor} className="font-body text-sm font-medium text-primary">
+const LabeledField: React.FC<LabeledFieldProps> = ({ label, htmlFor, required, children, className }) => (
+  <div className={clsx('flex flex-col', className)}>
+    <label htmlFor={htmlFor} className={labelClass}>
       {label}
       {required && <span className="text-red-500 ml-0.5">*</span>}
     </label>
@@ -51,30 +61,23 @@ const LabeledField: React.FC<LabeledFieldProps> = ({ label, htmlFor, required, c
   </div>
 );
 
-const inputClass = [
-  'w-full rounded-lg border border-border bg-surface px-3 py-2',
-  'font-body text-sm text-primary placeholder:text-primary/40',
-  'transition-colors duration-200',
-  'focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent/60',
-].join(' ');
-
 interface InterviewFormProps {
-  isOpen: boolean;
-  onClose: () => void;
   editInterview?: Interview;
+  onClose: () => void;
 }
 
-const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInterview }) => {
+const InterviewForm: React.FC<InterviewFormProps> = ({ onClose, editInterview }) => {
   const [values, setValues] = useState<FormValues>(DEFAULT_VALUES);
   const [errors, setErrors] = useState<Partial<Record<keyof FormValues, string>>>({});
+  const [suggestionsOpen, setSuggestionsOpen] = useState(true);
 
   const addInterview    = useInterviewStore((s) => s.addInterview);
   const updateInterview = useInterviewStore((s) => s.updateInterview);
 
-  // Populate form when editing
   useEffect(() => {
     if (editInterview) {
       setValues({
+        interviewerName: editInterview.interviewerName || '',
         intervieweeName: editInterview.intervieweeName,
         role:            editInterview.role,
         area:            editInterview.area,
@@ -88,7 +91,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInte
       setValues(DEFAULT_VALUES);
     }
     setErrors({});
-  }, [editInterview, isOpen]);
+  }, [editInterview]);
 
   const set = <K extends keyof FormValues>(key: K, value: FormValues[K]) => {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -97,12 +100,22 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInte
 
   function validate(): boolean {
     const newErrors: Partial<Record<keyof FormValues, string>> = {};
-    if (!values.intervieweeName.trim()) newErrors.intervieweeName = 'Nome e obrigatorio';
+    if (!values.interviewerName.trim()) newErrors.interviewerName = 'Nome do entrevistador e obrigatorio';
+    if (!values.intervieweeName.trim()) newErrors.intervieweeName = 'Nome do entrevistado e obrigatorio';
     if (!values.role.trim())            newErrors.role            = 'Cargo e obrigatorio';
     if (!values.area.trim())            newErrors.area            = 'Area e obrigatoria';
     if (!values.date)                   newErrors.date            = 'Data e obrigatoria';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  }
+
+  function appendQuestion(question: string) {
+    setValues((prev) => ({
+      ...prev,
+      transcript: prev.transcript
+        ? `${prev.transcript}\n${question}`
+        : question,
+    }));
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -119,6 +132,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInte
     } else {
       const newInterview: Interview = {
         id:              generateId(),
+        interviewerName: values.interviewerName.trim(),
         intervieweeName: values.intervieweeName.trim(),
         role:            values.role.trim(),
         area:            values.area.trim(),
@@ -138,17 +152,31 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInte
   }
 
   const isEditing = Boolean(editInterview);
+  const suggestedQuestions = SUGGESTED_QUESTIONS[values.pillar];
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={isEditing ? 'Editar Entrevista' : 'Nova Entrevista'}
-      size="lg"
-    >
-      <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-        {/* Row 1: name + date */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
+      <div className="rounded-2xl border border-border bg-surface-2 p-6">
+        <h2 className="font-heading text-lg font-semibold text-text mb-5">
+          {isEditing ? 'Editar Entrevista' : 'Nova Entrevista'}
+        </h2>
+
+        {/* Short fields — 2 column grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+          <LabeledField label="Entrevistador" htmlFor="interviewerName" required>
+            <input
+              id="interviewerName"
+              type="text"
+              value={values.interviewerName}
+              onChange={(e) => set('interviewerName', e.target.value)}
+              placeholder="Ex: Joao Silva"
+              className={inputClass}
+            />
+            {errors.interviewerName && (
+              <span className="text-xs text-red-500 mt-1">{errors.interviewerName}</span>
+            )}
+          </LabeledField>
+
           <LabeledField label="Nome do entrevistado" htmlFor="intervieweeName" required>
             <input
               id="intervieweeName"
@@ -159,26 +187,10 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInte
               className={inputClass}
             />
             {errors.intervieweeName && (
-              <span className="font-body text-xs text-red-500">{errors.intervieweeName}</span>
+              <span className="text-xs text-red-500 mt-1">{errors.intervieweeName}</span>
             )}
           </LabeledField>
 
-          <LabeledField label="Data da entrevista" htmlFor="date" required>
-            <input
-              id="date"
-              type="date"
-              value={values.date}
-              onChange={(e) => set('date', e.target.value)}
-              className={inputClass}
-            />
-            {errors.date && (
-              <span className="font-body text-xs text-red-500">{errors.date}</span>
-            )}
-          </LabeledField>
-        </div>
-
-        {/* Row 2: role + area */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <LabeledField label="Cargo" htmlFor="role" required>
             <input
               id="role"
@@ -189,7 +201,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInte
               className={inputClass}
             />
             {errors.role && (
-              <span className="font-body text-xs text-red-500">{errors.role}</span>
+              <span className="text-xs text-red-500 mt-1">{errors.role}</span>
             )}
           </LabeledField>
 
@@ -203,13 +215,10 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInte
               className={inputClass}
             />
             {errors.area && (
-              <span className="font-body text-xs text-red-500">{errors.area}</span>
+              <span className="text-xs text-red-500 mt-1">{errors.area}</span>
             )}
           </LabeledField>
-        </div>
 
-        {/* Row 3: level + pillar */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <LabeledField label="Nivel hierarquico" htmlFor="level">
             <select
               id="level"
@@ -235,57 +244,108 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ isOpen, onClose, editInte
               ))}
             </select>
           </LabeledField>
+
+          <LabeledField label="Data da entrevista" htmlFor="date" required>
+            <input
+              id="date"
+              type="date"
+              value={values.date}
+              onChange={(e) => set('date', e.target.value)}
+              className={inputClass}
+            />
+            {errors.date && (
+              <span className="text-xs text-red-500 mt-1">{errors.date}</span>
+            )}
+          </LabeledField>
         </div>
 
-        {/* Transcript */}
-        <LabeledField label="Transcricao da entrevista" htmlFor="transcript">
+        {/* Transcript — full width */}
+        <LabeledField label="Transcricao da entrevista" htmlFor="transcript" className="mb-5">
           <textarea
             id="transcript"
             value={values.transcript}
             onChange={(e) => set('transcript', e.target.value)}
-            rows={6}
+            rows={8}
             placeholder="Cole aqui a transcricao completa da entrevista..."
-            className={[inputClass, 'resize-y min-h-[120px]'].join(' ')}
+            className={clsx(inputClass, 'resize-y min-h-[180px]')}
           />
-          <p className="font-body text-xs text-primary/40">
+          <p className="text-xs text-text-secondary mt-1.5">
             Adicionar a transcricao habilita a analise por IA e altera o status para &quot;Concluida&quot;.
           </p>
         </LabeledField>
 
+        {/* Suggested Questions Panel */}
+        <div className="bg-surface-2 border border-border rounded-2xl p-5 mb-5">
+          <button
+            type="button"
+            onClick={() => setSuggestionsOpen((prev) => !prev)}
+            className="flex items-center gap-2 w-full text-left group"
+          >
+            <Lightbulb size={16} className="text-accent shrink-0" />
+            <span className="font-heading text-sm font-semibold text-text flex-1">
+              Perguntas sugeridas para {PILLAR_LABELS[values.pillar]}
+            </span>
+            {suggestionsOpen ? (
+              <ChevronUp size={16} className="text-text-tertiary" />
+            ) : (
+              <ChevronDown size={16} className="text-text-tertiary" />
+            )}
+          </button>
+
+          {suggestionsOpen && (
+            <div className="mt-4 flex flex-col gap-2">
+              {suggestedQuestions.map((question, idx) => (
+                <div
+                  key={idx}
+                  className="bg-surface-3 border border-border-subtle rounded-xl p-3 flex items-start gap-3"
+                >
+                  <span className="font-body text-sm text-text flex-1 leading-relaxed">
+                    {question}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => appendQuestion(question)}
+                    title="Adicionar ao transcript"
+                    className="shrink-0 inline-flex items-center justify-center h-7 w-7 rounded-lg text-text-tertiary hover:text-accent hover:bg-accent/10 transition-colors duration-150"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         {/* Ready for AI */}
-        <label className="flex items-start gap-3 cursor-pointer group">
+        <label className="flex items-start gap-3 cursor-pointer group mb-2">
           <input
             id="readyForAI"
             type="checkbox"
             checked={values.readyForAI}
             onChange={(e) => set('readyForAI', e.target.checked)}
-            className={[
-              'mt-0.5 h-4 w-4 shrink-0 rounded border-border',
-              'text-accent focus:ring-accent/40',
-              'transition-colors duration-200',
-            ].join(' ')}
+            className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-accent focus:ring-accent/40 transition-colors duration-200"
           />
           <div>
-            <span className="font-body text-sm font-medium text-primary">
+            <span className="text-sm font-medium text-text">
               Pronto para analise de IA
             </span>
-            <p className="font-body text-xs text-primary/50 mt-0.5">
+            <p className="text-xs text-text-secondary mt-0.5">
               Marque quando a transcricao estiver revisada e aprovada para processamento.
             </p>
           </div>
         </label>
+      </div>
 
-        {/* Actions */}
-        <div className="flex items-center justify-end gap-3 pt-2 border-t border-border">
-          <Button variant="outline" onClick={onClose} type="button">
-            Cancelar
-          </Button>
-          <Button variant="primary" type="submit">
-            {isEditing ? 'Salvar alteracoes' : 'Criar entrevista'}
-          </Button>
-        </div>
-      </form>
-    </Modal>
+      {/* Actions */}
+      <div className="flex items-center justify-end gap-3">
+        <Button variant="outline" onClick={onClose} type="button">
+          Cancelar
+        </Button>
+        <Button variant="primary" type="submit">
+          {isEditing ? 'Salvar alteracoes' : 'Salvar'}
+        </Button>
+      </div>
+    </form>
   );
 };
 
