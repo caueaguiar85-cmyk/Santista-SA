@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Lightbulb, Plus, ChevronDown, ChevronUp } from 'lucide-react';
 import type { Interview, PillarType, HierarchyLevel } from '../../types/interview';
-import { PILLAR_LABELS, HIERARCHY_LABELS, SUGGESTED_QUESTIONS } from '../../types/interview';
+import { PILLAR_LABELS, HIERARCHY_LABELS, SUGGESTED_QUESTIONS, AREA_QUESTIONS } from '../../types/interview';
 import { useInterviewStore } from '../../store/interviewStore';
 import Button from '../ui/Button';
 
 const PILLAR_OPTIONS = Object.entries(PILLAR_LABELS) as [PillarType, string][];
 const LEVEL_OPTIONS  = Object.entries(HIERARCHY_LABELS) as [HierarchyLevel, string][];
+const AREA_OPTIONS   = Object.keys(AREA_QUESTIONS);
 
 interface FormValues {
   interviewerName: string;
@@ -152,7 +153,13 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ onClose, editInterview })
   }
 
   const isEditing = Boolean(editInterview);
-  const suggestedQuestions = SUGGESTED_QUESTIONS[values.pillar];
+
+  // Area-specific questions take priority, fallback to pillar questions
+  const areaQuestions = values.area ? AREA_QUESTIONS[values.area] : null;
+  const suggestedQuestions = areaQuestions || SUGGESTED_QUESTIONS[values.pillar];
+  const questionsLabel = areaQuestions
+    ? `Perguntas especificas para ${values.area}`
+    : `Perguntas gerais para ${PILLAR_LABELS[values.pillar]}`;
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
@@ -205,15 +212,43 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ onClose, editInterview })
             )}
           </LabeledField>
 
-          <LabeledField label="Area" htmlFor="area" required>
-            <input
+          <LabeledField label="Area / Departamento" htmlFor="area" required>
+            <select
               id="area"
-              type="text"
               value={values.area}
               onChange={(e) => set('area', e.target.value)}
-              placeholder="Ex: Logistica"
               className={inputClass}
-            />
+            >
+              <option value="">Selecione a area...</option>
+              <optgroup label="Fabril">
+                <option value="Fiacao">Fiacao</option>
+                <option value="Tecelagem">Tecelagem</option>
+                <option value="Tinturaria">Tinturaria</option>
+                <option value="Acabamento">Acabamento</option>
+                <option value="Qualidade">Qualidade / Inspecao</option>
+                <option value="Manutencao">Manutencao / Engenharia</option>
+                <option value="Automacao">Automacao</option>
+                <option value="Utilidades">Utilidades / Energia</option>
+              </optgroup>
+              <optgroup label="Supply Chain">
+                <option value="PCP">PCP / Programacao</option>
+                <option value="Logistica">Logistica / Expedicao / DPA</option>
+                <option value="Suprimentos">Suprimentos / Compras</option>
+                <option value="S&OP">S&OP / Planejamento</option>
+              </optgroup>
+              <optgroup label="Comercial">
+                <option value="Comercial">Comercial / Vendas</option>
+                <option value="Marketing">Marketing / Desenvolvimento de Produto</option>
+              </optgroup>
+              <optgroup label="Corporativo">
+                <option value="Financeiro">Financeiro / Fiscal</option>
+                <option value="Custos">Custos Industriais</option>
+                <option value="TI">TI / Sistemas</option>
+                <option value="RH">Gente & Gestao / RH</option>
+                <option value="Diretoria">Diretoria / Presidencia</option>
+                <option value="Juridico">Juridico / Compliance</option>
+              </optgroup>
+            </select>
             {errors.area && (
               <span className="text-xs text-red-500 mt-1">{errors.area}</span>
             )}
@@ -283,7 +318,7 @@ const InterviewForm: React.FC<InterviewFormProps> = ({ onClose, editInterview })
           >
             <Lightbulb size={16} className="text-accent shrink-0" />
             <span className="font-heading text-sm font-semibold text-text flex-1">
-              Perguntas sugeridas para {PILLAR_LABELS[values.pillar]}
+              {questionsLabel}
             </span>
             {suggestionsOpen ? (
               <ChevronUp size={16} className="text-text-tertiary" />
